@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style type="text/css">
+@font-face {
+    font-family: 'Be Vietnam Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/be-vietnam-pro-4.woff2) format('woff2');
+}
+@font-face {
+    font-family: 'Be Vietnam Pro';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(fonts/be-vietnam-pro-10.woff2) format('woff2');
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f5f6;
+    color: #6c7883;
+}
+.sogo-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    max-width: 340px;
+    user-select: none;
+}
+.sogo-empty-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 148px;
+    height: 148px;
+    border-radius: 50%;
+    background-color: rgba(82, 142, 134, 0.08);
+    margin-bottom: 18px;
+}
+.sogo-empty-icon {
+    width: 88px;
+    height: 88px;
+    color: #b7c2c9;
+}
+.sogo-empty-title {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #52606d;
+    letter-spacing: -0.01em;
+}
+.sogo-empty-sub {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #84929e;
+}
+
+html.dark-mode body {
+    background-color: #1b2025;
+    color: #8796a3;
+}
+html.dark-mode .sogo-empty-badge {
+    background-color: rgba(111, 194, 182, 0.08);
+}
+html.dark-mode .sogo-empty-icon {
+    color: #3d4954;
+}
+html.dark-mode .sogo-empty-title {
+    color: #b8c4ce;
+}
+html.dark-mode .sogo-empty-sub {
+    color: #778694;
+}
+</style>
+<script>
+  try {
+    var pDoc = window.parent && window.parent.document;
+    var isDark = false;
+    if (pDoc && pDoc.documentElement.classList.contains('dark-mode')) {
+      isDark = true;
+    } else if (document.cookie.indexOf('colorMode=dark') > -1
+      || (document.cookie.indexOf('colorMode=light') === -1 && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      isDark = true;
+    }
+    if (isDark) {
+      document.documentElement.className += ' dark-mode';
+    }
+  } catch (e) { }
+</script>
+</head>
+<body>
+  <div class="sogo-empty-state">
+    <div class="sogo-empty-badge">
+      <svg id="empty-icon" class="sogo-empty-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12h-3.13c-.47 0-.89.29-1.06.73-.44 1.13-1.53 1.94-2.81 1.94s-2.37-.81-2.81-1.94A1.13 1.13 0 0 0 8.13 15H5V5h14v10z"/>
+      </svg>
+    </div>
+    <p id="empty-title" class="sogo-empty-title"></p>
+    <p id="empty-sub" class="sogo-empty-sub"></p>
+  </div>
+  <script>
+    (function () {
+      var i18n = {
+        mail: {
+          vi: ['Chưa chọn thư nào', 'Chọn một thư từ danh sách bên trái để xem nội dung.'],
+          en: ['No message selected', 'Select a message from the list to read its content.'],
+          fr: ['Aucun message sélectionné', 'Sélectionnez un message dans la liste pour le lire.']
+        },
+        addressbook: {
+          vi: ['Chưa chọn liên hệ nào', 'Chọn một liên hệ từ danh sách để xem thông tin chi tiết.'],
+          en: ['No contact selected', 'Select a contact from the list to view details.'],
+          fr: ['Aucun contact sélectionné', 'Sélectionnez un contact dans la liste pour voir les détails.']
+        },
+        settings: {
+          vi: ['Chưa chọn mục cài đặt', 'Chọn một mục ở danh sách bên trái để tùy chỉnh.'],
+          en: ['No section selected', 'Choose a setting from the list on the left.'],
+          fr: ['Aucune section sélectionnée', 'Choisissez une option dans la liste à gauche.']
+        }
+      };
+
+      var iconPaths = {
+        mail: 'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12h-3.13c-.47 0-.89.29-1.06.73-.44 1.13-1.53 1.94-2.81 1.94s-2.37-.81-2.81-1.94A1.13 1.13 0 0 0 8.13 15H5V5h14v10z',
+        addressbook: 'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z',
+        settings: 'M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.48.48 0 0 0-.48.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.26.41.48.41h3.84c.24 0 .44-.17.48-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z'
+      };
+
+      var task = 'mail';
+      var lang = 'en';
+
+      try {
+        var pDoc = window.parent && window.parent.document;
+        if (pDoc) {
+          var htmlLang = pDoc.documentElement.getAttribute('lang');
+          if (htmlLang) {
+            lang = htmlLang.slice(0, 2).toLowerCase();
+          }
+          var cls = pDoc.body ? pDoc.body.className : '';
+          if (cls.indexOf('task-addressbook') > -1) {
+            task = 'addressbook';
+          } else if (cls.indexOf('task-settings') > -1) {
+            task = 'settings';
+          }
+        }
+      } catch (e) { }
+
+      if (!lang && navigator.language) {
+        lang = navigator.language.slice(0, 2).toLowerCase();
+      }
+
+      var map = i18n[task] || i18n.mail;
+      var pair = map[lang] || map.en;
+      var pathEl = document.querySelector('#empty-icon path');
+      if (pathEl && iconPaths[task]) {
+        pathEl.setAttribute('d', iconPaths[task]);
+      }
+      document.getElementById('empty-title').textContent = pair[0];
+      document.getElementById('empty-sub').textContent = pair[1];
+    })();
+  </script>
+</body>
+</html>
