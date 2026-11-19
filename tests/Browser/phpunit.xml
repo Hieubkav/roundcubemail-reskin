@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<phpunit
+  bootstrap="bootstrap.php"
+  colors="true"
+  failOnDeprecation="true"
+  failOnNotice="true"
+  failOnWarning="true"
+  displayDetailsOnTestsThatTriggerDeprecations="true"
+  displayDetailsOnPhpunitDeprecations="true"
+>
+  <extensions>
+    <bootstrap class="Ergebnis\PHPUnit\SlowTestDetector\Extension">
+      <parameter name="maximum-duration" value="5000"/>
+    </bootstrap>
+  </extensions>
+  <testsuites>
+    <testsuite name="tests">
+      <directory>.</directory>
+    </testsuite>
+    <testsuite name="plugins">
+      <directory>../../plugins/*/tests/Browser</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
