@@ -135,6 +135,12 @@
                 }
                 parent.dataset.sogoEditorInit = '1';
 
+                // Skip Roundcube's "switching editor may lose formatting" confirm
+                // (auto-enable HTML is a skin default, not a user toggle).
+                if (window.rcmail && window.rcmail.env) {
+                    window.rcmail.env.editor_warned = true;
+                }
+
                 var htmlBtn = parent.querySelector('a.mce-i-html');
                 if (htmlBtn) {
                     htmlBtn.click();
