@@ -8,6 +8,105 @@
 (function () {
     'use strict';
 
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function decodeEntities(str) {
+        return String(str)
+            .replace(/&nbsp;/g, ' ')
+            .replace(/&gt;/g, '>')
+            .replace(/&lt;/g, '<')
+            .replace(/&amp;/g, '&');
+    }
+
+    function beautifyComposeQuote() {
+        var tm = window.tinymce;
+        var editor = tm && tm.get ? tm.get('composebody') : null;
+        if (!editor || !editor.getBody) {
+            return false;
+        }
+        var bodyEl = editor.getBody();
+        if (!bodyEl || bodyEl.getAttribute('data-sogo-quote') === '1') {
+            return !!bodyEl;
+        }
+
+        var intro = bodyEl.querySelector('#reply-intro');
+        var quotes = bodyEl.querySelectorAll('blockquote');
+        var pre = bodyEl.querySelector('div.pre');
+
+        if (pre && !quotes.length) {
+            var chunks = pre.innerHTML.replace(/\r/g, '').split(/<br\s*\/?>/i);
+            var introText = '';
+            var quoteLines = [];
+            var i;
+            for (i = 0; i < chunks.length; i++) {
+                var decoded = decodeEntities(chunks[i]).replace(/^\s+|\s+$/g, '');
+                if (!decoded) {
+                    continue;
+                }
+                var m = decoded.match(/^(>+)\s?(.*)$/);
+                if (m) {
+                    quoteLines.push(m[2]);
+                } else if (!quoteLines.length) {
+                    introText += (introText ? ' ' : '') + decoded;
+                } else {
+                    quoteLines.push(decoded);
+                }
+            }
+
+            var html = '<p class="sogo-reply-start"><br data-mce-bogus="1"></p>';
+            if (introText) {
+                if (!/[:：]$/.test(introText)) {
+                    introText += ':';
+                }
+                html += '<p class="sogo-reply-intro" id="reply-intro">' + escapeHtml(introText) + '</p>';
+            }
+            html += '<blockquote class="sogo-quote">';
+            if (!quoteLines.length) {
+                html += '<p><br></p>';
+            } else {
+                for (i = 0; i < quoteLines.length; i++) {
+                    html += '<p>' + (quoteLines[i] ? escapeHtml(quoteLines[i]) : '<br>') + '</p>';
+                }
+            }
+            html += '</blockquote>';
+
+            var wrap = editor.dom.create('div');
+            wrap.innerHTML = html;
+            pre.parentNode.insertBefore(wrap, pre);
+            pre.parentNode.removeChild(pre);
+            while (wrap.firstChild) {
+                wrap.parentNode.insertBefore(wrap.firstChild, wrap);
+            }
+            wrap.parentNode.removeChild(wrap);
+        } else {
+            if (intro) {
+                intro.classList.add('sogo-reply-intro');
+            }
+            for (var q = 0; q < quotes.length; q++) {
+                quotes[q].classList.add('sogo-quote');
+            }
+            if ((intro || quotes.length) && !bodyEl.querySelector('.sogo-reply-start')) {
+                var start = editor.dom.create('p', { 'class': 'sogo-reply-start' });
+                start.innerHTML = '<br data-mce-bogus="1">';
+                bodyEl.insertBefore(start, bodyEl.firstChild);
+            }
+        }
+
+        bodyEl.setAttribute('data-sogo-quote', '1');
+        var caret = bodyEl.querySelector('.sogo-reply-start');
+        if (caret && editor.selection) {
+            editor.selection.setCursorLocation(caret, 0);
+            editor.focus();
+        }
+        return true;
+    }
+
     function initSogoSkin() {
         var html = document.documentElement;
         var body = document.body;
@@ -149,11 +248,23 @@
                         parent.classList.add('ishtml');
                     }
                 }
+
+                var tries = 0;
+                var waitEditor = function () {
+                    if (beautifyComposeQuote() || ++tries > 40) {
+                        return;
+                    }
+                    setTimeout(waitEditor, 80);
+                };
+                setTimeout(waitEditor, 120);
             };
 
             if (window.rcmail && typeof window.rcmail.addEventListener === 'function') {
                 window.rcmail.addEventListener('init', function () {
                     setTimeout(autoEnableRichEditor, 60);
+                });
+                window.rcmail.addEventListener('editor-init', function () {
+                    setTimeout(beautifyComposeQuote, 30);
                 });
             }
             setTimeout(autoEnableRichEditor, 180);
