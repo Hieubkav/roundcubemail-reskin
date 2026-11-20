@@ -4507,11 +4507,13 @@ class rcube_imap extends rcube_storage
     {
         if ($this->sort_folder_collator === null) {
             $locale = ($this->options['language'] ?? null) ?: 'en_US';
-            $this->sort_folder_collator = collator_create($locale) ?: false;
+            $this->sort_folder_collator = function_exists('collator_create')
+                ? (collator_create($locale) ?: false)
+                : false;
         }
 
         if (!$this->sort_folder_collator) {
-            return 0;
+            return strnatcasecmp($str1, $str2);
         }
 
         $path1 = explode($this->delimiter, $str1);

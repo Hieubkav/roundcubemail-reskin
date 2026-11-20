@@ -1441,22 +1441,16 @@ class rcube_utils
             $domain = $input;
         }
 
-        // Note that in PHP 7.2/7.3 calling idn_to_* functions with default arguments
-        // throws a warning, so we have to set the variant explicitly (#6075)
-        $variant = \INTL_IDNA_VARIANT_UTS46;
-        $options = 0;
-
         // Because php-intl extension lowercases domains and return false
-        // on invalid input (#6224), we skip conversion when not needed
+        // on invalid input (#6224), we skip conversion when not needed.
+        // Some cPanel PHP builds have intl loaded but no INTL_IDNA_VARIANT_UTS46.
 
         if ($is_utf) {
             if (preg_match('/[^\x20-\x7E]/', $domain)) {
-                $options = \IDNA_NONTRANSITIONAL_TO_ASCII;
-                $domain = idn_to_ascii($domain, $options, $variant);
+                $domain = self::idn_to_ascii_domain($domain);
             }
         } elseif (preg_match('/(^|\.)xn--/i', $domain)) {
-            $options = \IDNA_NONTRANSITIONAL_TO_UNICODE;
-            $domain = idn_to_utf8($domain, $options, $variant);
+            $domain = self::idn_to_utf8_domain($domain);
         }
 
         if ($domain === false) {
@@ -1464,6 +1458,46 @@ class rcube_utils
         }
 
         return $at ? $user . '@' . $domain : $domain;
+    }
+
+    /**
+     * idn_to_ascii with fallback when php-intl lacks UTS46 constants.
+     *
+     * @param string $domain
+     *
+     * @return string|false
+     */
+    protected static function idn_to_ascii_domain($domain)
+    {
+        if (!function_exists('idn_to_ascii')) {
+            return $domain;
+        }
+
+        if (defined('INTL_IDNA_VARIANT_UTS46') && defined('IDNA_NONTRANSITIONAL_TO_ASCII')) {
+            return idn_to_ascii($domain, \IDNA_NONTRANSITIONAL_TO_ASCII, \INTL_IDNA_VARIANT_UTS46);
+        }
+
+        return idn_to_ascii($domain);
+    }
+
+    /**
+     * idn_to_utf8 with fallback when php-intl lacks UTS46 constants.
+     *
+     * @param string $domain
+     *
+     * @return string|false
+     */
+    protected static function idn_to_utf8_domain($domain)
+    {
+        if (!function_exists('idn_to_utf8')) {
+            return $domain;
+        }
+
+        if (defined('INTL_IDNA_VARIANT_UTS46') && defined('IDNA_NONTRANSITIONAL_TO_UNICODE')) {
+            return idn_to_utf8($domain, \IDNA_NONTRANSITIONAL_TO_UNICODE, \INTL_IDNA_VARIANT_UTS46);
+        }
+
+        return idn_to_utf8($domain);
     }
 
     /**
