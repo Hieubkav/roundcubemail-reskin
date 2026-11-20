@@ -40,3 +40,7 @@ skins/elastic/styles/_variables.less
 
 # PHPUnit cache
 /tests/.phpunit.result.cache
+
+# local/prod deploy artifacts (secrets, vendor tarball)
+config-server.inc.php
+dist-deploy/
