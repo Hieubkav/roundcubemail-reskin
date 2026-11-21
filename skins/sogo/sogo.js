@@ -1,5 +1,5 @@
 /**
- * SOGo Elastic skin enhancements (inherits Elastic UI).
+ * Sogo skin enhancements (inherits Elastic UI).
  * - Replaces Roundcube logo with sleek SOGo user card & date widget in desktop topbar/sidebar
  * - Adds a single green circular Compose FAB inside #layout-list on desktop mail view
  * - Automatically opens the HTML Rich Text Editor (TinyMCE) when composing a new message
@@ -24,6 +24,97 @@
             .replace(/&amp;/g, '&');
     }
 
+    // Max quoted lines shown before collapsing (long quotes like cPanel notices).
+    var SOGO_QUOTE_PREVIEW_LINES = 8;
+    var SOGO_QUOTE_PREVIEW_CHARS = 1200;
+
+    function replyPlaceholderText() {
+        var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
+        return lang.indexOf('vi') === 0 ? 'Nhập nội dung trả lời tại đây...' : 'Type your reply here...';
+    }
+
+    function quoteToggleText(expanded) {
+        var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
+        if (lang.indexOf('vi') === 0) {
+            return expanded ? '— Thu gọn nội dung trích dẫn —' : '... Hiển thị nội dung trích dẫn ...';
+        }
+        return expanded ? '— Collapse quoted message —' : '... Show quoted message ...';
+    }
+
+    function makeQuoteToggle(editor, quote) {
+        var btn = editor.dom.create('button', {
+            'type': 'button',
+            'class': 'sogo-quote-toggle',
+            'contenteditable': 'false',
+            'data-mce-bogus': '1'
+        });
+        btn.textContent = quoteToggleText(false);
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var collapsed = quote.classList.toggle('sogo-collapsed');
+            btn.textContent = quoteToggleText(!collapsed);
+            try { editor.nodeChanged(); } catch (err) { }
+        });
+        return btn;
+    }
+
+    function collapseLongQuote(editor, quote) {
+        if (!quote || quote.getAttribute('data-sogo-collapse') === '1') {
+            return;
+        }
+        quote.setAttribute('data-sogo-collapse', '1');
+        var textLen = (quote.textContent || '').replace(/\s+/g, ' ').length;
+        var blocks = quote.querySelectorAll('p, div, li');
+        if (textLen < SOGO_QUOTE_PREVIEW_CHARS && blocks.length <= SOGO_QUOTE_PREVIEW_LINES + 2) {
+            return;
+        }
+        quote.classList.add('sogo-quote', 'sogo-collapsed');
+        var toggle = makeQuoteToggle(editor, quote);
+        quote.parentNode.insertBefore(toggle, quote.nextSibling);
+    }
+
+    // Expand collapsed quotes + drop helper buttons so sent mail keeps full quote.
+    function expandQuotesForSend(bodyEl) {
+        var toggles = bodyEl.querySelectorAll('.sogo-quote-toggle');
+        for (var i = 0; i < toggles.length; i++) {
+            if (toggles[i].parentNode) {
+                toggles[i].parentNode.removeChild(toggles[i]);
+            }
+        }
+        var quotes = bodyEl.querySelectorAll('blockquote.sogo-collapsed');
+        for (var q = 0; q < quotes.length; q++) {
+            quotes[q].classList.remove('sogo-collapsed');
+        }
+    }
+
+    function armQuoteExpandOnSend(editor) {
+        var bodyEl = editor.getBody();
+        if (!bodyEl || bodyEl.getAttribute('data-sogo-send-armed') === '1') {
+            return;
+        }
+        bodyEl.setAttribute('data-sogo-send-armed', '1');
+        var form = document.querySelector('form');
+        if (form && form.addEventListener) {
+            form.addEventListener('submit', function () {
+                expandQuotesForSend(editor.getBody());
+                try { editor.save(); } catch (e) { }
+            });
+        }
+    }
+
+    function buildQuoteSeparator(editor, introText) {
+        var sep = editor.dom.create('div', { 'class': 'sogo-quote-sep', 'contenteditable': 'false' });
+        var label = introText || '';
+        if (label && !/[:：]$/.test(label)) {
+            label += ':';
+        }
+        sep.innerHTML = '<span class="sogo-quote-sep-line"></span>' +
+            '<span class="sogo-quote-sep-label">' + escapeHtml(label) + '</span>' +
+            '<span class="sogo-quote-sep-line"></span>';
+        return sep;
+    }
+
     function beautifyComposeQuote() {
         var tm = window.tinymce;
         var editor = tm && tm.get ? tm.get('composebody') : null;
@@ -32,6 +123,7 @@
         }
         var bodyEl = editor.getBody();
         if (!bodyEl || bodyEl.getAttribute('data-sogo-quote') === '1') {
+            if (bodyEl) { armQuoteExpandOnSend(editor); }
             return !!bodyEl;
         }
 
@@ -59,13 +151,8 @@
                 }
             }
 
-            var html = '<p class="sogo-reply-start"><br data-mce-bogus="1"></p>';
-            if (introText) {
-                if (!/[:：]$/.test(introText)) {
-                    introText += ':';
-                }
-                html += '<p class="sogo-reply-intro" id="reply-intro">' + escapeHtml(introText) + '</p>';
-            }
+            var html = '<p class="sogo-reply-start" data-sogo-placeholder="' + escapeHtml(replyPlaceholderText()) + '"><br data-mce-bogus="1"></p>';
+            html += '__SOGO_SEP__';
             html += '<blockquote class="sogo-quote">';
             if (!quoteLines.length) {
                 html += '<p><br></p>';
@@ -78,6 +165,13 @@
 
             var wrap = editor.dom.create('div');
             wrap.innerHTML = html;
+            var sepKids = wrap.childNodes;
+            for (var sk = 0; sk < sepKids.length; sk++) {
+                if (sepKids[sk].nodeType === 3 && sepKids[sk].nodeValue === '__SOGO_SEP__') {
+                    wrap.replaceChild(buildQuoteSeparator(editor, introText), sepKids[sk]);
+                    break;
+                }
+            }
             pre.parentNode.insertBefore(wrap, pre);
             pre.parentNode.removeChild(pre);
             while (wrap.firstChild) {
@@ -86,19 +180,30 @@
             wrap.parentNode.removeChild(wrap);
         } else {
             if (intro) {
-                intro.classList.add('sogo-reply-intro');
+                var sep2 = buildQuoteSeparator(editor, intro.textContent || '');
+                intro.parentNode.insertBefore(sep2, intro);
+                intro.parentNode.removeChild(intro);
             }
             for (var q = 0; q < quotes.length; q++) {
                 quotes[q].classList.add('sogo-quote');
             }
-            if ((intro || quotes.length) && !bodyEl.querySelector('.sogo-reply-start')) {
-                var start = editor.dom.create('p', { 'class': 'sogo-reply-start' });
+            if (!bodyEl.querySelector('.sogo-reply-start')) {
+                var start = editor.dom.create('p', {
+                    'class': 'sogo-reply-start',
+                    'data-sogo-placeholder': replyPlaceholderText()
+                });
                 start.innerHTML = '<br data-mce-bogus="1">';
                 bodyEl.insertBefore(start, bodyEl.firstChild);
             }
         }
 
+        var built = bodyEl.querySelectorAll('blockquote');
+        for (var b = 0; b < built.length; b++) {
+            collapseLongQuote(editor, built[b]);
+        }
+
         bodyEl.setAttribute('data-sogo-quote', '1');
+        armQuoteExpandOnSend(editor);
         var caret = bodyEl.querySelector('.sogo-reply-start');
         if (caret && editor.selection) {
             editor.selection.setCursorLocation(caret, 0);

@@ -20,7 +20,7 @@ Passphrase of `id_rsa_vitrasau` is not stored in this repository.
 
 ## What is on the server vs git
 
-Git tracks application source (including `sogo-elastic` and PHP intl fallbacks).
+Git tracks application source (including `sogo` and PHP intl fallbacks).
 
 **Not** in git (already on prod, do not `git clean`):
 
