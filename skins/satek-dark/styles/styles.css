@@ -8309,25 +8309,29 @@ body.task-login .btn.mainaction:active {
   #taskmenu > a,
   #taskmenu .action-buttons > a,
   #taskmenu .special-buttons > a {
-    color: #f5ede2 !important;
     border-radius: 10px !important;
   }
   #taskmenu > a:hover,
   #taskmenu .action-buttons > a:hover,
   #taskmenu .special-buttons > a:hover {
     background-color: rgba(255, 140, 0, 0.16) !important;
-    color: #ffa733 !important;
   }
   #taskmenu > a.selected,
   #taskmenu .action-buttons > a.selected,
   #taskmenu .special-buttons > a.selected {
     background-color: #ff8c00 !important;
+  }
+  #taskmenu > a.selected:before,
+  #taskmenu .action-buttons > a.selected:before,
+  #taskmenu .special-buttons > a.selected:before {
     color: #141414 !important;
   }
   #taskmenu .action-buttons > a.compose {
     background-color: #ff8c00 !important;
-    color: #141414 !important;
     font-weight: 700 !important;
+  }
+  #taskmenu .action-buttons > a.compose:before {
+    color: #141414 !important;
   }
 }
 #layout-sidebar .listitem .icon,

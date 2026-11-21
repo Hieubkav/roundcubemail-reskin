@@ -1889,30 +1889,34 @@ body.task-login {
 
 // ---------------- Satek Dark icon + thumbnail fixes (orange/black, no teal leftovers) ----------------
 
-// Taskbar icons: white on black, orange pill for active item.
+// Taskbar: orange pill for active item; never touch icon glyphs (font-icon-class).
 @media screen and (min-width: 481px) {
     #taskmenu {
         & > a,
         .action-buttons > a,
         .special-buttons > a {
-            color: #f5ede2 !important;
             border-radius: 10px !important;
 
             &:hover {
                 background-color: rgba(255, 140, 0, 0.16) !important;
-                color: #ffa733 !important;
             }
 
             &.selected {
                 background-color: #ff8c00 !important;
-                color: #141414 !important;
+
+                &:before {
+                    color: #141414 !important;
+                }
             }
         }
 
         .action-buttons > a.compose {
             background-color: #ff8c00 !important;
-            color: #141414 !important;
             font-weight: 700 !important;
+
+            &:before {
+                color: #141414 !important;
+            }
         }
     }
 }
