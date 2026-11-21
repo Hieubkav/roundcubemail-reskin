@@ -8305,3 +8305,41 @@ body.task-login .btn.mainaction:active {
   background-color: #e07f00 !important;
   border-color: #e07f00 !important;
 }
+@media screen and (min-width: 481px) {
+  #taskmenu > a,
+  #taskmenu .action-buttons > a,
+  #taskmenu .special-buttons > a {
+    color: #f5ede2 !important;
+    border-radius: 10px !important;
+  }
+  #taskmenu > a:hover,
+  #taskmenu .action-buttons > a:hover,
+  #taskmenu .special-buttons > a:hover {
+    background-color: rgba(255, 140, 0, 0.16) !important;
+    color: #ffa733 !important;
+  }
+  #taskmenu > a.selected,
+  #taskmenu .action-buttons > a.selected,
+  #taskmenu .special-buttons > a.selected {
+    background-color: #ff8c00 !important;
+    color: #141414 !important;
+  }
+  #taskmenu .action-buttons > a.compose {
+    background-color: #ff8c00 !important;
+    color: #141414 !important;
+    font-weight: 700 !important;
+  }
+}
+#layout-sidebar .listitem .icon,
+#layout-sidebar .treetoggle {
+  color: #d97700 !important;
+}
+#layout-sidebar .listitem.selected {
+  background-color: #fff3e3 !important;
+  border-left: 3px solid #ff8c00 !important;
+}
+#layout-sidebar .unreadcount,
+.messagelist .unread .subject {
+  background-color: #ff8c00 !important;
+  color: #141414 !important;
+}

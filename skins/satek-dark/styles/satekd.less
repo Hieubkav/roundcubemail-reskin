@@ -1886,3 +1886,51 @@ body.task-login {
         }
     }
 }
+
+// ---------------- Satek Dark icon + thumbnail fixes (orange/black, no teal leftovers) ----------------
+
+// Taskbar icons: white on black, orange pill for active item.
+@media screen and (min-width: 481px) {
+    #taskmenu {
+        & > a,
+        .action-buttons > a,
+        .special-buttons > a {
+            color: #f5ede2 !important;
+            border-radius: 10px !important;
+
+            &:hover {
+                background-color: rgba(255, 140, 0, 0.16) !important;
+                color: #ffa733 !important;
+            }
+
+            &.selected {
+                background-color: #ff8c00 !important;
+                color: #141414 !important;
+            }
+        }
+
+        .action-buttons > a.compose {
+            background-color: #ff8c00 !important;
+            color: #141414 !important;
+            font-weight: 700 !important;
+        }
+    }
+}
+
+// Sidebar folder icons: orange accent instead of teal.
+#layout-sidebar .listitem .icon,
+#layout-sidebar .treetoggle {
+    color: #d97700 !important;
+}
+
+#layout-sidebar .listitem.selected {
+    background-color: #fff3e3 !important;
+    border-left: 3px solid #ff8c00 !important;
+}
+
+// Unread badges: orange.
+#layout-sidebar .unreadcount,
+.messagelist .unread .subject {
+    background-color: #ff8c00 !important;
+    color: #141414 !important;
+}
