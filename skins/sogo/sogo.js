@@ -1,5 +1,5 @@
 /**
- * Sogo skin enhancements (inherits Elastic UI).
+ * Satek skin enhancements (inherits Elastic UI).
  * - Replaces Roundcube logo with sleek SOGo user card & date widget in desktop topbar/sidebar
  * - Adds a single green circular Compose FAB inside #layout-list on desktop mail view
  * - Automatically opens the HTML Rich Text Editor (TinyMCE) when composing a new message
