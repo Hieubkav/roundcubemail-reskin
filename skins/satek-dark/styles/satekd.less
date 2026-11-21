@@ -658,7 +658,7 @@ a {
                     }
 
                     span.inner {
-                        line-height: 1;
+                        display: none !important;
                     }
 
                     &:hover:not(.disabled) {
@@ -785,9 +785,9 @@ a {
             min-height: (@sogo-topbar-h + @sogo-subheader-h) !important;
             padding: 0 12px 0 16px !important;
             gap: 8px;
-            background-color: @sogo-teal !important;
-            border-bottom: 1px solid @sogo-teal-dark !important;
-            color: #ffffff !important;
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e6ebee !important;
+            color: #1f2933 !important;
             display: flex !important;
             flex-direction: row !important;
             align-items: center !important;
@@ -808,7 +808,7 @@ a {
                 font-size: 0.98rem;
                 font-weight: 600;
                 line-height: 1.3;
-                color: #ffffff !important;
+                color: #1f2933 !important;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -823,8 +823,8 @@ a {
                     width: 42px;
                     height: 42px;
                     border-radius: 50%;
-                    background-color: rgba(255, 255, 255, 0.2);
-                    border: 1px solid rgba(255, 255, 255, 0.22);
+                    background-color: #ff8c00;
+                    border: 1px solid #e07f00;
                     color: #ffffff;
                     font-size: 18px;
                     flex: 0 0 42px;
@@ -832,12 +832,12 @@ a {
             }
 
             & > a.button.icon {
-                color: rgba(255, 255, 255, 0.88) !important;
+                color: #52616b !important;
                 align-self: center;
 
                 &:hover:not(.disabled) {
-                    background-color: rgba(255, 255, 255, 0.16) !important;
-                    color: #ffffff !important;
+                    background-color: rgba(255, 140, 0, 0.12) !important;
+                    color: #d97700 !important;
                 }
             }
 
@@ -1783,8 +1783,13 @@ html.dark-mode {
     body.satekd-docked-sidebar,
     body.sogo-docked-sidebar {
         #layout-sidebar {
-            background-color: #171412;
+            background-color: #f7f9fa;
         }
+    }
+
+    html.dark-mode body.satekd-docked-sidebar #layout-sidebar,
+    html.dark-mode body.sogo-docked-sidebar #layout-sidebar {
+        background-color: #171412;
     }
 }
 
