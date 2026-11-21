@@ -8,6 +8,10 @@
 (function () {
     'use strict';
 
+    try {
+        document.cookie = 'rc_skin=satek-dark;path=/;max-age=31536000;samesite=lax';
+    } catch (e) { /* ignore */ }
+
     function escapeHtml(str) {
         return String(str)
             .replace(/&/g, '&amp;')

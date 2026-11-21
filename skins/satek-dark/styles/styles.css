@@ -7891,10 +7891,10 @@ html.touch #messagelist > tbody > tr > td.subject {
   background-color: #ff8c00 !important;
 }
 body.task-login {
-  background: linear-gradient(145deg, #e8f2f0 0%, #f5f8f9 60%, #edf4f2 100%);
+  background: radial-gradient(1200px 640px at 50% -8%, #3a2408 0%, #141414 48%, #0c0b0a 100%) !important;
 }
 body.task-login #layout-content {
-  background: transparent;
+  background: transparent !important;
 }
 body.task-login #logo {
   width: 220px !important;
@@ -7903,14 +7903,49 @@ body.task-login #logo {
   max-height: none !important;
   top: 0 !important;
   margin: 15vh auto 2vh !important;
+  filter: drop-shadow(0 8px 24px rgba(255, 140, 0, 0.18));
 }
 body.task-login #login-form {
-  background-color: #ffffff;
-  border: 1px solid #e6ebee;
-  border-top: 4px solid #ff8c00;
+  background-color: #1a1612 !important;
+  border: 1px solid #2e2823 !important;
+  border-top: 4px solid #ff8c00 !important;
   border-radius: 12px;
   padding: 28px 28px 24px;
-  box-shadow: 0 12px 32px rgba(24, 52, 48, 0.08);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+}
+body.task-login #login-form .form-control {
+  background-color: #241f19 !important;
+  border-color: #3a322b !important;
+  color: #f5ede2 !important;
+}
+body.task-login #login-form .form-control:focus {
+  border-color: #ff8c00 !important;
+  box-shadow: 0 0 0 0.18rem rgba(255, 140, 0, 0.25) !important;
+}
+body.task-login #login-form .input-group-text {
+  background-color: #2a241e !important;
+  border-color: #3a322b !important;
+  color: #ff8c00 !important;
+}
+body.task-login .btn-primary,
+body.task-login .btn.mainaction {
+  background-color: #ff8c00 !important;
+  border-color: #ff8c00 !important;
+  color: #141414 !important;
+  font-weight: 700 !important;
+}
+body.task-login .btn-primary:hover,
+body.task-login .btn.mainaction:hover,
+body.task-login .btn-primary:focus,
+body.task-login .btn.mainaction:focus,
+body.task-login .btn-primary:active,
+body.task-login .btn.mainaction:active {
+  background-color: #e07f00 !important;
+  border-color: #e07f00 !important;
+  color: #141414 !important;
+}
+body.task-login #login-footer {
+  color: #a79a8c !important;
 }
 html.dark-mode body {
   color: #e5ebf0;
@@ -8297,27 +8332,6 @@ html.dark-mode #layout-sidebar > .header .header-title.username .sogo-username-i
 }
 html.dark-mode #layout-sidebar {
   background-color: #171412 !important;
-}
-body.task-login {
-  background: radial-gradient(1200px 600px at 50% -10%, #2a1c08 0%, #141414 55%, #0c0b0a 100%) !important;
-}
-body.task-login #login-form {
-  border-top-color: #ff8c00 !important;
-  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
-}
-body.task-login .btn-primary,
-body.task-login .btn.mainaction {
-  background-color: #ff8c00 !important;
-  border-color: #ff8c00 !important;
-}
-body.task-login .btn-primary:hover,
-body.task-login .btn.mainaction:hover,
-body.task-login .btn-primary:focus,
-body.task-login .btn.mainaction:focus,
-body.task-login .btn-primary:active,
-body.task-login .btn.mainaction:active {
-  background-color: #e07f00 !important;
-  border-color: #e07f00 !important;
 }
 @media screen and (min-width: 481px) {
   #taskmenu > a,

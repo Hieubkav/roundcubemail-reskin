@@ -1370,13 +1370,12 @@ a {
 // ---------------- Login Screen ----------------
 
 body.task-login {
-    background: linear-gradient(145deg, #e8f2f0 0%, #f5f8f9 60%, #edf4f2 100%);
+    background: radial-gradient(1200px 640px at 50% -8%, #3a2408 0%, #141414 48%, #0c0b0a 100%) !important;
 
     #layout-content {
-        background: transparent;
+        background: transparent !important;
     }
 
-    // Satek brand logo on login: wide wordmark, clear top gap, close to form
     #logo {
         width: 220px !important;
         max-width: 70%;
@@ -1384,15 +1383,53 @@ body.task-login {
         max-height: none !important;
         top: 0 !important;
         margin: 15vh auto 2vh !important;
+        filter: drop-shadow(0 8px 24px rgba(255, 140, 0, 0.18));
     }
 
     #login-form {
-        background-color: @sogo-surface;
-        border: 1px solid @sogo-border;
-        border-top: 4px solid @sogo-teal;
+        background-color: #1a1612 !important;
+        border: 1px solid #2e2823 !important;
+        border-top: 4px solid #ff8c00 !important;
         border-radius: 12px;
         padding: 28px 28px 24px;
-        box-shadow: 0 12px 32px rgba(24, 52, 48, 0.08);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+
+        .form-control {
+            background-color: #241f19 !important;
+            border-color: #3a322b !important;
+            color: #f5ede2 !important;
+
+            &:focus {
+                border-color: #ff8c00 !important;
+                box-shadow: 0 0 0 0.18rem rgba(255, 140, 0, 0.25) !important;
+            }
+        }
+
+        .input-group-text {
+            background-color: #2a241e !important;
+            border-color: #3a322b !important;
+            color: #ff8c00 !important;
+        }
+    }
+
+    .btn-primary,
+    .btn.mainaction {
+        background-color: #ff8c00 !important;
+        border-color: #ff8c00 !important;
+        color: #141414 !important;
+        font-weight: 700 !important;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: #e07f00 !important;
+            border-color: #e07f00 !important;
+            color: #141414 !important;
+        }
+    }
+
+    #login-footer {
+        color: #a79a8c !important;
     }
 }
 
@@ -1884,28 +1921,7 @@ html.dark-mode #layout-sidebar {
     background-color: #171412 !important;
 }
 
-// Login: black backdrop, orange top border, glowing logo card.
-body.task-login {
-    background: radial-gradient(1200px 600px at 50% -10%, #2a1c08 0%, #141414 55%, #0c0b0a 100%) !important;
 
-    #login-form {
-        border-top-color: #ff8c00 !important;
-        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
-    }
-
-    .btn-primary,
-    .btn.mainaction {
-        background-color: #ff8c00 !important;
-        border-color: #ff8c00 !important;
-
-        &:hover,
-        &:focus,
-        &:active {
-            background-color: #e07f00 !important;
-            border-color: #e07f00 !important;
-        }
-    }
-}
 
 // ---------------- Satek Dark icon + thumbnail fixes (orange/black, no teal leftovers) ----------------
 
