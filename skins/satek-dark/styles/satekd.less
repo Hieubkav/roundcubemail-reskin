@@ -1798,20 +1798,24 @@ html.dark-mode {
     }
 }
 
-// Orange pill compose button (desktop + mobile), distinct from Sogo green FAB.
+// Round orange compose FAB (icon only, like Sogo green circle).
 .sogo-fab-compose {
-    border-radius: 999px !important;
-    width: auto !important;
-    min-width: 56px !important;
-    padding: 0 18px !important;
-    background: linear-gradient(135deg, #ff8c00, #e07f00) !important;
+    border-radius: 50% !important;
+    width: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
+    height: 46px !important;
+    padding: 0 !important;
+    background: #ff8c00 !important;
     box-shadow: 0 4px 14px rgba(255, 140, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2) !important;
 
     &:before {
-        content: "+ Soạn thư" !important;
-        font-family: inherit !important;
-        font-weight: 700 !important;
-        font-size: 14px !important;
+        content: "\f304" !important;
+        font-family: 'Icons' !important;
+        font-weight: 900 !important;
+        font-size: 17px !important;
+        line-height: 1 !important;
+        color: #141414 !important;
     }
 
     &:hover {
@@ -1819,8 +1823,32 @@ html.dark-mode {
     }
 }
 
-// Dark sidebar account strip to match black/orange vibe.
+// Light mode: white sidebar like Sogo, orange accents only (dark sidebar only in dark mode).
+#layout-sidebar {
+    background-color: #f7f9fa !important;
+}
+
 #layout-sidebar > .header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e6ebee !important;
+
+    .header-title.username {
+        color: #1f2933 !important;
+
+        .sogo-username-icon {
+            background-color: rgba(255, 140, 0, 0.14) !important;
+            color: #d97700 !important;
+        }
+    }
+}
+
+#layout-sidebar .listitem.selected {
+    background-color: #fff3e3 !important;
+    border-left: 3px solid #ff8c00 !important;
+}
+
+// Dark-mode sidebar account strip (light mode uses white above).
+html.dark-mode #layout-sidebar > .header {
     background-color: #1e1a16 !important;
     border-bottom: 1px solid #2e2823 !important;
 
@@ -1832,6 +1860,10 @@ html.dark-mode {
             color: #ff8c00 !important;
         }
     }
+}
+
+html.dark-mode #layout-sidebar {
+    background-color: #171412 !important;
 }
 
 // Login: black backdrop, orange top border, glowing logo card.
