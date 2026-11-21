@@ -1,0 +1,1888 @@
+/**
+ * Satek Dark (satekd) — Black/orange skin for Satek Webmail (extends Elastic).
+ * Full Light Mode & Dark Mode (html.dark-mode) support across all layouts & tasks.
+ */
+
+// ---------------- Design Tokens ----------------
+
+// Light Mode
+@sogo-teal:               #ff8c00;
+@sogo-teal-dark:          #d97700;
+@sogo-teal-soft:          #fff3e3;
+@sogo-teal-hover:         #fff8ef;
+@sogo-green:              #ff8c00;
+@sogo-green-hover:        #e07f00;
+@sogo-border:             #e6ebee;
+@sogo-border-subtle:      #eef2f4;
+@sogo-sidebar-bg:         #f7f9fa;
+@sogo-surface:            #ffffff;
+@sogo-hover:              #f2f5f7;
+@sogo-text:               #1f2933;
+@sogo-text-secondary:     #52606d;
+@sogo-text-muted:         #7b8794;
+@sogo-avatar-bg:          #e4eaee;
+@sogo-avatar-fg:          #8a99a6;
+@sogo-flagged:            #dc4c4c;
+
+// Dark Mode (black/orange Satek vibe)
+@sogo-dm-teal:            #3a2408;
+@sogo-dm-teal-dark:       #2a1a05;
+@sogo-dm-teal-accent:     #ffa733;
+@sogo-dm-teal-soft:       rgba(255, 140, 0, 0.14);
+@sogo-dm-green:           #b35c00;
+@sogo-dm-green-hover:     #cc6a00;
+@sogo-dm-bg:              #0f0e0c;
+@sogo-dm-sidebar-bg:      #131110;
+@sogo-dm-surface:         #171412;
+@sogo-dm-surface-alt:     #1e1a16;
+@sogo-dm-hover:           #241f19;
+@sogo-dm-border:          #2e2823;
+@sogo-dm-border-subtle:   #221d18;
+@sogo-dm-text:            #e5ebf0;
+@sogo-dm-text-secondary:  #a7b4bf;
+@sogo-dm-text-muted:      #7d8c99;
+@sogo-dm-avatar-bg:       #2a333c;
+@sogo-dm-avatar-fg:       #8798a6;
+@sogo-dm-flagged:         #f07171;
+
+@sogo-topbar-h:           60px;
+@sogo-subheader-h:        44px;
+@sogo-font-sans:          "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+// ---------------- Base Typography & Accents ----------------
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+    font-family: @sogo-font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    color: @sogo-text;
+    background-color: @sogo-surface;
+}
+
+a {
+    color: @sogo-teal;
+    &:hover {
+        color: @sogo-teal-dark;
+    }
+}
+
+.btn-primary,
+.btn.mainaction {
+    background-color: @sogo-teal !important;
+    border-color: @sogo-teal !important;
+    color: #ffffff !important;
+    border-radius: 6px;
+    font-weight: 500;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: @sogo-teal-dark !important;
+        border-color: @sogo-teal-dark !important;
+        box-shadow: 0 0 0 0.2rem rgba(82, 142, 134, 0.25) !important;
+    }
+}
+
+.form-control:focus,
+.custom-select:focus {
+    border-color: @sogo-teal !important;
+    box-shadow: 0 0 0 0.18rem rgba(82, 142, 134, 0.2) !important;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: @sogo-teal !important;
+    border-color: @sogo-teal !important;
+}
+
+// Hide desktop-only widgets by default on <= 480px unless inside phone drawer
+.sogo-topbar-user,
+.sogo-topbar-date,
+.sogo-fab-compose,
+.sogo-sidebar-settings {
+    display: none;
+}
+
+// Style Elastic's native mobile FAB (.floating-action-buttons) to match SOGo green FAB
+.floating-action-buttons {
+    z-index: 25;
+
+    a.button {
+        width: 46px !important;
+        height: 46px !important;
+        border-radius: 50% !important;
+        background: @sogo-green !important;
+        color: #ffffff !important;
+        opacity: 1 !important;
+        box-shadow: 0 4px 12px rgba(56, 138, 60, 0.36), 0 1px 3px rgba(0, 0, 0, 0.14) !important;
+
+        &:before {
+            width: 46px !important;
+            height: 46px !important;
+            line-height: 46px !important;
+            font-size: 17px !important;
+        }
+
+        &:hover {
+            background: @sogo-green-hover !important;
+        }
+    }
+}
+
+// ---------------- Phone Portrait Layout (<= 480px) ----------------
+
+@media screen and (max-width: 480px) {
+    #layout > div > .header {
+        height: 48px !important;
+        min-height: 48px !important;
+        line-height: 48px !important;
+        padding: 0 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        background-color: @sogo-teal !important;
+        border-bottom: 1px solid @sogo-teal-dark !important;
+        color: #ffffff !important;
+
+        .header-title {
+            color: #ffffff !important;
+            font-size: 0.96rem;
+            font-weight: 600;
+        }
+
+        a.button,
+        a.button.icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px !important;
+            min-width: 34px !important;
+            height: 34px !important;
+            margin: 0 2px !important;
+            padding: 0 !important;
+            border-radius: 6px;
+            color: #ffffff !important;
+
+            &:before {
+                display: block !important;
+                float: none !important;
+                width: auto !important;
+                height: auto !important;
+                line-height: 1 !important;
+                font-size: 16px !important;
+                margin: 0 !important;
+                color: #ffffff !important;
+            }
+        }
+    }
+
+    #layout-menu {
+        .popover-header {
+            background-color: @sogo-teal !important;
+            height: 52px !important;
+            line-height: 52px !important;
+            padding: 0 12px !important;
+            display: flex !important;
+            align-items: center !important;
+
+            #logo {
+                display: none !important;
+            }
+
+            a.cancel {
+                margin-left: auto;
+                color: #ffffff !important;
+            }
+        }
+    }
+
+    #layout-list:not(:has(.floating-action-buttons)) > a.sogo-fab-compose {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 16px;
+        bottom: 48px;
+        z-index: 25;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background-color: @sogo-green;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        box-shadow: 0 4px 12px rgba(56, 138, 60, 0.36), 0 1px 3px rgba(0, 0, 0, 0.14);
+
+        &:before {
+            font-family: 'Icons';
+            font-weight: 900;
+            content: "\f304";
+            font-size: 17px;
+            line-height: 1;
+        }
+    }
+}
+
+// ---------------- Horizontal Top Header Bar (>= 481px: Tablet & Desktop) ----------------
+
+@media screen and (min-width: 481px) {
+    body:not(.task-login) #layout {
+        padding-top: @sogo-topbar-h;
+        box-sizing: border-box;
+    }
+
+    #layout-menu {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        height: @sogo-topbar-h !important;
+        padding: 0 14px;
+        margin: 0 !important;
+        z-index: 1030;
+        background-color: @sogo-teal !important;
+        border: 0 !important;
+        border-bottom: 1px solid @sogo-teal-dark !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+        // Hide Roundcube logo on desktop — use SOGo user icon + date instead
+        .popover-header {
+            display: none !important;
+        }
+
+        // Sleek white user icon when sidebar isn't docked at top-left (769..1200px or Compose)
+        .sogo-topbar-user {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            width: 34px;
+            height: 34px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.16);
+            color: #ffffff !important;
+            text-decoration: none !important;
+            transition: background-color 0.15s ease;
+
+            &:before {
+                font-family: 'Icons';
+                font-weight: 900;
+                content: "\f007";
+                font-size: 15px;
+                line-height: 1;
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.26);
+            }
+        }
+
+        // Sleek 2-line topbar date display with crisp day badge
+        .sogo-topbar-date {
+            display: flex !important;
+            align-items: center;
+            gap: 10px;
+            flex: 0 0 auto;
+            padding-left: 12px;
+            border-left: 1px solid rgba(255, 255, 255, 0.22);
+            color: rgba(255, 255, 255, 0.96);
+            user-select: none;
+
+            .sogo-date-day {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 34px;
+                height: 34px;
+                padding: 0 8px;
+                border-radius: 8px;
+                background-color: rgba(255, 255, 255, 0.16);
+                font-size: 20px;
+                font-weight: 700;
+                line-height: 1;
+                letter-spacing: -0.02em;
+                font-variant-numeric: tabular-nums;
+                color: #ffffff;
+            }
+
+            .sogo-date-meta {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2px;
+
+                .sogo-date-weekday {
+                    font-size: 13px;
+                    font-weight: 600;
+                    line-height: 1.15;
+                    color: #ffffff;
+                }
+
+                .sogo-date-monthyear {
+                    font-size: 11px;
+                    font-weight: 400;
+                    line-height: 1.15;
+                    color: rgba(255, 255, 255, 0.84);
+                }
+            }
+        }
+
+        #taskmenu {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            flex: 1 1 auto !important;
+            width: auto !important;
+            height: @sogo-topbar-h !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+            background: transparent !important;
+
+            .action-buttons {
+                display: inline-flex;
+                align-items: center;
+                margin: 0 6px 0 0;
+                padding: 0;
+                background: transparent !important;
+
+                // Hide topbar Compose when green circular FAB is active in #layout-list (zero duplicate!)
+                body.sogo-has-fab & {
+                    display: none !important;
+                }
+            }
+
+            // Uniform, pixel-aligned topbar icon buttons
+            & > a,
+            .action-buttons > a,
+            .special-buttons > a {
+                display: inline-flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: center !important;
+                float: none !important;
+                width: 36px !important;
+                min-width: 36px !important;
+                max-width: 36px !important;
+                height: 36px !important;
+                padding: 0 !important;
+                margin: 0 2px !important;
+                border: 0 !important;
+                border-radius: 8px !important;
+                line-height: 1 !important;
+                color: rgba(255, 255, 255, 0.88) !important;
+                background: transparent !important;
+                transition: background-color 0.15s ease, color 0.15s ease;
+
+                &:before {
+                    display: block !important;
+                    float: none !important;
+                    width: auto !important;
+                    height: auto !important;
+                    line-height: 1 !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    font-size: 16px !important;
+                    color: inherit !important;
+                }
+
+                .inner {
+                    display: none !important;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.16) !important;
+                    color: #ffffff !important;
+                }
+
+                &:focus {
+                    background-color: rgba(255, 255, 255, 0.14) !important;
+                    outline: none !important;
+                }
+
+                &.selected {
+                    background-color: rgba(255, 255, 255, 0.22) !important;
+                    color: #ffffff !important;
+                    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+                }
+            }
+
+            .action-buttons > a.compose {
+                background-color: @sogo-green !important;
+                color: #ffffff !important;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+
+                &:hover,
+                &.selected {
+                    background-color: @sogo-green-hover !important;
+                }
+            }
+
+            .special-buttons {
+                position: static !important;
+                top: auto !important;
+                bottom: auto !important;
+                left: auto !important;
+                right: auto !important;
+                display: inline-flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                height: 24px !important;
+                margin: 0 0 0 8px !important;
+                padding: 0 0 0 10px !important;
+                border-left: 1px solid rgba(255, 255, 255, 0.22) !important;
+                background: transparent !important;
+
+                & > a.logout {
+                    color: rgba(255, 255, 255, 0.88) !important;
+
+                    &:hover {
+                        background-color: rgba(220, 76, 76, 0.34) !important;
+                        color: #ffffff !important;
+                    }
+                }
+            }
+        }
+    }
+
+    // ---------------- Unified 44px Sub-Headers Across All Columns ----------------
+
+    #layout-sidebar > .header,
+    #layout-list > .header,
+    #layout-content > .header {
+        height: @sogo-subheader-h !important;
+        min-height: @sogo-subheader-h !important;
+        line-height: @sogo-subheader-h !important;
+        padding: 0 10px !important;
+        display: flex !important;
+        align-items: center !important;
+        background-color: @sogo-surface !important;
+        border-bottom: 1px solid @sogo-border !important;
+        color: @sogo-text !important;
+        overflow: hidden;
+    }
+
+    // Center EVERY visible header icon button cleanly (prevents top-edge clipping!)
+    #layout > div > .header > a.button.icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        width: 32px !important;
+        min-width: 32px !important;
+        height: 32px !important;
+        padding: 0 !important;
+        margin: 0 2px !important;
+        border-radius: 6px !important;
+        line-height: 1 !important;
+        color: @sogo-text-secondary !important;
+        transition: background-color 0.14s ease, color 0.14s ease;
+
+        &:before {
+            display: block !important;
+            float: none !important;
+            width: auto !important;
+            height: auto !important;
+            line-height: 1 !important;
+            margin: 0 !important;
+            font-size: 15px !important;
+        }
+
+        span.inner {
+            display: none !important;
+        }
+
+        &:hover:not(.disabled) {
+            background-color: @sogo-hover !important;
+            color: @sogo-text !important;
+        }
+    }
+
+    // Preserve Elastic responsive button visibility strictly
+    #layout > div > .header > a.task-menu-button {
+        display: none !important;
+    }
+
+    // Sidebar header: crisp white/surface account strip (no duplicate teal bar)
+    #layout-sidebar > .header {
+        background-color: @sogo-sidebar-bg !important;
+        justify-content: space-between;
+
+        .header-title.username {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 4px !important;
+            padding-right: 2px;
+            text-align: left !important;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: @sogo-text;
+            min-width: 0;
+            flex: 1 1 auto;
+            overflow: hidden;
+
+            .sogo-username-icon {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                background-color: @sogo-teal-soft;
+                color: @sogo-teal;
+                font-size: 11px;
+                flex: 0 0 24px;
+
+                &:before {
+                    font-family: 'Icons';
+                    font-weight: 900;
+                    content: "\f007";
+                }
+            }
+
+            .sogo-username-text {
+                min-width: 0;
+                flex: 1 1 auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    // List header across ALL tasks (Mail, Addressbook, Settings): clean title left, icons right
+    #layout-list > .header {
+        justify-content: flex-start !important;
+
+        .header-title {
+            display: block !important;
+            margin: 0 auto 0 6px !important;
+            text-align: left !important;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: @sogo-text;
+            flex: 1 1 auto;
+        }
+
+        & > a.refresh {
+            margin-left: 4px !important;
+        }
+    }
+
+    // Green circular Compose FAB inside #layout-list (unless native .floating-action-buttons is already shown)
+    #layout-list:not(:has(.floating-action-buttons)) > a.sogo-fab-compose {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 18px;
+        bottom: 50px;
+        z-index: 25;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background-color: @sogo-green;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        box-shadow: 0 4px 12px rgba(56, 138, 60, 0.36), 0 1px 3px rgba(0, 0, 0, 0.14);
+        transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+
+        &:before {
+            font-family: 'Icons';
+            font-weight: 900;
+            content: "\f304";
+            font-size: 17px;
+            line-height: 1;
+        }
+
+        &:hover {
+            background-color: @sogo-green-hover;
+            transform: translateY(-1px) scale(1.04);
+            box-shadow: 0 6px 16px rgba(56, 138, 60, 0.42), 0 2px 5px rgba(0, 0, 0, 0.16);
+        }
+
+        &:active {
+            transform: scale(0.97);
+        }
+    }
+}
+
+// Compact topbar on narrow tablet / small window (481px..640px)
+@media screen and (min-width: 481px) and (max-width: 640px) {
+    #layout-menu .sogo-topbar-date .sogo-date-meta {
+        display: none !important;
+    }
+}
+
+// Inline content toolbar on Desktop (>= 769px; on <= 768px it stays a dropdown menu triggered by 3-dot icon)
+@media screen and (min-width: 769px) {
+    #layout > div > .header > a.toolbar-menu-button,
+    #layout-content > .header > .header-title {
+        display: none !important;
+    }
+
+    // Reading pane & content header: ui.js converts toolbars into ul#toolbar-menu
+    #layout-content > .header {
+        justify-content: flex-end !important;
+        padding: 0 14px !important;
+
+        & > ul#toolbar-menu {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            flex-wrap: nowrap !important;
+            height: @sogo-subheader-h !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            list-style: none !important;
+            gap: 4px;
+
+            & > li {
+                display: inline-flex !important;
+                align-items: center !important;
+                height: 32px !important;
+                line-height: 32px !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: 0 !important;
+                flex: 0 0 auto;
+
+                &.spacer {
+                    display: inline-block !important;
+                    width: 1px !important;
+                    height: 18px !important;
+                    background-color: @sogo-border;
+                    margin: 0 6px !important;
+                }
+
+                & > a:not(.hidden),
+                & > .dropbutton > a:not(.hidden) {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                    float: none !important;
+                    height: 32px !important;
+                    min-width: 32px !important;
+                    max-width: none !important;
+                    padding: 0 10px !important;
+                    border-radius: 6px !important;
+                    line-height: 1 !important;
+                    font-size: 0.82rem !important;
+                    font-weight: 500;
+                    white-space: nowrap !important;
+                    color: @sogo-text-secondary !important;
+                    transition: background-color 0.14s ease, color 0.14s ease;
+
+                    &:before {
+                        display: block !important;
+                        float: none !important;
+                        width: auto !important;
+                        height: auto !important;
+                        line-height: 1 !important;
+                        font-size: 14px !important;
+                        margin: 0 !important;
+                    }
+
+                    span.inner {
+                        line-height: 1;
+                    }
+
+                    &:hover:not(.disabled) {
+                        background-color: @sogo-hover !important;
+                        color: @sogo-text !important;
+                    }
+                }
+
+                & > .dropbutton {
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    height: 32px !important;
+                    border-radius: 6px !important;
+                    overflow: hidden;
+
+                    & > a:first-child {
+                        padding: 0 6px 0 9px !important;
+                        border-radius: 6px 0 0 6px !important;
+                    }
+
+                    & > a.dropdown {
+                        min-width: 18px !important;
+                        padding: 0 5px 0 3px !important;
+                        border-radius: 0 6px 6px 0 !important;
+
+                        &:before {
+                            font-size: 11px !important;
+                            line-height: 1 !important;
+                        }
+
+                        span.inner {
+                            display: none !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Strictly respect Elastic's responsive hidden utility classes inside #toolbar-menu (zero duplicate icons!)
+    #layout-content > .header > ul#toolbar-menu > li {
+        &.hidden,
+        &:has(> a.hidden) {
+            display: none !important;
+        }
+
+        & > a.hidden {
+            display: none !important;
+        }
+    }
+
+    html.layout-large #layout-content > .header > ul#toolbar-menu > li,
+    html.layout-normal #layout-content > .header > ul#toolbar-menu > li {
+        &.hidden-big,
+        &.hidden-lbs,
+        &:has(> a.hidden-big),
+        &:has(> a.hidden-lbs) {
+            display: none !important;
+        }
+
+        & > a.hidden-big,
+        & > a.hidden-lbs {
+            display: none !important;
+        }
+    }
+
+    html.layout-large #layout-content > .header > ul#toolbar-menu > li {
+        &.hidden-large,
+        &:has(> a.hidden-large) {
+            display: none !important;
+        }
+
+        & > a.hidden-large {
+            display: none !important;
+        }
+    }
+
+    // Mail inbox reading pane: sleek SOGo icon-only toolbar (tooltips on hover)
+    body.task-mail.action-none #layout-content > .header > ul#toolbar-menu {
+        & > li {
+            & > a,
+            & > .dropbutton > a:first-child {
+                padding: 0 8px !important;
+
+                &:before {
+                    font-size: 15px !important;
+                }
+
+                span.inner {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    #layout > div > .header > a.back-sidebar-button,
+    #layout > div > .header > a.back-list-button,
+    #layout > div > .header > a.toolbar-list-button {
+        display: none !important;
+    }
+
+    body.sogo-docked-sidebar #layout-menu {
+        .sogo-topbar-user {
+            display: none !important;
+        }
+
+        .sogo-topbar-date {
+            padding-left: 0;
+            border-left: 0;
+        }
+    }
+
+    // SOGo-style docked teal user card at top-left (spans topbar 52px + subheader 44px = 96px)
+    body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) {
+        margin-top: -@sogo-topbar-h;
+        height: calc(~"100% + @{sogo-topbar-h}");
+        z-index: 1031;
+        position: relative;
+
+        & > .header {
+            height: (@sogo-topbar-h + @sogo-subheader-h) !important;
+            min-height: (@sogo-topbar-h + @sogo-subheader-h) !important;
+            padding: 0 12px 0 16px !important;
+            gap: 8px;
+            background-color: @sogo-teal !important;
+            border-bottom: 1px solid @sogo-teal-dark !important;
+            color: #ffffff !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            position: relative;
+
+            .header-title {
+                display: flex !important;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 12px;
+                margin: 0 !important;
+                padding: 0 !important;
+                flex: 1 1 auto;
+                min-width: 0;
+                text-align: left !important;
+                font-size: 0.98rem;
+                font-weight: 600;
+                line-height: 1.3;
+                color: #ffffff !important;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                &:before {
+                    font-family: 'Icons';
+                    font-weight: 900;
+                    content: "\f007";
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 42px;
+                    height: 42px;
+                    border-radius: 50%;
+                    background-color: rgba(255, 255, 255, 0.2);
+                    border: 1px solid rgba(255, 255, 255, 0.22);
+                    color: #ffffff;
+                    font-size: 18px;
+                    flex: 0 0 42px;
+                }
+            }
+
+            & > a.button.icon {
+                color: rgba(255, 255, 255, 0.88) !important;
+                align-self: center;
+
+                &:hover:not(.disabled) {
+                    background-color: rgba(255, 255, 255, 0.16) !important;
+                    color: #ffffff !important;
+                }
+            }
+
+            & > a.sogo-sidebar-settings {
+                display: inline-flex !important;
+                order: 9;
+
+                &:before {
+                    font-family: 'Icons';
+                    font-weight: 900;
+                    content: "\f013";
+                    font-size: 14px;
+                }
+            }
+
+            & > a.sidebar-menu {
+                order: 10;
+            }
+        }
+
+        html.dark-mode & > .header {
+            background-color: @sogo-dm-teal !important;
+            border-bottom-color: @sogo-dm-teal-dark !important;
+            color: #ffffff !important;
+
+            .header-title {
+                color: #ffffff !important;
+
+                &:before {
+                    background-color: rgba(255, 255, 255, 0.14);
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+
+    body.task-settings.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header {
+        .header-title:before {
+            content: "\f013";
+        }
+        & > a.sogo-sidebar-settings {
+            display: none !important;
+        }
+    }
+
+    body.task-addressbook.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header {
+        .header-title:before {
+            content: "\f0c0";
+        }
+    }
+
+    // Large desktop (>= 1201px): style BOTH div.toolbar.menu AND ul#toolbar-list-menu across ALL tasks
+    #layout-list > .header > .toolbar.menu,
+    #layout-list > .header > ul#toolbar-list-menu {
+        display: inline-flex !important;
+        align-items: center !important;
+        margin: 0 0 0 auto !important;
+        padding: 0 !important;
+        height: @sogo-subheader-h !important;
+        list-style: none !important;
+        gap: 4px;
+
+        & > li {
+            display: inline-flex !important;
+            align-items: center !important;
+            height: 32px !important;
+            line-height: 32px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+        }
+
+        & > a,
+        & > li > a {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            float: none !important;
+            width: 32px !important;
+            min-width: 32px !important;
+            max-width: 32px !important;
+            height: 32px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border-radius: 6px !important;
+            line-height: 1 !important;
+            color: @sogo-text-secondary !important;
+
+            &:before {
+                display: block !important;
+                float: none !important;
+                width: auto !important;
+                height: auto !important;
+                line-height: 1 !important;
+                font-size: 14px !important;
+                margin: 0 !important;
+            }
+
+            span.inner {
+                display: none !important;
+            }
+
+            &:hover:not(.disabled) {
+                background-color: @sogo-hover !important;
+                color: @sogo-text !important;
+            }
+        }
+    }
+}
+
+// ---------------- Sidebar & Folder List ----------------
+
+#layout-sidebar {
+    background-color: #eef1f3;
+    border-right: 1px solid @sogo-border;
+
+    & > .footer {
+        background-color: #eef1f3;
+        border-top: 1px solid @sogo-border;
+        color: @sogo-text-muted;
+        font-size: 0.8rem;
+    }
+}
+
+.folderlist,
+#layout-sidebar .treelist.listing {
+    padding: 6px 0;
+
+    li {
+        & > a {
+            color: @sogo-text;
+            font-size: 0.9rem;
+            padding: 0.48rem 0.9rem 0.48rem 0.85rem;
+            border-left: 3px solid transparent;
+            transition: background-color 0.12s ease, color 0.12s ease;
+
+            &:before {
+                color: @sogo-text-muted;
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.65);
+            }
+        }
+
+        &.selected > a {
+            background-color: #ffffff !important;
+            color: @sogo-teal-dark !important;
+            font-weight: 600;
+            border-left-color: @sogo-teal;
+            box-shadow: inset 0 1px 0 @sogo-border-subtle, inset 0 -1px 0 @sogo-border-subtle;
+
+            &:before {
+                color: @sogo-teal !important;
+            }
+        }
+
+        span.unreadcount {
+            background-color: @sogo-teal;
+            color: #ffffff;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0 7px;
+            min-width: 20px;
+            height: 19px;
+            line-height: 19px;
+            text-align: center;
+        }
+    }
+}
+
+// ---------------- Message List Column & Rows ----------------
+
+#layout-list {
+    background-color: @sogo-surface;
+    border-right: 1px solid @sogo-border;
+
+    .searchbar {
+        background-color: @sogo-surface;
+        border-bottom: 1px solid @sogo-border;
+        height: 40px;
+        line-height: 40px;
+
+        input {
+            font-size: 0.88rem;
+            color: @sogo-text;
+            height: 39px;
+        }
+
+        a:before {
+            height: 39px;
+            line-height: 39px;
+            color: @sogo-text-muted;
+        }
+    }
+
+    & > .footer {
+        background-color: @sogo-sidebar-bg;
+        border-top: 1px solid @sogo-border;
+        font-size: 0.78rem;
+
+        &.pagenav {
+            padding: 0 4px !important;
+
+            a {
+                flex: 0 0 24px !important;
+                min-width: 24px !important;
+                width: 24px !important;
+                padding: 0 !important;
+            }
+
+            .pagenav-text {
+                flex: 1 1 auto !important;
+                font-size: 0.73rem !important;
+                padding: 0 4px;
+                text-align: center;
+            }
+
+            input {
+                width: 2.1rem !important;
+                min-width: 2.1rem !important;
+                height: 22px !important;
+                font-size: 0.76rem !important;
+                padding: 0 2px !important;
+            }
+        }
+    }
+}
+
+#messagelist {
+    width: 100% !important;
+    border-collapse: collapse;
+}
+
+#messagelist > tbody > tr {
+    border-bottom: 1px solid @sogo-border-subtle;
+    transition: background-color 0.12s ease;
+
+    & > td {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: transparent;
+        border-bottom: 1px solid @sogo-border-subtle;
+    }
+
+    // Crisp SOGo circular user avatar on left of each message
+    & > td.subject {
+        position: relative;
+        padding-left: 52px !important;
+        padding-right: 4px !important;
+
+        &:before {
+            font-family: 'Icons';
+            font-weight: 900;
+            content: "\f007";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: @sogo-avatar-bg;
+            color: @sogo-avatar-fg;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            pointer-events: none;
+        }
+
+        span {
+            line-height: 1.45;
+        }
+
+        span.fromto {
+            padding-left: 0 !important;
+            font-size: 0.87rem;
+            font-weight: 500;
+            color: @sogo-text;
+        }
+
+        span.date {
+            font-size: 0.74rem;
+            color: @sogo-text-muted;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        span.subject {
+            margin-top: 2px;
+            font-size: 0.83rem;
+
+            a {
+                color: @sogo-text-secondary;
+            }
+        }
+
+        span.msgicon.status {
+            &:before {
+                height: 1.35rem;
+                line-height: 1.35rem;
+                width: 0.95rem;
+                color: @sogo-text-muted;
+                opacity: 0.3;
+                transition: opacity 0.12s ease;
+            }
+
+            &.unread:before {
+                color: @sogo-teal;
+                opacity: 1;
+                font-size: 0.45rem;
+            }
+
+            &.replied:before,
+            &.forwarded:before {
+                color: @sogo-teal;
+                opacity: 0.9;
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+    & > td.flags {
+        padding-right: 10px;
+        width: 2.4em;
+    }
+
+    html.touch & > td.subject {
+        padding-right: 34px !important;
+    }
+
+    &:hover {
+        background-color: @sogo-teal-hover;
+
+        & > td.subject span.msgicon.status:before {
+            opacity: 0.75;
+        }
+    }
+
+    &.unread {
+        & > td.subject {
+            span.fromto {
+                font-weight: 700;
+                color: @sogo-text;
+            }
+
+            span.subject a {
+                font-weight: 600;
+                color: @sogo-text;
+            }
+
+            span.date {
+                font-weight: 600;
+                color: @sogo-teal-dark;
+            }
+        }
+    }
+
+    &.flagged {
+        & > td.subject span.fromto,
+        & > td.subject span.subject a,
+        & > td.subject span.date {
+            color: @sogo-flagged;
+        }
+    }
+
+    // Selected row: crisp SOGo green with high-contrast pure white content
+    &.selected,
+    &.selected > td {
+        background-color: @sogo-green !important;
+        background-image: none !important;
+        border-bottom-color: rgba(255, 255, 255, 0.14) !important;
+        box-shadow: none !important;
+        color: #ffffff !important;
+    }
+
+    &.selected {
+        & > td.subject {
+            &:before {
+                background-color: rgba(255, 255, 255, 0.24) !important;
+                color: #ffffff !important;
+            }
+
+            span.fromto,
+            span.subject a {
+                color: #ffffff !important;
+            }
+
+            span.date,
+            span.size {
+                color: rgba(255, 255, 255, 0.88) !important;
+            }
+
+            span.msgicon.status:before {
+                color: #ffffff !important;
+                opacity: 0.92;
+            }
+        }
+
+        & > td.flags,
+        & > td.flags span,
+        & > td.flags span:before {
+            color: #ffffff !important;
+        }
+
+        &:hover,
+        &:hover > td {
+            background-color: @sogo-green-hover !important;
+        }
+    }
+}
+
+// ---------------- Reading Pane & Message Preview (incl. iframe) ----------------
+
+#layout-content {
+    background-color: @sogo-surface;
+}
+
+#message-header {
+    padding: 20px 28px 16px;
+    margin-bottom: 0;
+    border-bottom: 1px solid @sogo-border;
+
+    & > .subject {
+        font-size: 1.35rem;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+        color: @sogo-text;
+        margin-bottom: 12px;
+        line-height: 1.35;
+    }
+
+    .contactphoto {
+        border-radius: 50%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-headers .rcmContactAddress {
+        display: inline-block;
+        background-color: #eef3f2;
+        color: @sogo-text;
+        border-radius: 999px;
+        padding: 1px 10px;
+        font-size: 0.86rem;
+        transition: background-color 0.14s ease;
+
+        &:hover {
+            background-color: #dfebe9;
+        }
+    }
+
+    .header-links a {
+        color: @sogo-teal;
+        font-size: 0.84rem;
+        font-weight: 500;
+    }
+}
+
+#messagebody {
+    padding: 20px 28px 32px;
+    line-height: 1.65;
+    color: @sogo-text;
+
+    blockquote {
+        margin: 0.6em 0 1em;
+        padding: 10px 14px;
+        border: 0;
+        border-left: 3px solid @sogo-teal;
+        background: @sogo-teal-soft;
+        border-radius: 0 10px 10px 0;
+        color: @sogo-text-secondary;
+        font-size: 0.92em;
+    }
+}
+
+// ---------------- Settings / Contacts Lists ----------------
+
+.listing.iconized li.selected > a,
+.listing tbody tr.selected td {
+    background-color: @sogo-teal-soft;
+    color: @sogo-teal-dark;
+}
+
+// ---------------- Refined Toast Notification (#messagestack) ----------------
+
+#messagestack {
+    & > div {
+        border-radius: 8px !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16) !important;
+        font-size: 0.86rem;
+        font-weight: 500;
+        padding: 0.55rem 0.9rem !important;
+        max-width: 320px;
+
+        &.loading {
+            background-color: #2b3a40 !important;
+        }
+
+        &.confirmation {
+            background-color: @sogo-green !important;
+        }
+    }
+}
+
+// ---------------- Login Screen ----------------
+
+body.task-login {
+    background: linear-gradient(145deg, #e8f2f0 0%, #f5f8f9 60%, #edf4f2 100%);
+
+    #layout-content {
+        background: transparent;
+    }
+
+    // Satek brand logo on login: wide wordmark, clear top gap, close to form
+    #logo {
+        width: 220px !important;
+        max-width: 70%;
+        height: auto !important;
+        max-height: none !important;
+        top: 0 !important;
+        margin: 15vh auto 2vh !important;
+    }
+
+    #login-form {
+        background-color: @sogo-surface;
+        border: 1px solid @sogo-border;
+        border-top: 4px solid @sogo-teal;
+        border-radius: 12px;
+        padding: 28px 28px 24px;
+        box-shadow: 0 12px 32px rgba(24, 52, 48, 0.08);
+    }
+}
+
+// =========================================================================
+// DARK MODE (html.dark-mode) — Full Visual Parity & Contrast
+// =========================================================================
+
+html.dark-mode {
+    body {
+        color: @sogo-dm-text;
+        background-color: @sogo-dm-bg;
+    }
+
+    a {
+        color: @sogo-dm-teal-accent;
+        &:hover {
+            color: lighten(@sogo-dm-teal-accent, 10%);
+        }
+    }
+
+    .btn-primary,
+    .btn.mainaction {
+        background-color: @sogo-dm-teal !important;
+        border-color: @sogo-dm-teal !important;
+        color: #ffffff !important;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: @sogo-teal !important;
+            border-color: @sogo-teal !important;
+        }
+    }
+
+    .form-control:focus,
+    .custom-select:focus {
+        border-color: @sogo-dm-teal-accent !important;
+        box-shadow: 0 0 0 0.18rem rgba(111, 194, 182, 0.22) !important;
+    }
+
+    .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: @sogo-dm-teal-accent !important;
+        border-color: @sogo-dm-teal-accent !important;
+    }
+
+    .floating-action-buttons a.button {
+        background: @sogo-dm-green !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
+
+        &:hover {
+            background: @sogo-dm-green-hover !important;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        #layout > div > .header {
+            background-color: @sogo-dm-teal !important;
+            border-bottom-color: @sogo-dm-teal-dark !important;
+        }
+
+        #layout-menu .popover-header {
+            background-color: @sogo-dm-teal !important;
+        }
+    }
+
+    @media screen and (min-width: 481px) {
+        #layout-menu {
+            background-color: @sogo-dm-teal !important;
+            border-bottom-color: @sogo-dm-teal-dark !important;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+
+            #taskmenu {
+                .action-buttons > a.compose {
+                    background-color: @sogo-dm-green !important;
+                    &:hover,
+                    &.selected {
+                        background-color: @sogo-dm-green-hover !important;
+                    }
+                }
+
+                & > a,
+                .action-buttons > a,
+                .special-buttons > a {
+                    color: rgba(229, 235, 240, 0.88) !important;
+
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.12) !important;
+                        color: #ffffff !important;
+                    }
+
+                    &.selected {
+                        background-color: rgba(255, 255, 255, 0.18) !important;
+                        color: #ffffff !important;
+                    }
+                }
+            }
+        }
+
+        #layout-sidebar > .header {
+            background-color: @sogo-dm-sidebar-bg !important;
+            border-bottom-color: @sogo-dm-border !important;
+            color: @sogo-dm-text !important;
+
+            .header-title.username {
+                color: @sogo-dm-text;
+
+                .sogo-username-icon {
+                    background-color: @sogo-dm-teal-soft;
+                    color: @sogo-dm-teal-accent;
+                }
+            }
+        }
+
+        #layout-list > .header,
+        #layout-content > .header {
+            background-color: @sogo-dm-surface !important;
+            border-bottom-color: @sogo-dm-border !important;
+            color: @sogo-dm-text !important;
+        }
+
+        #layout > div > .header > a.button.icon,
+        #layout-list > .header > .toolbar.menu > a,
+        #layout-list > .header > .toolbar.menu > li > a,
+        #layout-list > .header > ul#toolbar-list-menu > li > a,
+        #layout-content > .header > ul#toolbar-menu > li > a,
+        #layout-content > .header > ul#toolbar-menu > li > .dropbutton > a {
+            color: @sogo-dm-text-secondary !important;
+
+            &:hover:not(.disabled) {
+                background-color: @sogo-dm-hover !important;
+                color: #ffffff !important;
+            }
+        }
+
+        #layout-list > .header .header-title {
+            color: @sogo-dm-text;
+        }
+
+        #layout-content > .header > ul#toolbar-menu > li.spacer {
+            background-color: @sogo-dm-border;
+        }
+
+        #layout-list > a.sogo-fab-compose {
+            background-color: @sogo-dm-green;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+
+            &:hover {
+                background-color: @sogo-dm-green-hover;
+            }
+        }
+    }
+
+    #layout-sidebar {
+        background-color: @sogo-dm-sidebar-bg;
+        border-right-color: @sogo-dm-border;
+
+        & > .footer {
+            background-color: @sogo-dm-sidebar-bg;
+            border-top-color: @sogo-dm-border;
+            color: @sogo-dm-text-muted;
+        }
+    }
+
+    .folderlist li,
+    #layout-sidebar .treelist.listing li {
+        & > a {
+            color: @sogo-dm-text;
+
+            &:before {
+                color: @sogo-dm-text-muted;
+            }
+
+            &:hover {
+                background-color: rgba(111, 194, 182, 0.08);
+            }
+        }
+
+        &.selected > a {
+            background-color: @sogo-dm-teal-soft !important;
+            color: @sogo-dm-teal-accent !important;
+            border-left-color: @sogo-dm-teal-accent;
+            box-shadow: none;
+
+            &:before {
+                color: @sogo-dm-teal-accent !important;
+            }
+        }
+
+        span.unreadcount {
+            background-color: @sogo-dm-teal;
+            color: #ffffff;
+        }
+    }
+
+    #layout-list {
+        background-color: @sogo-dm-surface;
+        border-right-color: @sogo-dm-border;
+
+        .searchbar {
+            background-color: @sogo-dm-surface;
+            border-bottom-color: @sogo-dm-border;
+
+            input {
+                color: @sogo-dm-text;
+                background-color: transparent;
+            }
+
+            a:before {
+                color: @sogo-dm-text-muted;
+            }
+        }
+
+        & > .footer {
+            background-color: @sogo-dm-sidebar-bg;
+            border-top-color: @sogo-dm-border;
+        }
+    }
+
+    #messagelist > tbody > tr {
+        border-bottom-color: @sogo-dm-border-subtle;
+        background-color: @sogo-dm-surface;
+
+        & > td {
+            border-bottom-color: @sogo-dm-border-subtle;
+        }
+
+        & > td.subject {
+            &:before {
+                background-color: @sogo-dm-avatar-bg;
+                color: @sogo-dm-avatar-fg;
+            }
+
+            span.fromto {
+                color: @sogo-dm-text;
+            }
+
+            span.date {
+                color: @sogo-dm-text-muted;
+            }
+
+            span.subject a {
+                color: @sogo-dm-text-secondary;
+            }
+
+            span.msgicon.status {
+                &.unread:before,
+                &.replied:before,
+                &.forwarded:before {
+                    color: @sogo-dm-teal-accent;
+                }
+            }
+        }
+
+        &:hover {
+            background-color: @sogo-dm-hover;
+        }
+
+        &.unread > td.subject {
+            span.fromto,
+            span.subject a {
+                color: #ffffff;
+            }
+
+            span.date {
+                color: @sogo-dm-teal-accent;
+            }
+        }
+
+        &.flagged {
+            & > td.subject span.fromto,
+            & > td.subject span.subject a,
+            & > td.subject span.date {
+                color: @sogo-dm-flagged;
+            }
+        }
+
+        &.selected,
+        &.selected > td {
+            background-color: @sogo-dm-green !important;
+            color: #ffffff !important;
+        }
+
+        &.selected {
+            & > td.subject {
+                &:before {
+                    background-color: rgba(255, 255, 255, 0.2) !important;
+                    color: #ffffff !important;
+                }
+
+                span.fromto,
+                span.subject a {
+                    color: #ffffff !important;
+                }
+
+                span.date,
+                span.size {
+                    color: rgba(255, 255, 255, 0.85) !important;
+                }
+
+                span.msgicon.status:before {
+                    color: #ffffff !important;
+                }
+            }
+
+            & > td.flags,
+            & > td.flags span,
+            & > td.flags span:before {
+                color: #ffffff !important;
+            }
+
+            &:hover,
+            &:hover > td {
+                background-color: @sogo-dm-green-hover !important;
+            }
+        }
+    }
+
+    #layout-content {
+        background-color: @sogo-dm-surface;
+    }
+
+    #message-header {
+        border-bottom-color: @sogo-dm-border;
+
+        & > .subject {
+            color: @sogo-dm-text;
+        }
+
+        .header-headers .rcmContactAddress {
+            background-color: @sogo-dm-surface-alt;
+            color: @sogo-dm-text;
+
+            &:hover {
+                background-color: lighten(@sogo-dm-surface-alt, 6%);
+            }
+        }
+
+        .header-links a {
+            color: @sogo-dm-teal-accent;
+        }
+    }
+
+    #messagebody {
+        color: @sogo-dm-text;
+
+        .message-htmlpart {
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        blockquote {
+            background: @sogo-dm-teal-soft;
+            border-left-color: @sogo-dm-teal-accent;
+            color: @sogo-dm-text-secondary;
+        }
+    }
+
+    .listing.iconized li.selected > a,
+    .listing tbody tr.selected td {
+        background-color: @sogo-dm-teal-soft;
+        color: @sogo-dm-teal-accent;
+    }
+
+    #messagestack > div.loading {
+        background-color: #253338 !important;
+    }
+
+    body.task-login {
+        background: linear-gradient(145deg, #101518 0%, #161d21 60%, #121b1a 100%);
+
+        #login-form {
+            background-color: @sogo-dm-surface;
+            border-color: @sogo-dm-border;
+            border-top-color: @sogo-dm-teal-accent;
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+        }
+    }
+}
+
+// ---------------- Satek Dark layout differences (black/orange, vs Sogo teal) ----------------
+
+// Taller black topbar with orange underline; orange compose pill instead of green circle.
+@media screen and (min-width: 481px) {
+    #layout-menu {
+        background-color: #141414 !important;
+        border-bottom: 3px solid #ff8c00 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+
+        .popover-header {
+            display: none !important;
+        }
+
+        .sogo-topbar-user {
+            background-color: #ff8c00 !important;
+
+            &:hover {
+                background-color: #ffa733 !important;
+            }
+        }
+
+        .sogo-topbar-date {
+            border-left-color: rgba(255, 140, 0, 0.45);
+
+            .sogo-date-day {
+                background-color: #ff8c00;
+            }
+        }
+    }
+
+    body.satekd-docked-sidebar,
+    body.sogo-docked-sidebar {
+        #layout-sidebar {
+            background-color: #171412;
+        }
+    }
+}
+
+// Orange pill compose button (desktop + mobile), distinct from Sogo green FAB.
+.sogo-fab-compose {
+    border-radius: 999px !important;
+    width: auto !important;
+    min-width: 56px !important;
+    padding: 0 18px !important;
+    background: linear-gradient(135deg, #ff8c00, #e07f00) !important;
+    box-shadow: 0 4px 14px rgba(255, 140, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+
+    &:before {
+        content: "+ Soạn thư" !important;
+        font-family: inherit !important;
+        font-weight: 700 !important;
+        font-size: 14px !important;
+    }
+
+    &:hover {
+        filter: brightness(1.08);
+    }
+}
+
+// Dark sidebar account strip to match black/orange vibe.
+#layout-sidebar > .header {
+    background-color: #1e1a16 !important;
+    border-bottom: 1px solid #2e2823 !important;
+
+    .header-title.username {
+        color: #f5ede2 !important;
+
+        .sogo-username-icon {
+            background-color: rgba(255, 140, 0, 0.18) !important;
+            color: #ff8c00 !important;
+        }
+    }
+}
+
+// Login: black backdrop, orange top border, glowing logo card.
+body.task-login {
+    background: radial-gradient(1200px 600px at 50% -10%, #2a1c08 0%, #141414 55%, #0c0b0a 100%) !important;
+
+    #login-form {
+        border-top-color: #ff8c00 !important;
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-primary,
+    .btn.mainaction {
+        background-color: #ff8c00 !important;
+        border-color: #ff8c00 !important;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: #e07f00 !important;
+            border-color: #e07f00 !important;
+        }
+    }
+}
