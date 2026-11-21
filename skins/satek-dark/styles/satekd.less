@@ -364,43 +364,13 @@ a {
                 }
             }
 
-            // Uniform, pixel-aligned topbar icon buttons
+            // Topbar icon buttons: keep elastic glyphs, only tint + round hover
             & > a,
             .action-buttons > a,
             .special-buttons > a {
-                display: inline-flex !important;
-                flex-direction: row !important;
-                align-items: center !important;
-                justify-content: center !important;
-                float: none !important;
-                width: 36px !important;
-                min-width: 36px !important;
-                max-width: 36px !important;
-                height: 36px !important;
-                padding: 0 !important;
-                margin: 0 2px !important;
-                border: 0 !important;
                 border-radius: 8px !important;
-                line-height: 1 !important;
                 color: rgba(255, 255, 255, 0.88) !important;
-                background: transparent !important;
                 transition: background-color 0.15s ease, color 0.15s ease;
-
-                &:before {
-                    display: block !important;
-                    float: none !important;
-                    width: auto !important;
-                    height: auto !important;
-                    line-height: 1 !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                    font-size: 16px !important;
-                    color: inherit !important;
-                }
-
-                .inner {
-                    display: none !important;
-                }
 
                 &:hover {
                     background-color: rgba(255, 255, 255, 0.16) !important;
