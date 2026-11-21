@@ -529,6 +529,11 @@ a {
             font-size: 0.9rem;
             font-weight: 600;
             color: @sogo-text;
+            min-width: 0;
+            flex: 1 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
 
             &:before {
                 font-family: 'Icons';
@@ -1378,14 +1383,14 @@ body.task-login {
         background: transparent;
     }
 
-    // Satek brand logo on login: wide wordmark, keep ratio
+    // Satek brand logo on login: wide wordmark, keep ratio, close to form
     #logo {
         width: 220px !important;
         max-width: 70%;
         height: auto !important;
         max-height: none !important;
         top: 0 !important;
-        margin: 6vh auto 18px !important;
+        margin: 2vh auto 12px !important;
     }
 
     #login-form {
