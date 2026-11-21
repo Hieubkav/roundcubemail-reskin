@@ -224,10 +224,20 @@
         var sidebar = document.querySelector('#layout-sidebar:not(.sidebar-right)');
 
         // 1. Sleek SOGo-style user badge + date block in topbar (#layout-menu)
-        // Full account email as tooltip on sidebar username (long addresses get ellipsis).
+        // Wrap sidebar username text in ellipsis span (long addresses get cut + tooltip).
         var sideUser = document.querySelector('#layout-sidebar > .header .header-title.username');
-        if (sideUser && !sideUser.getAttribute('title')) {
-            sideUser.setAttribute('title', sideUser.textContent.trim());
+        if (sideUser && !sideUser.querySelector('.sogo-username-text')) {
+            var fullMail = sideUser.textContent.trim();
+            sideUser.setAttribute('title', fullMail);
+            sideUser.innerHTML = '';
+            var uIcon = document.createElement('span');
+            uIcon.className = 'sogo-username-icon';
+            uIcon.setAttribute('aria-hidden', 'true');
+            var uText = document.createElement('span');
+            uText.className = 'sogo-username-text';
+            uText.textContent = fullMail;
+            sideUser.appendChild(uIcon);
+            sideUser.appendChild(uText);
         }
         if (layoutMenu && !layoutMenu.querySelector('.sogo-topbar-date')) {
             var userBadge = document.createElement('a');

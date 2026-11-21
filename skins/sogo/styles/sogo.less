@@ -525,6 +525,7 @@ a {
             align-items: center;
             gap: 8px;
             margin: 0 4px !important;
+            padding-right: 2px;
             text-align: left !important;
             font-size: 0.9rem;
             font-weight: 600;
@@ -532,13 +533,8 @@ a {
             min-width: 0;
             flex: 1 1 auto;
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
 
-            &:before {
-                font-family: 'Icons';
-                font-weight: 900;
-                content: "\f007";
+            .sogo-username-icon {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
@@ -549,6 +545,20 @@ a {
                 color: @sogo-teal;
                 font-size: 11px;
                 flex: 0 0 24px;
+
+                &:before {
+                    font-family: 'Icons';
+                    font-weight: 900;
+                    content: "\f007";
+                }
+            }
+
+            .sogo-username-text {
+                min-width: 0;
+                flex: 1 1 auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }
@@ -1383,14 +1393,14 @@ body.task-login {
         background: transparent;
     }
 
-    // Satek brand logo on login: wide wordmark, keep ratio, close to form
+    // Satek brand logo on login: wide wordmark, balanced above form
     #logo {
         width: 220px !important;
         max-width: 70%;
         height: auto !important;
         max-height: none !important;
         top: 0 !important;
-        margin: 2vh auto 12px !important;
+        margin: 5vh auto 10px !important;
     }
 
     #login-form {
@@ -1506,7 +1516,7 @@ html.dark-mode {
             .header-title.username {
                 color: @sogo-dm-text;
 
-                &:before {
+                .sogo-username-icon {
                     background-color: @sogo-dm-teal-soft;
                     color: @sogo-dm-teal-accent;
                 }
