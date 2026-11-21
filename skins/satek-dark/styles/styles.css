@@ -7044,14 +7044,38 @@ a:hover {
   #layout-menu #taskmenu > a,
   #layout-menu #taskmenu .action-buttons > a,
   #layout-menu #taskmenu .special-buttons > a {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px;
+    height: 44px !important;
+    min-width: 52px !important;
+    padding: 4px 10px !important;
+    margin: 0 2px !important;
     border-radius: 8px !important;
-    color: rgba(255, 255, 255, 0.88) !important;
+    color: rgba(255, 255, 255, 0.92) !important;
     transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  #layout-menu #taskmenu > a:before,
+  #layout-menu #taskmenu .action-buttons > a:before,
+  #layout-menu #taskmenu .special-buttons > a:before {
+    margin: 0 !important;
+    float: none !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
   }
   #layout-menu #taskmenu > a .inner,
   #layout-menu #taskmenu .action-buttons > a .inner,
   #layout-menu #taskmenu .special-buttons > a .inner {
-    display: none !important;
+    display: block !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+    max-width: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   #layout-menu #taskmenu > a:hover,
   #layout-menu #taskmenu .action-buttons > a:hover,
@@ -7080,7 +7104,7 @@ a:hover {
     display: inline-flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    height: 24px !important;
+    height: auto !important;
     margin: 0 0 0 8px !important;
     padding: 0 0 0 10px !important;
     border-left: 1px solid rgba(255, 255, 255, 0.22) !important;

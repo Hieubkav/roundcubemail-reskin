@@ -362,16 +362,39 @@ a {
                 display: none !important;
             }
 
-            // Icon-only taskbar (Sogo layout), orange accent on selected.
+            // Taskbar: icon + label, orange accent on selected.
             & > a,
             .action-buttons > a,
             .special-buttons > a {
+                display: inline-flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 2px;
+                height: 44px !important;
+                min-width: 52px !important;
+                padding: 4px 10px !important;
+                margin: 0 2px !important;
                 border-radius: 8px !important;
-                color: rgba(255, 255, 255, 0.88) !important;
+                color: rgba(255, 255, 255, 0.92) !important;
                 transition: background-color 0.15s ease, color 0.15s ease;
 
+                &:before {
+                    margin: 0 !important;
+                    float: none !important;
+                    font-size: 16px !important;
+                    line-height: 1 !important;
+                }
+
                 .inner {
-                    display: none !important;
+                    display: block !important;
+                    font-size: 11px !important;
+                    font-weight: 500 !important;
+                    line-height: 1.1 !important;
+                    white-space: nowrap !important;
+                    max-width: 72px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
 
                 &:hover {
@@ -399,7 +422,7 @@ a {
                 display: inline-flex !important;
                 flex-direction: row !important;
                 align-items: center !important;
-                height: 24px !important;
+                height: auto !important;
                 margin: 0 0 0 8px !important;
                 padding: 0 0 0 10px !important;
                 border-left: 1px solid rgba(255, 255, 255, 0.22) !important;
