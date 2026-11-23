@@ -49,6 +49,16 @@ class satek_mailbox_reset extends rcube_plugin
             $this->handle_reset();
         }
 
+        if (!empty($_SESSION['satek_mailbox_flash']) && is_array($_SESSION['satek_mailbox_flash'])) {
+            $flash = $_SESSION['satek_mailbox_flash'];
+            unset($_SESSION['satek_mailbox_flash']);
+            $text = isset($flash['text']) ? (string) $flash['text'] : '';
+            $type = isset($flash['type']) ? (string) $flash['type'] : 'confirmation';
+            if ($text !== '') {
+                $this->rc->output->show_message($this->gettext($text), $type);
+            }
+        }
+
         $args['task'] = 'login';
 
         return $args;
@@ -201,7 +211,7 @@ class satek_mailbox_reset extends rcube_plugin
                 'title' => html::label('satek-mailbox-email', rcube::Q($this->gettext('mailboxemail'))),
                 'content' => (new html_inputfield([
                     'type' => 'email',
-                    'name' => '_user',
+                    'name' => '_mailbox_display',
                     'id' => 'satek-mailbox-email',
                     'class' => 'form-control',
                     'readonly' => true,
@@ -279,8 +289,7 @@ class satek_mailbox_reset extends rcube_plugin
         ]);
 
         if ($result['ok']) {
-            $this->rc->output->show_message($this->gettext('forgotsent'), 'confirmation');
-            return;
+            $this->redirect_login('forgotsent', 'confirmation');
         }
 
         $this->rc->output->show_message($result['message'], 'error');
@@ -314,14 +323,17 @@ class satek_mailbox_reset extends rcube_plugin
         ]);
 
         if ($result['ok']) {
-            $this->rc->output->show_message($this->gettext('resetsuccess'), 'confirmation');
-            $this->rc->action = '';
-            $_GET['email'] = '';
-            $_GET['token'] = '';
-            return;
+            $this->redirect_login('resetsuccess', 'confirmation');
         }
 
         $this->rc->output->show_message($result['message'], 'error');
+    }
+
+    private function redirect_login($text, $type)
+    {
+        $_SESSION['satek_mailbox_flash'] = ['text' => $text, 'type' => $type];
+        header('Location: ' . $this->rc->url(['_task' => 'login']), true, 303);
+        exit;
     }
 
     private function public_reset_url()
