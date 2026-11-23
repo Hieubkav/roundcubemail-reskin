@@ -362,39 +362,42 @@ a {
                 display: none !important;
             }
 
-            // Taskbar: icon + label, orange accent on selected.
+            // Icon-only taskbar (Sogo layout), orange accent on selected.
             & > a,
             .action-buttons > a,
             .special-buttons > a {
                 display: inline-flex !important;
-                flex-direction: column !important;
+                flex-direction: row !important;
                 align-items: center !important;
                 justify-content: center !important;
-                gap: 2px;
-                height: 44px !important;
-                min-width: 52px !important;
-                padding: 4px 10px !important;
+                float: none !important;
+                width: 36px !important;
+                min-width: 36px !important;
+                max-width: 36px !important;
+                height: 36px !important;
+                padding: 0 !important;
                 margin: 0 2px !important;
+                border: 0 !important;
                 border-radius: 8px !important;
-                color: rgba(255, 255, 255, 0.92) !important;
+                line-height: 1 !important;
+                color: rgba(255, 255, 255, 0.88) !important;
+                background: transparent !important;
                 transition: background-color 0.15s ease, color 0.15s ease;
 
                 &:before {
-                    margin: 0 !important;
+                    display: block !important;
                     float: none !important;
-                    font-size: 16px !important;
+                    width: auto !important;
+                    height: auto !important;
                     line-height: 1 !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    font-size: 16px !important;
+                    color: inherit !important;
                 }
 
                 .inner {
-                    display: block !important;
-                    font-size: 11px !important;
-                    font-weight: 500 !important;
-                    line-height: 1.1 !important;
-                    white-space: nowrap !important;
-                    max-width: 72px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                    display: none !important;
                 }
 
                 &:hover {
@@ -403,6 +406,7 @@ a {
                 }
 
                 &:focus {
+                    background-color: rgba(255, 140, 0, 0.14) !important;
                     outline: none !important;
                 }
 
@@ -410,6 +414,10 @@ a {
                     background-color: #ff8c00 !important;
                     color: #141414 !important;
                     box-shadow: none;
+
+                    &:before {
+                        color: #141414 !important;
+                    }
                 }
             }
 
@@ -422,7 +430,7 @@ a {
                 display: inline-flex !important;
                 flex-direction: row !important;
                 align-items: center !important;
-                height: auto !important;
+                height: 24px !important;
                 margin: 0 0 0 8px !important;
                 padding: 0 0 0 10px !important;
                 border-left: 1px solid rgba(255, 255, 255, 0.22) !important;
