@@ -2,7 +2,7 @@
 
 /**
  * Forgot / reset mailbox password via Satek CRM public API.
- * Runs on the login screen; no CRM or Roundcube session required.
+ * Matches MailboxForgotPassword mail: {reseturl}?email=&token=
  */
 class satek_mailbox_reset extends rcube_plugin
 {
@@ -13,7 +13,7 @@ class satek_mailbox_reset extends rcube_plugin
     /** @var rcmail */
     private $rc;
 
-    #[\Override]
+    #[Override]
     public function init()
     {
         $this->rc = rcmail::get_instance();
@@ -27,9 +27,12 @@ class satek_mailbox_reset extends rcube_plugin
 
     public function startup($args)
     {
-        $action = (string) ($args['action'] ?? '');
-        if ($action === 'satek_forgot' || $action === 'satek_reset') {
+        $this->hydrate_query();
+        $mode = $this->mode();
+        if ($mode === 'satek_forgot' || $mode === 'satek_reset') {
             $args['task'] = 'login';
+            $args['action'] = $mode;
+            $this->rc->action = $mode;
         }
 
         return $args;
@@ -37,11 +40,11 @@ class satek_mailbox_reset extends rcube_plugin
 
     public function unauthenticated($args)
     {
-        $action = (string) $this->rc->action;
-        if ($action === 'satek_forgot' && ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+        $mode = $this->mode();
+        if ($mode === 'satek_forgot' && ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $this->handle_forgot();
         }
-        if ($action === 'satek_reset' && ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+        if ($mode === 'satek_reset' && ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $this->handle_reset();
         }
 
@@ -52,12 +55,12 @@ class satek_mailbox_reset extends rcube_plugin
 
     public function loginform_content(array $form)
     {
-        $action = (string) $this->rc->action;
+        $mode = $this->mode();
 
-        if ($action === 'satek_forgot') {
+        if ($mode === 'satek_forgot') {
             return $this->forgot_form($form);
         }
-        if ($action === 'satek_reset') {
+        if ($mode === 'satek_reset') {
             return $this->reset_form($form);
         }
 
@@ -71,9 +74,60 @@ class satek_mailbox_reset extends rcube_plugin
         return $form;
     }
 
+    private function mode()
+    {
+        $action = (string) $this->rc->action;
+        if (str_contains($action, 'satek_reset')) {
+            return 'satek_reset';
+        }
+        if (str_contains($action, 'satek_forgot')) {
+            return 'satek_forgot';
+        }
+
+        $email = $this->query_email();
+        $token = $this->query_token();
+        if ($email !== '' && $token !== '') {
+            return 'satek_reset';
+        }
+
+        return $action;
+    }
+
+    private function hydrate_query()
+    {
+        $qs = str_replace('?', '&', (string) ($_SERVER['QUERY_STRING'] ?? ''));
+        parse_str($qs, $params);
+        foreach (['email', 'token', '_mailbox_email', '_reset_token'] as $key) {
+            if (!empty($params[$key]) && is_string($params[$key])) {
+                $_GET[$key] = $params[$key];
+                $_REQUEST[$key] = $params[$key];
+            }
+        }
+    }
+
+    private function query_email()
+    {
+        $email = trim(rcube_utils::get_input_string('_mailbox_email', rcube_utils::INPUT_GPC));
+        if ($email === '') {
+            $email = trim(rcube_utils::get_input_string('email', rcube_utils::INPUT_GPC));
+        }
+
+        return $email;
+    }
+
+    private function query_token()
+    {
+        $token = trim(rcube_utils::get_input_string('_reset_token', rcube_utils::INPUT_GPC));
+        if ($token === '') {
+            $token = trim(rcube_utils::get_input_string('token', rcube_utils::INPUT_GPC));
+        }
+
+        return $token;
+    }
+
     private function forgot_form(array $form)
     {
-        $email = rcube_utils::get_input_string('_mailbox_email', rcube_utils::INPUT_GPC);
+        $email = $this->query_email();
         $personal = rcube_utils::get_input_string('_email_personal', rcube_utils::INPUT_GPC);
 
         $form['hidden'] = [
@@ -82,6 +136,9 @@ class satek_mailbox_reset extends rcube_plugin
             'token' => (new html_hiddenfield(['name' => '_token', 'value' => $this->rc->get_request_token()]))->show(),
         ];
         $form['inputs'] = [
+            'heading' => [
+                'content' => html::div('satek-reset-title', rcube::Q($this->gettext('forgottitle'))),
+            ],
             'mailbox' => [
                 'title' => html::label('satek-mailbox-email', rcube::Q($this->gettext('mailboxemail'))),
                 'content' => (new html_inputfield([
@@ -91,6 +148,7 @@ class satek_mailbox_reset extends rcube_plugin
                     'required' => true,
                     'class' => 'form-control',
                     'autocomplete' => 'username',
+                    'data-icon' => 'user',
                 ]))->show($email),
             ],
             'personal' => [
@@ -102,6 +160,7 @@ class satek_mailbox_reset extends rcube_plugin
                     'required' => true,
                     'class' => 'form-control',
                     'autocomplete' => 'email',
+                    'data-icon' => 'email',
                 ]))->show($personal),
             ],
         ];
@@ -110,6 +169,7 @@ class satek_mailbox_reset extends rcube_plugin
                 'outterclass' => 'formbuttons',
                 'content' => html::tag('button', [
                     'type' => 'submit',
+                    'id' => 'rcmloginsubmit',
                     'class' => 'button mainaction submit',
                 ], rcube::Q($this->gettext('sendreset'))),
             ],
@@ -126,14 +186,8 @@ class satek_mailbox_reset extends rcube_plugin
 
     private function reset_form(array $form)
     {
-        $email = rcube_utils::get_input_string('_mailbox_email', rcube_utils::INPUT_GPC);
-        if ($email === '') {
-            $email = rcube_utils::get_input_string('email', rcube_utils::INPUT_GPC);
-        }
-        $token = rcube_utils::get_input_string('_reset_token', rcube_utils::INPUT_GPC);
-        if ($token === '') {
-            $token = rcube_utils::get_input_string('token', rcube_utils::INPUT_GPC);
-        }
+        $email = $this->query_email();
+        $token = $this->query_token();
 
         $form['hidden'] = [
             'task' => (new html_hiddenfield(['name' => '_task', 'value' => 'login']))->show(),
@@ -143,14 +197,18 @@ class satek_mailbox_reset extends rcube_plugin
             'email' => (new html_hiddenfield(['name' => '_mailbox_email', 'value' => $email]))->show(),
         ];
         $form['inputs'] = [
+            'heading' => [
+                'content' => html::div('satek-reset-title', rcube::Q($this->gettext('resettitle'))),
+            ],
             'mailbox' => [
                 'title' => html::label('satek-mailbox-email', rcube::Q($this->gettext('mailboxemail'))),
                 'content' => (new html_inputfield([
                     'type' => 'email',
-                    'name' => '_mailbox_email_display',
+                    'name' => '_user',
                     'id' => 'satek-mailbox-email',
                     'class' => 'form-control',
-                    'disabled' => true,
+                    'readonly' => true,
+                    'data-icon' => 'user',
                 ]))->show($email),
             ],
             'password' => [
@@ -161,6 +219,8 @@ class satek_mailbox_reset extends rcube_plugin
                     'required' => true,
                     'class' => 'form-control',
                     'autocomplete' => 'new-password',
+                    'data-icon' => 'lock',
+                    'placeholder' => $this->gettext('newpassword'),
                 ]))->show(),
             ],
             'confirm' => [
@@ -171,6 +231,8 @@ class satek_mailbox_reset extends rcube_plugin
                     'required' => true,
                     'class' => 'form-control',
                     'autocomplete' => 'new-password',
+                    'data-icon' => 'lock',
+                    'placeholder' => $this->gettext('confirmpassword'),
                 ]))->show(),
             ],
         ];
@@ -179,6 +241,7 @@ class satek_mailbox_reset extends rcube_plugin
                 'outterclass' => 'formbuttons',
                 'content' => html::tag('button', [
                     'type' => 'submit',
+                    'id' => 'rcmloginsubmit',
                     'class' => 'button mainaction submit',
                 ], rcube::Q($this->gettext('savereset'))),
             ],
@@ -256,6 +319,8 @@ class satek_mailbox_reset extends rcube_plugin
         if ($result['ok']) {
             $this->rc->output->show_message($this->gettext('resetsuccess'), 'confirmation');
             $this->rc->action = '';
+            $_GET['email'] = '';
+            $_GET['token'] = '';
             return;
         }
 
@@ -273,8 +338,8 @@ class satek_mailbox_reset extends rcube_plugin
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
         $script = $_SERVER['SCRIPT_NAME'] ?? '/';
 
-        return ($https ? 'https://' : 'http://') . $host . $script
-            . '?_task=login&_action=satek_reset';
+        // Mail template appends ?email=&token=
+        return ($https ? 'https://' : 'http://') . $host . $script;
     }
 
     /**

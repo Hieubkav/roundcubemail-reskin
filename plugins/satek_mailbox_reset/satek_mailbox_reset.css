@@ -6,3 +6,15 @@
 .satek-mailbox-reset-link a {
   font-size: 13px;
 }
+
+.satek-reset-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+body.action-satek_reset #login-form .formbuttons button,
+body.action-satek_forgot #login-form .formbuttons button {
+  text-transform: none;
+}

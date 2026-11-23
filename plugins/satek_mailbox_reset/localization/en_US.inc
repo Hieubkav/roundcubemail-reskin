@@ -1,6 +1,8 @@
 <?php
 
 $labels['forgotlink'] = 'Forgot mailbox password?';
+$labels['forgottitle'] = 'Reset mailbox password';
+$labels['resettitle'] = 'Set a new mailbox password';
 $labels['mailboxemail'] = 'Mailbox email';
 $labels['personalemail'] = 'Recovery email';
 $labels['sendreset'] = 'Send reset link';

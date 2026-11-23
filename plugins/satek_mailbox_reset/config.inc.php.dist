@@ -1,5 +1,5 @@
 <?php
 
 $config['satek_crm_api_base'] = 'https://crm-api.satek.vn/v1';
-// Absolute URL used as reseturl. Empty = current host + ?_task=login&_action=satek_reset
+// Base URL for MailboxForgotPassword reseturl. Mail appends ?email=&token=
 $config['satek_mailbox_reset_url'] = '';

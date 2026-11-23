@@ -1,6 +1,8 @@
 <?php
 
 $labels['forgotlink'] = 'Quên mật khẩu hộp thư?';
+$labels['forgottitle'] = 'Khôi phục mật khẩu hộp thư';
+$labels['resettitle'] = 'Đặt mật khẩu hộp thư mới';
 $labels['mailboxemail'] = 'Email hộp thư';
 $labels['personalemail'] = 'Email khôi phục';
 $labels['sendreset'] = 'Gửi liên kết đặt lại';
