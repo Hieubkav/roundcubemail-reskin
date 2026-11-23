@@ -14,5 +14,8 @@ if (window.rcmail) {
             title.textContent = rcmail.env.satek_reset_title;
             form.insertBefore(title, form.firstChild);
         }
+
+        $('#login-form.satek-reset-form .icon.new_password, #login-form.satek-reset-form .icon.confirm_password, #login-form.satek-reset-form .icon.lock')
+            .addClass('pass');
     });
 }

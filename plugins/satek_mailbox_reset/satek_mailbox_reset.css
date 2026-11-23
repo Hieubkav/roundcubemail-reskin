@@ -27,15 +27,52 @@ html.dark-mode .satek-mailbox-reset-link a,
   color: #ffb347;
 }
 
+#login-form.satek-reset-form table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#login-form.satek-reset-form td.title {
+  display: none !important;
+}
+
+#login-form.satek-reset-form td.input {
+  display: block;
+  width: 100%;
+  padding: 0 0 12px;
+}
+
+#login-form.satek-reset-form .input-group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  width: 100%;
+}
+
+#login-form.satek-reset-form .input-group-prepend,
+#login-form.satek-reset-form .input-group-text {
+  flex: 0 0 auto;
+}
+
+#login-form.satek-reset-form .input-group .form-control {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+
 #login-form.satek-reset-form .formbuttons button {
   text-transform: none;
   width: 100%;
 }
 
-#login-form.satek-reset-form .input-group {
-  width: 100%;
+#login-form.satek-reset-form .icon.new_password,
+#login-form.satek-reset-form .icon.confirm_password,
+#login-form.satek-reset-form .icon.lock {
+  /* reuse login lock glyph */
 }
 
-#login-form.satek-reset-form .form-control {
-  width: 100%;
+#login-form.satek-reset-form .icon.new_password:before,
+#login-form.satek-reset-form .icon.confirm_password:before,
+#login-form.satek-reset-form .icon.lock:before {
+  content: none;
 }
