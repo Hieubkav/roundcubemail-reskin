@@ -1,0 +1,11 @@
+{
+    "name": "satek/mailbox_reset",
+    "type": "roundcube-plugin",
+    "description": "Forgot/reset mailbox password via Satek CRM public API",
+    "license": "GPL-3.0-or-later",
+    "version": "1.0.0",
+    "require": {
+        "php": ">=7.3.0",
+        "roundcube/plugin-installer": "~0.3.5"
+    }
+}
