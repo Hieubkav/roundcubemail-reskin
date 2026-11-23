@@ -15,7 +15,31 @@ if (window.rcmail) {
             form.insertBefore(title, form.firstChild);
         }
 
-        $('#login-form.satek-reset-form .icon.new_password, #login-form.satek-reset-form .icon.confirm_password, #login-form.satek-reset-form .icon.lock')
-            .addClass('pass');
+        $('#login-form.satek-reset-form td.input').each(function () {
+            var $td = $(this);
+            if ($td.children('.satek-field').length) {
+                return;
+            }
+
+            var $input = $td.find('input,select').first();
+            if (!$input.length) {
+                return;
+            }
+
+            $td.siblings('td.title').hide();
+
+            var iconName = $input.data('icon') || 'pass';
+            if (iconName === 'lock') {
+                iconName = 'pass';
+            }
+
+            var $wrap = $('<div class="input-group input-group-lg satek-field">');
+            var $icon = $('<i>').attr('class', 'input-group-text icon ' + iconName);
+            $wrap.append($('<span class="input-group-prepend">').append($icon));
+            $td.children('.input-group-prepend').remove();
+            $input.addClass('form-control');
+            $wrap.append($input);
+            $td.removeClass('input-group').empty().append($wrap);
+        });
     });
 }
