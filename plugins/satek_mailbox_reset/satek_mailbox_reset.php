@@ -316,6 +316,10 @@ class satek_mailbox_reset extends rcube_plugin
             $this->rc->output->show_message($this->gettext('passwordmismatch'), 'warning');
             return;
         }
+        if (!$this->is_valid_mailbox_password($password)) {
+            $this->rc->output->show_message($this->gettext('passwordrules'), 'warning');
+            return;
+        }
 
         $result = $this->call_api('/shared/mailservers/mailbox-reset-password', [
             'email' => $email,
@@ -328,6 +332,19 @@ class satek_mailbox_reset extends rcube_plugin
         }
 
         $this->redirect_login($result['message'], 'error', true);
+    }
+
+    private function is_valid_mailbox_password($password)
+    {
+        $len = strlen($password);
+        if ($len < 8 || $len > 50) {
+            return false;
+        }
+
+        return (bool) preg_match('/[a-z]/', $password)
+            && (bool) preg_match('/[A-Z]/', $password)
+            && (bool) preg_match('/\d/', $password)
+            && (bool) preg_match('/[^A-Za-z0-9]/', $password);
     }
 
     private function redirect_login($text, $type, $raw = false)

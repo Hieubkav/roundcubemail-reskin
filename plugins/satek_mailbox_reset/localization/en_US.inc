@@ -14,6 +14,7 @@ $labels['forgotsent'] = 'If the mailbox and recovery email match, a reset link w
 $labels['resetsuccess'] = 'Password updated. You can log in now.';
 $labels['fieldsrequired'] = 'Please fill in all required fields.';
 $labels['passwordmismatch'] = 'The two passwords do not match.';
+$labels['passwordrules'] = 'Mailbox password: min 8, max 50, must include uppercase, lowercase, number and special character';
 $labels['missingresettoken'] = 'This reset link is missing email or token.';
 $labels['invalidrequest'] = 'Invalid request. Reload the page and try again.';
 $labels['apierror'] = 'Could not reset the mailbox password.';
