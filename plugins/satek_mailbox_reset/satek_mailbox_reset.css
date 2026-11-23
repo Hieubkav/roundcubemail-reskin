@@ -1,20 +1,53 @@
 .satek-mailbox-reset-link {
   text-align: center;
-  margin: 12px 0 0;
+  margin: 14px 0 0;
 }
 
 .satek-mailbox-reset-link a {
   font-size: 13px;
+  font-weight: 500;
 }
 
 .satek-reset-title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   text-align: center;
-  margin: 0 0 8px;
+  margin: 0 0 18px;
+  line-height: 1.35;
 }
 
-body.action-satek_reset #login-form .formbuttons button,
-body.action-satek_forgot #login-form .formbuttons button {
+#login-form.satek-reset-form table,
+#login-form.satek-reset-form tbody,
+#login-form.satek-reset-form tr,
+#login-form.satek-reset-form td {
+  display: block;
+  width: 100%;
+}
+
+#login-form.satek-reset-form td.title {
+  display: none;
+}
+
+#login-form.satek-reset-form .input-group {
+  margin-bottom: 12px;
+}
+
+#login-form.satek-reset-form .formbuttons button {
   text-transform: none;
+  width: 100%;
+}
+
+body.task-login.sogo-skin .satek-reset-title,
+html:not(.dark-mode) body.task-login .satek-reset-title {
+  color: #1b4f47;
+}
+
+body.task-login.satek-dark .satek-reset-title,
+html.dark-mode body.task-login .satek-reset-title {
+  color: #f5ede2;
+}
+
+body.task-login.satek-dark .satek-mailbox-reset-link a,
+html.dark-mode body.task-login .satek-mailbox-reset-link a {
+  color: #ffb347;
 }

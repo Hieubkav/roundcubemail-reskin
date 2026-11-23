@@ -23,6 +23,7 @@ class satek_mailbox_reset extends rcube_plugin
         $this->add_hook('unauthenticated', [$this, 'unauthenticated']);
         $this->add_hook('loginform_content', [$this, 'loginform_content']);
         $this->include_stylesheet('satek_mailbox_reset.css');
+        $this->include_script('satek_mailbox_reset.js');
     }
 
     public function startup($args)
@@ -135,10 +136,8 @@ class satek_mailbox_reset extends rcube_plugin
             'action' => (new html_hiddenfield(['name' => '_action', 'value' => 'satek_forgot']))->show(),
             'token' => (new html_hiddenfield(['name' => '_token', 'value' => $this->rc->get_request_token()]))->show(),
         ];
+        $this->rc->output->set_env('satek_reset_title', $this->gettext('forgottitle'));
         $form['inputs'] = [
-            'heading' => [
-                'content' => html::div('satek-reset-title', rcube::Q($this->gettext('forgottitle'))),
-            ],
             'mailbox' => [
                 'title' => html::label('satek-mailbox-email', rcube::Q($this->gettext('mailboxemail'))),
                 'content' => (new html_inputfield([
@@ -196,10 +195,8 @@ class satek_mailbox_reset extends rcube_plugin
             'reset_token' => (new html_hiddenfield(['name' => '_reset_token', 'value' => $token]))->show(),
             'email' => (new html_hiddenfield(['name' => '_mailbox_email', 'value' => $email]))->show(),
         ];
+        $this->rc->output->set_env('satek_reset_title', $this->gettext('resettitle'));
         $form['inputs'] = [
-            'heading' => [
-                'content' => html::div('satek-reset-title', rcube::Q($this->gettext('resettitle'))),
-            ],
             'mailbox' => [
                 'title' => html::label('satek-mailbox-email', rcube::Q($this->gettext('mailboxemail'))),
                 'content' => (new html_inputfield([
