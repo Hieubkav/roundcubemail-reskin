@@ -55,7 +55,8 @@ class satek_mailbox_reset extends rcube_plugin
             $text = isset($flash['text']) ? (string) $flash['text'] : '';
             $type = isset($flash['type']) ? (string) $flash['type'] : 'confirmation';
             if ($text !== '') {
-                $this->rc->output->show_message($this->gettext($text), $type);
+                $message = !empty($flash['raw']) ? $text : $this->gettext($text);
+                $this->rc->output->show_message($message, $type);
             }
         }
 
@@ -326,12 +327,12 @@ class satek_mailbox_reset extends rcube_plugin
             $this->redirect_login('resetsuccess', 'confirmation');
         }
 
-        $this->rc->output->show_message($result['message'], 'error');
+        $this->redirect_login($result['message'], 'error', true);
     }
 
-    private function redirect_login($text, $type)
+    private function redirect_login($text, $type, $raw = false)
     {
-        $_SESSION['satek_mailbox_flash'] = ['text' => $text, 'type' => $type];
+        $_SESSION['satek_mailbox_flash'] = ['text' => $text, 'type' => $type, 'raw' => $raw];
         header('Location: ' . $this->rc->url(['_task' => 'login']), true, 303);
         exit;
     }
