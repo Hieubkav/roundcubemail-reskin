@@ -39,12 +39,7 @@
 
     function inboxShortcutLabel() {
         var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
-        return lang.indexOf('vi') === 0 ? 'Về Hộp thư đến (INBOX)' : 'Go to Inbox';
-    }
-
-    function backToMailLabel() {
-        var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
-        return lang.indexOf('vi') === 0 ? 'Về Mail' : 'Inbox';
+        return lang.indexOf('vi') === 0 ? 'Quay lại Hộp thư' : 'Back to Inbox';
     }
 
     function quoteToggleText(expanded) {
@@ -294,9 +289,12 @@
                     backMailLink.href = '?_task=mail&_mbox=INBOX';
                     backMailLink.setAttribute('title', inboxShortcutLabel());
                     backMailLink.setAttribute('aria-label', inboxShortcutLabel());
-                    var backMailText = document.createElement('span');
-                    backMailText.textContent = backToMailLabel();
-                    backMailLink.appendChild(backMailText);
+                    backMailLink.innerHTML =
+                        '<svg class="sogo-back-mail-svg" viewBox="0 0 24 20" width="20" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                            '<path d="M5.5 6.5 L2 10 L5.5 13.5"/>' +
+                            '<rect x="8.5" y="4.5" width="13.5" height="11" rx="2.2"/>' +
+                            '<path d="M8.5 6.8 L15.25 11.4 L22 6.8"/>' +
+                        '</svg>';
                     sideTitle.parentElement.appendChild(backMailLink);
                 }
             }

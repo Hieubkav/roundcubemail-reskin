@@ -1059,39 +1059,45 @@ a {
                     overflow: hidden;
                     text-align: left;
                 }
+
+                &:not(.username) .sogo-username-text {
+                    padding-right: 40px;
+                }
             }
 
             & > a.sogo-sidebar-back-mail {
                 display: inline-flex !important;
                 align-items: center;
-                gap: 5px;
+                justify-content: center;
                 position: absolute !important;
-                top: 13px;
-                right: 12px;
-                height: 30px;
-                padding: 0 11px;
-                border-radius: 999px;
-                background-color: rgba(255, 255, 255, 0.16);
-                border: 1px solid rgba(255, 255, 255, 0.26);
-                color: #ffffff !important;
-                font-size: 12px;
-                font-weight: 600;
-                line-height: 1;
+                right: 10px;
+                bottom: 7px;
+                width: 32px;
+                height: 28px;
+                padding: 0;
+                border-radius: 8px;
+                background-color: rgba(255, 255, 255, 0.12);
+                border: 1px solid rgba(255, 255, 255, 0.16);
+                color: rgba(255, 255, 255, 0.92) !important;
                 text-decoration: none !important;
-                white-space: nowrap;
-                transition: background-color 0.15s ease;
+                transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 
-                &:before {
-                    font-family: 'Icons';
-                    font-weight: 900;
-                    content: "\f060";
-                    font-size: 11px;
-                    line-height: 1;
+                svg.sogo-back-mail-svg {
+                    display: block;
+                    width: 20px;
+                    height: 16px;
+                    flex: 0 0 auto;
                 }
 
                 &:hover {
-                    background-color: rgba(255, 255, 255, 0.28) !important;
+                    background-color: rgba(255, 255, 255, 0.24) !important;
+                    border-color: rgba(255, 255, 255, 0.34);
                     color: #ffffff !important;
+                    transform: translateX(-1px);
+                }
+
+                &:active {
+                    transform: scale(0.95);
                 }
             }
 
@@ -1138,12 +1144,14 @@ a {
                 }
 
                 & > a.sogo-sidebar-back-mail {
-                    background-color: rgba(255, 255, 255, 0.14);
-                    border-color: rgba(255, 255, 255, 0.2);
-                    color: #ffffff !important;
+                    background-color: rgba(255, 255, 255, 0.12);
+                    border-color: rgba(255, 255, 255, 0.18);
+                    color: rgba(255, 255, 255, 0.92) !important;
 
                     &:hover {
                         background-color: rgba(255, 255, 255, 0.24) !important;
+                        border-color: rgba(255, 255, 255, 0.32);
+                        color: #ffffff !important;
                     }
                 }
             }
@@ -1168,9 +1176,6 @@ a {
         }
         &.sogo-has-usercard .sogo-username-icon:before {
             content: "\f0c0";
-        }
-        &.sogo-has-usercard > a.sogo-sidebar-back-mail {
-            right: 80px;
         }
     }
 
