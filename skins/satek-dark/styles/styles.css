@@ -7585,38 +7585,36 @@ a:hover {
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    width: 34px !important;
-    height: 34px !important;
-    flex: 0 0 34px !important;
-    border-radius: 50%;
-    background-color: #ff8c00 !important;
-    border: 1px solid #e07f00;
-    color: #ffffff !important;
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+    margin-left: -6px !important;
+    border: 0 !important;
+    border-radius: 10px;
+    background: transparent;
+    color: #d97700 !important;
     text-decoration: none !important;
-    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
   }
   body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header > a.sogo-sidebar-mail-btn:before {
     font-family: 'Icons';
     font-weight: 900;
     content: "\f0e0";
-    font-size: 15px;
+    font-size: 21px;
     line-height: 1;
   }
   body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header > a.sogo-sidebar-mail-btn:hover:not(.is-disabled) {
-    background-color: #e07f00 !important;
-    border-color: #c96f00;
-    color: #ffffff !important;
-    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.35);
-    transform: scale(1.05);
+    background-color: rgba(255, 140, 0, 0.14) !important;
+    color: #ff8c00 !important;
+    transform: scale(1.04);
   }
   body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header > a.sogo-sidebar-mail-btn:active:not(.is-disabled) {
     transform: scale(0.96);
   }
   body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header > a.sogo-sidebar-mail-btn.is-disabled {
-    background-color: rgba(255, 140, 0, 0.12) !important;
-    border-color: rgba(255, 140, 0, 0.18) !important;
-    color: rgba(217, 119, 0, 0.48) !important;
-    box-shadow: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    color: rgba(217, 119, 0, 0.36) !important;
     cursor: default !important;
     pointer-events: none !important;
   }
@@ -7624,12 +7622,12 @@ a:hover {
     height: auto !important;
     min-height: 0 !important;
     flex: 0 0 auto !important;
-    padding: 9px 12px 12px 16px !important;
+    padding: 8px 12px 12px 16px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
     justify-content: flex-start !important;
-    gap: 6px !important;
+    gap: 5px !important;
   }
   body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard > a.sogo-sidebar-mail-btn {
     margin-right: 76px;
@@ -7715,20 +7713,18 @@ a:hover {
     color: #ffffff;
   }
   html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header > a.sogo-sidebar-mail-btn {
-    background-color: rgba(255, 140, 0, 0.24) !important;
-    border-color: rgba(255, 167, 51, 0.42);
+    background: transparent;
+    border: 0 !important;
     color: #ffa733 !important;
   }
   html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header > a.sogo-sidebar-mail-btn:hover:not(.is-disabled) {
-    background-color: #ff8c00 !important;
-    border-color: #ff8c00;
-    color: #141414 !important;
-    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+    background-color: rgba(255, 140, 0, 0.2) !important;
+    color: #ffb85c !important;
   }
   html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header > a.sogo-sidebar-mail-btn.is-disabled {
-    background-color: rgba(255, 140, 0, 0.08) !important;
-    border-color: rgba(255, 167, 51, 0.14) !important;
-    color: rgba(255, 167, 51, 0.36) !important;
+    background: transparent !important;
+    border: 0 !important;
+    color: rgba(255, 167, 51, 0.34) !important;
   }
   html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title .sogo-username-text,
   html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav .header-title .sogo-username-text {

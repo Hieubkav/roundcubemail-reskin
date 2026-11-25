@@ -993,34 +993,34 @@ a {
             }
         }
 
-        // Pure Mail shortcut circle (active on Contacts & Settings, disabled on Mail)
+        // Pure Mail shortcut icon button (large clean glyph, no circle ring; disabled on Mail)
         & > .header > a.sogo-sidebar-mail-btn {
             display: inline-flex !important;
             align-items: center;
             justify-content: center;
-            width: 34px !important;
-            height: 34px !important;
-            flex: 0 0 34px !important;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.22);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ffffff !important;
+            width: 36px !important;
+            height: 36px !important;
+            flex: 0 0 36px !important;
+            margin-left: -6px !important;
+            border: 0 !important;
+            border-radius: 8px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.94) !important;
             text-decoration: none !important;
-            transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+            transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 
             &:before {
                 font-family: 'Icons';
                 font-weight: 900;
                 content: "\f0e0";
-                font-size: 15px;
+                font-size: 21px;
                 line-height: 1;
             }
 
             &:hover:not(.is-disabled) {
-                background-color: rgba(255, 255, 255, 0.34) !important;
-                border-color: rgba(255, 255, 255, 0.48);
+                background-color: rgba(255, 255, 255, 0.16) !important;
                 color: #ffffff !important;
-                transform: scale(1.05);
+                transform: scale(1.04);
             }
 
             &:active:not(.is-disabled) {
@@ -1028,25 +1028,25 @@ a {
             }
 
             &.is-disabled {
-                background-color: rgba(255, 255, 255, 0.10) !important;
-                border-color: rgba(255, 255, 255, 0.12) !important;
-                color: rgba(255, 255, 255, 0.45) !important;
+                background: transparent !important;
+                border: 0 !important;
+                color: rgba(255, 255, 255, 0.38) !important;
                 cursor: default !important;
                 pointer-events: none !important;
             }
         }
 
-        // Mail account card: disabled Mail circle top-left + top-right actions, full-width email below
+        // Mail account card: disabled Mail icon top-left + top-right actions, full-width email below
         & > .header.sogo-has-usercard {
             height: auto !important;
             min-height: 0 !important;
             flex: 0 0 auto !important;
-            padding: 9px 12px 11px 16px !important;
+            padding: 8px 12px 11px 16px !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: flex-start !important;
             justify-content: flex-start !important;
-            gap: 6px !important;
+            gap: 5px !important;
 
             & > a.sogo-sidebar-mail-btn {
                 margin-right: 76px;
@@ -1146,19 +1146,19 @@ a {
             }
 
             & > a.sogo-sidebar-mail-btn {
-                background-color: rgba(255, 255, 255, 0.18);
-                border-color: rgba(255, 255, 255, 0.24);
-                color: #ffffff !important;
+                background: transparent;
+                border: 0 !important;
+                color: rgba(255, 255, 255, 0.92) !important;
 
                 &:hover:not(.is-disabled) {
-                    background-color: rgba(255, 255, 255, 0.3) !important;
-                    border-color: rgba(255, 255, 255, 0.42);
+                    background-color: rgba(255, 255, 255, 0.16) !important;
+                    color: #ffffff !important;
                 }
 
                 &.is-disabled {
-                    background-color: rgba(255, 255, 255, 0.08) !important;
-                    border-color: rgba(255, 255, 255, 0.1) !important;
-                    color: rgba(255, 255, 255, 0.42) !important;
+                    background: transparent !important;
+                    border: 0 !important;
+                    color: rgba(255, 255, 255, 0.36) !important;
                 }
             }
 
