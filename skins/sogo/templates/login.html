@@ -3,18 +3,167 @@
 <h1 class="voice"><roundcube:object name="productname" /> <roundcube:label name="login" /></h1>
 
 <div id="layout-content" class="selected no-navbar" role="main">
-	<roundcube:object name="logo" src="/images/logo-satek.png" id="logo" alt="Satek" logo-type="satek" />
-	<roundcube:form id="login-form" name="login-form" method="post" class="propform">
-	<roundcube:object name="loginform" form="login-form" size="40" submit=true class="form-control" />
-		<div id="login-footer" role="contentinfo">
-			<roundcube:object name="productname" condition="config:display_product_info &gt; 0" />
-			<roundcube:object name="version" condition="config:display_product_info == 2" />
-			<roundcube:if condition="config:support_url" />
-				&nbsp;&bull;&nbsp; <a href="<roundcube:var name='config:support_url' />" target="_blank" rel="noopener" class="support-link"><roundcube:label name="support" /></a>
-			<roundcube:endif />
-			<roundcube:container name="loginfooter" id="login-footer" />
+	<svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none;opacity:0">
+		<defs>
+			<filter id="satek-logo-dark" color-interpolation-filters="sRGB">
+				<feColorMatrix type="matrix" values="
+					 0.05  0     0     0  0.95
+					-0.40  0     0.40  0  0.96
+					-0.97  0     0.97  0  0.97
+					 0     0     0     1  0" />
+			</filter>
+		</defs>
+	</svg>
+
+	<div class="satek-login-shell">
+		<div class="satek-login-card"
+			data-email-label="<roundcube:label name='sateklogin_email' />"
+			data-pwd-show="<roundcube:label name='sateklogin_showpwd' />"
+			data-pwd-hide="<roundcube:label name='sateklogin_hidepwd' />">
+
+			<div class="satek-login-visual" aria-hidden="true">
+				<svg class="satek-login-svg" viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false">
+					<defs>
+						<linearGradient id="illHdrGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" style="stop-color:var(--ill-hdr-a)" />
+							<stop offset="100%" style="stop-color:var(--ill-hdr-b)" />
+						</linearGradient>
+						<linearGradient id="illTrayGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" style="stop-color:var(--ill-tray-a)" />
+							<stop offset="100%" style="stop-color:var(--ill-tray-b)" />
+						</linearGradient>
+						<linearGradient id="illPlaneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+							<stop offset="0%" style="stop-color:var(--ill-accent)" />
+							<stop offset="100%" style="stop-color:var(--ill-accent-deep)" />
+						</linearGradient>
+						<filter id="illShadowLg" x="-15%" y="-15%" width="135%" height="140%">
+							<feDropShadow dx="0" dy="14" stdDeviation="14" style="flood-color:var(--ill-shadow);flood-opacity:1" />
+						</filter>
+						<filter id="illShadowSm" x="-20%" y="-20%" width="145%" height="155%">
+							<feDropShadow dx="0" dy="8" stdDeviation="9" style="flood-color:var(--ill-shadow);flood-opacity:1" />
+						</filter>
+						<clipPath id="illWinClip">
+							<rect x="0" y="0" width="268" height="178" rx="14" />
+						</clipPath>
+					</defs>
+
+					<!-- Organic soft background blob & orbital arc -->
+					<path d="M 96 105 C 122 52 195 36 250 66 C 304 95 352 152 332 224 C 312 296 226 322 156 298 C 86 274 62 174 96 105 Z" style="fill:var(--ill-blob)" />
+					<path d="M 30 226 C 16 278 96 312 222 308" fill="none" style="stroke:var(--ill-arc)" stroke-width="1.8" stroke-linecap="round" />
+					<circle cx="136" cy="299" r="4.2" style="fill:var(--ill-accent);opacity:0.75" />
+
+					<!-- Dashed flight trajectory + paper plane -->
+					<path d="M 248 134 C 282 114 316 96 344 74" fill="none" style="stroke:var(--ill-dash)" stroke-width="1.8" stroke-dasharray="4.5 4.5" stroke-linecap="round" />
+					<g transform="translate(342, 46) rotate(4)" filter="url(#illShadowSm)">
+						<polygon points="0,18 40,2 28,28 15,21" fill="url(#illPlaneGrad)" />
+						<polygon points="15,21 40,2 21,29 17,33" style="fill:var(--ill-accent-deep)" />
+						<polygon points="17,33 21,25 25,27" style="fill:var(--ill-accent)" />
+					</g>
+
+					<!-- Main miniature Webmail client window -->
+					<g transform="translate(52, 118) skewY(-2)" filter="url(#illShadowLg)">
+						<g clip-path="url(#illWinClip)">
+							<rect x="0" y="0" width="268" height="178" style="fill:var(--ill-win-bg)" />
+							<rect x="0" y="32" width="54" height="146" style="fill:var(--ill-rail-bg)" />
+							<rect x="0" y="0" width="268" height="32" fill="url(#illHdrGrad)" />
+						</g>
+						<rect x="0" y="0" width="268" height="178" rx="14" fill="none" style="stroke:var(--ill-win-border)" stroke-width="1.2" />
+
+						<!-- Window control dots & miniature Satek logo -->
+						<circle cx="15" cy="16" r="2.8" fill="#ffffff" opacity="0.55" />
+						<circle cx="24" cy="16" r="2.8" fill="#ffffff" opacity="0.55" />
+						<circle cx="33" cy="16" r="2.8" fill="#ffffff" opacity="0.55" />
+						<text x="50" y="20.5" font-family="Be Vietnam Pro, Segoe UI, sans-serif" font-size="13.5" font-weight="800" letter-spacing="-0.4" fill="#ffffff">sa<tspan fill="#ff8c00">T</tspan>ek</text>
+
+						<!-- Left navigation rail icons -->
+						<rect x="11" y="45" width="32" height="28" rx="8" style="fill:var(--ill-accent-soft)" />
+						<g transform="translate(19, 53)">
+							<rect x="0" y="0" width="16" height="11.5" rx="2.5" style="fill:var(--ill-accent)" />
+							<path d="M 1.5 2 L 8 6.8 L 14.5 2" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+						</g>
+						<!-- Star icon -->
+						<path d="M 27 89 L 28.9 92.8 L 33.1 93.4 L 30 96.3 L 30.8 100.5 L 27 98.5 L 23.2 100.5 L 24 96.3 L 20.9 93.4 L 25.1 92.8 Z" fill="none" style="stroke:var(--ill-icon-muted)" stroke-width="1.4" stroke-linejoin="round" />
+						<!-- Send icon -->
+						<path d="M 21 120 L 33 114 L 29 126 L 26 121.5 Z" fill="none" style="stroke:var(--ill-icon-muted)" stroke-width="1.4" stroke-linejoin="round" />
+						<!-- Trash icon -->
+						<g style="stroke:var(--ill-icon-muted)" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M 21.5 143 H 32.5 M 25 143 V 141 H 29 V 143 M 23 143 L 23.8 152.5 H 30.2 L 31 143" />
+						</g>
+
+						<!-- Message list rows -->
+						<g transform="translate(66, 46)">
+							<rect x="0" y="0" width="184" height="36" rx="8" style="fill:var(--ill-row-bg);stroke:var(--ill-row-border)" stroke-width="1" />
+							<circle cx="17" cy="18" r="7.5" style="fill:var(--ill-avatar)" />
+							<rect x="33" y="11.5" width="76" height="5" rx="2.5" style="fill:var(--ill-line-a)" />
+							<rect x="33" y="21" width="52" height="4" rx="2" style="fill:var(--ill-line-b)" />
+							<circle cx="169" cy="18" r="3.6" style="fill:var(--ill-accent)" />
+						</g>
+						<g transform="translate(66, 90)">
+							<rect x="0" y="0" width="184" height="36" rx="8" style="fill:var(--ill-row-bg);stroke:var(--ill-row-border)" stroke-width="1" />
+							<circle cx="17" cy="18" r="7.5" style="fill:var(--ill-avatar)" />
+							<rect x="33" y="11.5" width="90" height="5" rx="2.5" style="fill:var(--ill-line-a)" />
+							<rect x="33" y="21" width="60" height="4" rx="2" style="fill:var(--ill-line-b)" />
+							<circle cx="169" cy="18" r="3.4" style="fill:var(--ill-line-b)" />
+						</g>
+						<g transform="translate(66, 134)">
+							<rect x="0" y="0" width="184" height="32" rx="8" style="fill:var(--ill-row-bg);stroke:var(--ill-row-border)" stroke-width="1" />
+							<circle cx="17" cy="16" r="7" style="fill:var(--ill-avatar)" />
+							<rect x="33" y="10" width="66" height="5" rx="2.5" style="fill:var(--ill-line-a)" />
+							<rect x="33" y="19" width="44" height="4" rx="2" style="fill:var(--ill-line-b)" />
+							<circle cx="169" cy="16" r="3.2" style="fill:var(--ill-line-b)" />
+						</g>
+					</g>
+
+					<!-- Floating notification toast -->
+					<g transform="translate(248, 110)" filter="url(#illShadowSm)">
+						<rect x="0" y="0" width="132" height="46" rx="11" style="fill:var(--ill-win-bg);stroke:var(--ill-win-border)" stroke-width="1" />
+						<rect x="10" y="9" width="28" height="28" rx="7.5" style="fill:var(--ill-accent)" />
+						<rect x="16" y="17.5" width="16" height="11" rx="2" fill="none" stroke="#ffffff" stroke-width="1.5" />
+						<path d="M 17 18.5 L 24 23.5 L 31 18.5" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+						<rect x="46" y="15.5" width="66" height="5" rx="2.5" style="fill:var(--ill-line-a)" />
+						<rect x="46" y="25" width="44" height="4.5" rx="2.2" style="fill:var(--ill-line-b)" />
+					</g>
+
+					<!-- Open 3D Inbox Tray with popped envelope -->
+					<g transform="translate(234, 218)" filter="url(#illShadowLg)">
+						<rect x="8" y="22" width="128" height="52" rx="11" style="fill:var(--ill-tray-back)" />
+						<rect x="21" y="2" width="102" height="58" rx="9" style="fill:var(--ill-env-bg);stroke:var(--ill-env-stroke)" stroke-width="1.2" />
+						<path d="M 24 8 L 72 38 L 120 8" fill="none" style="stroke:var(--ill-env-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						<path d="M 8 36 L 46 36 C 52 36 55 41 58 45 C 62 50 67 52 72 52 C 77 52 82 50 86 45 C 89 41 92 36 98 36 L 136 36 L 136 78 C 136 85 130 90 123 90 L 21 90 C 14 90 8 85 8 78 Z" fill="url(#illTrayGrad)" />
+						<path d="M 14 37 H 46 C 51 37 54 41 58 46 C 62 51 67 53 72 53 C 77 53 82 51 86 46 C 90 41 93 37 98 37 H 130" fill="none" stroke="#ffffff" stroke-opacity="0.32" stroke-width="1.4" stroke-linecap="round" />
+					</g>
+				</svg>
+			</div>
+
+			<div class="satek-login-pane">
+				<roundcube:if condition="config:dark_mode_support" />
+					<button type="button" class="satek-login-theme-btn" title="<roundcube:label name='sateklogin_toggletheme' />" aria-label="<roundcube:label name='sateklogin_toggletheme' />"></button>
+				<roundcube:endif />
+
+				<div class="satek-login-brand">
+					<roundcube:object name="logo" src="/images/logo-satek.png" id="logo" alt="Satek" logo-type="satek" />
+				</div>
+
+				<div class="satek-login-header">
+					<h2 class="satek-login-heading"><roundcube:label name="sateklogin_title" /></h2>
+					<p class="satek-login-subtitle"><roundcube:label name="sateklogin_subtitle" /></p>
+				</div>
+
+				<roundcube:form id="login-form" name="login-form" method="post" class="propform">
+				<roundcube:object name="loginform" form="login-form" size="40" submit=true class="form-control" />
+					<div id="login-footer" role="contentinfo">
+						<roundcube:object name="productname" condition="config:display_product_info &gt; 0" />
+						<roundcube:object name="version" condition="config:display_product_info == 2" />
+						<roundcube:if condition="config:support_url" />
+							&nbsp;&bull;&nbsp; <a href="<roundcube:var name='config:support_url' />" target="_blank" rel="noopener" class="support-link"><roundcube:label name="support" /></a>
+						<roundcube:endif />
+						<roundcube:container name="loginfooter" id="login-footer" />
+					</div>
+				</form>
+			</div>
+
 		</div>
-	</form>
+	</div>
 </div>
 
 <noscript>

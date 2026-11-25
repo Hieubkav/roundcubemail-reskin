@@ -252,11 +252,120 @@
         return true;
     }
 
+    function enhanceSatekLogin() {
+        var html = document.documentElement;
+        var card = document.querySelector('.satek-login-card');
+        if (!card) {
+            return;
+        }
+
+        // Theme switch button (Light / Dark)
+        var themeBtn = card.querySelector('.satek-login-theme-btn');
+        if (themeBtn && !themeBtn.dataset.satekBound) {
+            themeBtn.dataset.satekBound = '1';
+            var syncThemeBtn = function () {
+                var isDark = html.classList.contains('dark-mode');
+                themeBtn.classList.toggle('is-dark', isDark);
+                themeBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+            };
+            syncThemeBtn();
+            themeBtn.addEventListener('click', function () {
+                var nextDark = !html.classList.contains('dark-mode');
+                html.classList.toggle('dark-mode', nextDark);
+                var mode = nextDark ? 'dark' : 'light';
+                if (window.rcmail && typeof window.rcmail.set_cookie === 'function') {
+                    window.rcmail.set_cookie('colorMode', mode, false);
+                } else {
+                    try {
+                        document.cookie = 'colorMode=' + mode + ';path=/;samesite=lax';
+                    } catch (e) { /* ignore */ }
+                }
+                syncThemeBtn();
+            });
+        }
+
+        var form = document.getElementById('login-form');
+        var pane = card.querySelector('.satek-login-pane');
+        if (!form || !pane) {
+            return;
+        }
+
+        var syncLoginFields = function () {
+            var isReset = form.classList.contains('satek-reset-form')
+                || (window.rcmail && window.rcmail.env && window.rcmail.env.satek_reset_title);
+            pane.classList.toggle('is-reset-mode', !!isReset);
+            if (isReset) {
+                return;
+            }
+
+            var userInput = document.getElementById('rcmloginuser');
+            if (userInput) {
+                var emailLabel = card.getAttribute('data-email-label') || 'Email';
+                var userLabel = form.querySelector('label[for="rcmloginuser"]');
+                if (userLabel) {
+                    userLabel.textContent = emailLabel;
+                    if (userLabel.parentElement) {
+                        userLabel.parentElement.style.display = '';
+                    }
+                }
+                userInput.setAttribute('placeholder', 'name@example.com');
+            }
+
+            var hostLabel = form.querySelector('label[for="rcmloginhost"]');
+            if (hostLabel && hostLabel.parentElement) {
+                hostLabel.parentElement.style.display = '';
+            }
+
+            var pwdInput = document.getElementById('rcmloginpwd');
+            if (pwdInput) {
+                var pwdLabel = form.querySelector('label[for="rcmloginpwd"]');
+                if (pwdLabel && pwdLabel.parentElement) {
+                    pwdLabel.parentElement.style.display = '';
+                }
+                pwdInput.setAttribute('placeholder', '••••••••');
+
+                var group = pwdInput.closest('.input-group');
+                if (group && !group.querySelector('.satek-pwd-toggle')) {
+                    var showTitle = card.getAttribute('data-pwd-show') || 'Show password';
+                    var hideTitle = card.getAttribute('data-pwd-hide') || 'Hide password';
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'satek-pwd-toggle';
+                    btn.setAttribute('title', showTitle);
+                    btn.setAttribute('aria-label', showTitle);
+                    btn.setAttribute('aria-pressed', 'false');
+                    btn.addEventListener('click', function () {
+                        var visible = pwdInput.type === 'password';
+                        pwdInput.type = visible ? 'text' : 'password';
+                        btn.classList.toggle('is-visible', visible);
+                        btn.setAttribute('aria-pressed', visible ? 'true' : 'false');
+                        btn.setAttribute('title', visible ? hideTitle : showTitle);
+                        btn.setAttribute('aria-label', visible ? hideTitle : showTitle);
+                    });
+                    group.appendChild(btn);
+                }
+            }
+        };
+
+        syncLoginFields();
+        if (window.rcmail && typeof window.rcmail.addEventListener === 'function' && !form.dataset.satekHooked) {
+            form.dataset.satekHooked = '1';
+            window.rcmail.addEventListener('init', function () {
+                setTimeout(syncLoginFields, 0);
+            });
+        }
+        setTimeout(syncLoginFields, 60);
+    }
+
     function initSogoSkin() {
         var html = document.documentElement;
         var body = document.body;
 
-        if (!body || html.classList.contains('iframe') || body.classList.contains('task-login')) {
+        if (!body || html.classList.contains('iframe')) {
+            return;
+        }
+        if (body.classList.contains('task-login')) {
+            enhanceSatekLogin();
             return;
         }
 

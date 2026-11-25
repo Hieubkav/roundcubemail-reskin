@@ -21,3 +21,11 @@ $labels['satekabout_guide_prefs_desc'] = 'Switch between Satek & Satek Dark, tog
 $labels['satekabout_contact_title'] = 'Satek Support & Contact';
 $labels['satekabout_contact_hours'] = 'Daily support: 08:00 – 22:00 (Hotline / Zalo)';
 $labels['satekabout_company'] = 'SATEK CO., LTD — 152 Phan Huy Chu, Tan An Ward, Can Tho City';
+
+// Custom Satek Webmail Login Screen
+$labels['sateklogin_title'] = 'Sign in to Webmail';
+$labels['sateklogin_subtitle'] = 'Access your email inbox on the Satek webmail platform.';
+$labels['sateklogin_email'] = 'Email';
+$labels['sateklogin_showpwd'] = 'Show password';
+$labels['sateklogin_hidepwd'] = 'Hide password';
+$labels['sateklogin_toggletheme'] = 'Switch Light / Dark mode';

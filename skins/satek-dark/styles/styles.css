@@ -8174,61 +8174,362 @@ html.touch #messagelist > tbody > tr > td.subject {
   background-color: #ff8c00 !important;
 }
 body.task-login {
-  background: radial-gradient(1200px 640px at 50% -8%, #3a2408 0%, #141414 48%, #0c0b0a 100%) !important;
+  --ill-blob: rgba(255, 140, 0, 0.12);
+  --ill-arc: rgba(224, 118, 0, 0.25);
+  --ill-dash: rgba(224, 118, 0, 0.45);
+  --ill-win-bg: #ffffff;
+  --ill-win-border: rgba(217, 119, 0, 0.22);
+  --ill-rail-bg: #faf7f3;
+  --ill-hdr-a: #231f1b;
+  --ill-hdr-b: #13110f;
+  --ill-accent: #f58600;
+  --ill-accent-deep: #cc6600;
+  --ill-accent-soft: #fff0db;
+  --ill-icon-muted: #8a8178;
+  --ill-row-bg: #ffffff;
+  --ill-row-border: #efe6da;
+  --ill-avatar: #ede4d8;
+  --ill-line-a: #dfd3c3;
+  --ill-line-b: #eee6dc;
+  --ill-tray-a: #ff9c24;
+  --ill-tray-b: #de7200;
+  --ill-tray-back: #26201a;
+  --ill-env-bg: #ffffff;
+  --ill-env-border: #eadbc8;
+  --ill-env-stroke: #c9ae8c;
+  --ill-shadow: rgba(45, 28, 10, 0.14);
+  background: radial-gradient(920px 560px at 14% 12%, rgba(255, 140, 0, 0.11) 0%, transparent 64%), radial-gradient(840px 520px at 88% 88%, rgba(255, 140, 0, 0.09) 0%, transparent 60%), linear-gradient(135deg, #fbfaf8 0%, #f7f4ef 52%, #f4ede3 100%) !important;
+  min-height: 100vh;
 }
 body.task-login #layout-content {
   background: transparent !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+  text-align: left !important;
+  overflow-y: auto;
+}
+body.task-login .satek-login-shell {
+  width: 100%;
+  max-width: 960px;
+  margin: auto;
+}
+body.task-login .satek-login-card {
+  display: grid;
+  grid-template-columns: 1.03fr 1fr;
+  background-color: #ffffff;
+  border: 1px solid #ebe2d5;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(34, 24, 14, 0.09), 0 4px 14px rgba(34, 24, 14, 0.04);
+}
+body.task-login .satek-login-visual {
+  background: linear-gradient(155deg, #fcf6ee 0%, #f6ebdc 100%);
+  border-right: 1px solid #efe5d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 26px;
+  position: relative;
+}
+body.task-login .satek-login-svg {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+body.task-login .satek-login-pane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 46px 48px 36px;
+  background-color: #ffffff;
+}
+body.task-login .satek-login-theme-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid #e8dfd2;
+  background-color: #faf6f0;
+  color: #6b6258;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+body.task-login .satek-login-theme-btn:before {
+  content: "\f186";
+  font-family: 'Icons';
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1;
+}
+body.task-login .satek-login-theme-btn.is-dark:before {
+  content: "\f185";
+}
+body.task-login .satek-login-theme-btn:hover {
+  background-color: #fff2e0;
+  border-color: rgba(255, 140, 0, 0.4);
+  color: #d97300;
+}
+body.task-login .satek-login-brand {
+  text-align: center;
+  margin-bottom: 18px;
 }
 body.task-login #logo {
-  width: 220px !important;
-  max-width: 70%;
+  position: static !important;
+  top: auto !important;
+  margin: 0 auto !important;
+  width: 164px !important;
+  max-width: 68% !important;
   height: auto !important;
-  max-height: none !important;
-  top: 0 !important;
-  margin: 15vh auto 2vh !important;
-  filter: drop-shadow(0 8px 24px rgba(255, 140, 0, 0.18));
+  max-height: 52px !important;
+  display: block !important;
+  object-fit: contain;
+  filter: none;
+}
+body.task-login .satek-login-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+body.task-login .satek-login-heading {
+  margin: 0 0 6px;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #191614;
+  line-height: 1.25;
+}
+body.task-login .satek-login-subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #6b6258;
+}
+body.task-login .satek-login-pane.is-reset-mode .satek-login-header {
+  display: none;
+}
+body.task-login #login-form.satek-reset-form .satek-reset-title {
+  color: #191614 !important;
 }
 body.task-login #login-form {
-  background-color: #1a1612 !important;
-  border: 1px solid #2e2823 !important;
-  border-top: 4px solid #ff8c00 !important;
-  border-radius: 12px;
-  padding: 28px 28px 24px;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+  position: static !important;
+  top: auto !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
 }
-body.task-login #login-form .form-control {
-  background-color: #241f19 !important;
-  border-color: #3a322b !important;
-  color: #f5ede2 !important;
+body.task-login #login-form table,
+body.task-login #login-form tbody {
+  display: block;
+  width: 100%;
 }
-body.task-login #login-form .form-control:focus {
-  border-color: #ff8c00 !important;
-  box-shadow: 0 0 0 0.18rem rgba(255, 140, 0, 0.25) !important;
+body.task-login #login-form:not(.satek-reset-form) table tr.form-group.row {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 16px;
 }
-body.task-login #login-form .input-group-text {
-  background-color: #2a241e !important;
-  border-color: #3a322b !important;
-  color: #ff8c00 !important;
+body.task-login #login-form:not(.satek-reset-form) td.title {
+  display: block !important;
+  width: 100%;
+  padding: 0 0 6px;
+  text-align: left;
 }
-body.task-login .btn-primary,
-body.task-login .btn.mainaction {
-  background-color: #ff8c00 !important;
-  border-color: #ff8c00 !important;
-  color: #141414 !important;
-  font-weight: 700 !important;
+body.task-login #login-form:not(.satek-reset-form) td.title label {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2b2520;
 }
-body.task-login .btn-primary:hover,
-body.task-login .btn.mainaction:hover,
-body.task-login .btn-primary:focus,
-body.task-login .btn.mainaction:focus,
-body.task-login .btn-primary:active,
-body.task-login .btn.mainaction:active {
-  background-color: #e07f00 !important;
-  border-color: #e07f00 !important;
-  color: #141414 !important;
+body.task-login #login-form:not(.satek-reset-form) td.input {
+  display: block;
+  width: 100%;
+  padding: 0;
+}
+body.task-login #login-form .input-group {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+body.task-login #login-form .input-group-prepend {
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  bottom: 1px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+body.task-login #login-form .input-group-prepend .input-group-text {
+  border: 0 !important;
+  background: transparent !important;
+  color: #8c7f72 !important;
+  padding: 0 0 0 14px !important;
+  font-size: 14px;
+  min-width: 38px;
+  justify-content: flex-start;
+}
+body.task-login #login-form .input-group-prepend .input-group-text.user:before {
+  content: "\f0e0" !important;
+  font-family: 'Icons';
+  font-weight: 400;
+}
+body.task-login #login-form .form-control,
+body.task-login #login-form .custom-select {
+  height: 46px;
+  border-radius: 10px !important;
+  border: 1px solid #e4dcd0 !important;
+  background-color: #ffffff !important;
+  color: #191614 !important;
+  font-size: 0.92rem;
+  padding-left: 42px !important;
+  padding-right: 42px !important;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+body.task-login #login-form .form-control::placeholder,
+body.task-login #login-form .custom-select::placeholder {
+  color: #a3978a;
+}
+body.task-login #login-form .form-control:focus,
+body.task-login #login-form .custom-select:focus {
+  border-color: #f58600 !important;
+  box-shadow: 0 0 0 3px rgba(245, 134, 0, 0.16) !important;
+}
+body.task-login #login-form .satek-pwd-toggle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #8c7f72;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+body.task-login #login-form .satek-pwd-toggle:before {
+  content: "\f06e";
+  font-family: 'Icons';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1;
+}
+body.task-login #login-form .satek-pwd-toggle.is-visible:before {
+  content: "\f070";
+}
+body.task-login #login-form .satek-pwd-toggle:hover {
+  color: #d97300;
+  background-color: rgba(255, 140, 0, 0.1);
+}
+body.task-login #login-form .formbuttons {
+  margin-top: 6px;
+}
+body.task-login #login-form #rcmloginsubmit {
+  height: 46px;
+  border-radius: 10px !important;
+  text-transform: none !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+  background-color: #1c1815 !important;
+  border-color: #1c1815 !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(28, 24, 21, 0.22);
+  transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+body.task-login #login-form #rcmloginsubmit:hover,
+body.task-login #login-form #rcmloginsubmit:focus {
+  background-color: #e07600 !important;
+  border-color: #e07600 !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 24px rgba(224, 118, 0, 0.28) !important;
+}
+body.task-login #login-form:not(.satek-reset-form) #rcmloginsubmit:after {
+  content: "\f061";
+  font-family: 'Icons';
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1;
 }
 body.task-login #login-footer {
-  color: #a79a8c !important;
+  flex: 0 0 auto;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #7d7368 !important;
+}
+body.task-login #login-footer > div {
+  background: transparent !important;
+  padding: 0 !important;
+  margin-top: 6px !important;
+}
+body.task-login #login-footer .satek-mailbox-reset-link {
+  margin: 10px 0 0;
+}
+body.task-login #login-footer .satek-mailbox-reset-link a {
+  color: #d97300 !important;
+  font-weight: 600;
+}
+@media screen and (max-width: 860px) {
+  body.task-login .satek-login-card {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  body.task-login .satek-login-visual {
+    border-right: 0;
+    border-bottom: 1px solid #efe5d8;
+    padding: 20px 24px 16px;
+  }
+  body.task-login .satek-login-svg {
+    max-width: 245px;
+  }
+  body.task-login .satek-login-pane {
+    padding: 28px 24px 24px;
+  }
+}
+@media screen and (max-width: 480px) {
+  body.task-login #layout-content {
+    padding: 14px 12px;
+  }
+  body.task-login .satek-login-card {
+    border-radius: 16px;
+  }
+  body.task-login .satek-login-visual {
+    padding: 16px 16px 12px;
+  }
+  body.task-login .satek-login-svg {
+    max-width: 205px;
+  }
+  body.task-login .satek-login-pane {
+    padding: 24px 18px 20px;
+  }
+  body.task-login .satek-login-heading {
+    font-size: 1.35rem;
+  }
 }
 html.dark-mode body {
   color: #e5ebf0;
@@ -8525,13 +8826,117 @@ html.dark-mode #messagestack > div.loading {
   background-color: #253338 !important;
 }
 html.dark-mode body.task-login {
-  background: linear-gradient(145deg, #101518 0%, #161d21 60%, #121b1a 100%);
+  --ill-blob: rgba(255, 140, 0, 0.11);
+  --ill-arc: rgba(255, 154, 36, 0.24);
+  --ill-dash: rgba(255, 154, 36, 0.45);
+  --ill-win-bg: #251f19;
+  --ill-win-border: #3a3026;
+  --ill-rail-bg: #1d1814;
+  --ill-hdr-a: #141210;
+  --ill-hdr-b: #0a0908;
+  --ill-accent: #ff941a;
+  --ill-accent-deep: #d46b00;
+  --ill-accent-soft: rgba(255, 140, 0, 0.16);
+  --ill-icon-muted: #988b7e;
+  --ill-row-bg: #2b241d;
+  --ill-row-border: #3b3127;
+  --ill-avatar: #3d3329;
+  --ill-line-a: #544638;
+  --ill-line-b: #40352a;
+  --ill-tray-a: #ff9c24;
+  --ill-tray-b: #cc6600;
+  --ill-tray-back: #13100d;
+  --ill-env-bg: #f6efe7;
+  --ill-env-border: #cfb79c;
+  --ill-env-stroke: #a6825b;
+  --ill-shadow: rgba(0, 0, 0, 0.52);
+  background: radial-gradient(980px 560px at 18% 12%, rgba(255, 140, 0, 0.16) 0%, transparent 62%), linear-gradient(145deg, #0d0c0b 0%, #14110f 55%, #0a0908 100%) !important;
+}
+html.dark-mode body.task-login .satek-login-card {
+  background-color: #171412;
+  border-color: #2d2620;
+  box-shadow: 0 26px 64px rgba(0, 0, 0, 0.65);
+}
+html.dark-mode body.task-login .satek-login-visual {
+  background: linear-gradient(155deg, #211b15 0%, #15120f 100%);
+  border-color: #2d2620;
+}
+html.dark-mode body.task-login .satek-login-pane {
+  background-color: #171412;
+}
+html.dark-mode body.task-login .satek-login-theme-btn {
+  background-color: #241e19;
+  border-color: #362e26;
+  color: #c5b6a6;
+}
+html.dark-mode body.task-login .satek-login-theme-btn:hover {
+  background-color: rgba(255, 140, 0, 0.16);
+  border-color: rgba(255, 140, 0, 0.45);
+  color: #ffa733;
+}
+html.dark-mode body.task-login #logo {
+  filter: url(#satek-logo-dark) !important;
+}
+html.dark-mode body.task-login .satek-login-heading {
+  color: #f6f0e8;
+}
+html.dark-mode body.task-login .satek-login-subtitle {
+  color: #a89b8d;
 }
 html.dark-mode body.task-login #login-form {
-  background-color: #171412;
-  border-color: #2e2823;
-  border-top-color: #ffa733;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html.dark-mode body.task-login #login-form.satek-reset-form .satek-reset-title {
+  color: #f6f0e8 !important;
+}
+html.dark-mode body.task-login #login-form:not(.satek-reset-form) td.title label {
+  color: #e6ddd2;
+}
+html.dark-mode body.task-login #login-form .input-group-prepend .input-group-text {
+  color: #b09f8e !important;
+}
+html.dark-mode body.task-login #login-form .form-control,
+html.dark-mode body.task-login #login-form .custom-select {
+  background-color: #211c17 !important;
+  border-color: #382f27 !important;
+  color: #f6f0e8 !important;
+}
+html.dark-mode body.task-login #login-form .form-control::placeholder,
+html.dark-mode body.task-login #login-form .custom-select::placeholder {
+  color: #7c6f62;
+}
+html.dark-mode body.task-login #login-form .form-control:focus,
+html.dark-mode body.task-login #login-form .custom-select:focus {
+  border-color: #ff941a !important;
+  box-shadow: 0 0 0 3px rgba(255, 148, 26, 0.22) !important;
+}
+html.dark-mode body.task-login #login-form .satek-pwd-toggle {
+  color: #a89888;
+}
+html.dark-mode body.task-login #login-form .satek-pwd-toggle:hover {
+  color: #ffa733;
+  background-color: rgba(255, 140, 0, 0.14);
+}
+html.dark-mode body.task-login #login-form #rcmloginsubmit {
+  background-color: #ff8c00 !important;
+  border-color: #ff8c00 !important;
+  color: #141414 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 8px 22px rgba(255, 140, 0, 0.24);
+}
+html.dark-mode body.task-login #login-form #rcmloginsubmit:hover,
+html.dark-mode body.task-login #login-form #rcmloginsubmit:focus {
+  background-color: #ffa028 !important;
+  border-color: #ffa028 !important;
+  color: #141414 !important;
+}
+html.dark-mode body.task-login #login-footer {
+  color: #9e9082 !important;
+}
+html.dark-mode body.task-login #login-footer .satek-mailbox-reset-link a {
+  color: #ffb347 !important;
 }
 @media screen and (min-width: 481px) {
   #layout-menu {

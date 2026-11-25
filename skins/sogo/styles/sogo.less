@@ -1672,32 +1672,418 @@ a {
     }
 }
 
-// ---------------- Login Screen ----------------
+// ---------------- Login Screen (Split Card + Custom SVG, Satek Teal) ----------------
 
 body.task-login {
-    background: linear-gradient(145deg, #e8f2f0 0%, #f5f8f9 60%, #edf4f2 100%);
+    --ill-blob: rgba(82, 142, 134, 0.13);
+    --ill-arc: rgba(82, 142, 134, 0.25);
+    --ill-dash: rgba(66, 119, 112, 0.42);
+    --ill-win-bg: #ffffff;
+    --ill-win-border: rgba(82, 142, 134, 0.20);
+    --ill-rail-bg: #f3f9f8;
+    --ill-hdr-a: #528e86;
+    --ill-hdr-b: #32665f;
+    --ill-accent: #4c8c84;
+    --ill-accent-deep: #30625b;
+    --ill-accent-soft: #e2f1ee;
+    --ill-icon-muted: #768e92;
+    --ill-row-bg: #ffffff;
+    --ill-row-border: #e3eeec;
+    --ill-avatar: #dae7e5;
+    --ill-line-a: #c6dad7;
+    --ill-line-b: #e0ecea;
+    --ill-tray-a: #5da299;
+    --ill-tray-b: #387169;
+    --ill-tray-back: #234d47;
+    --ill-env-bg: #ffffff;
+    --ill-env-border: #d7e6e3;
+    --ill-env-stroke: #b0cdc7;
+    --ill-shadow: rgba(20, 56, 51, 0.14);
+
+    background:
+        radial-gradient(920px 560px at 14% 12%, #e4f3f0 0%, transparent 64%),
+        radial-gradient(840px 520px at 88% 88%, #e8f5f2 0%, transparent 60%),
+        linear-gradient(135deg, #f4faf9 0%, #f8fbfb 52%, #edf6f4 100%) !important;
+    min-height: 100vh;
 
     #layout-content {
-        background: transparent;
+        background: transparent !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 24px 16px;
+        text-align: left !important;
+        overflow-y: auto;
     }
 
-    // Satek brand logo on login: wide wordmark, clear top gap, close to form
+    .satek-login-shell {
+        width: 100%;
+        max-width: 960px;
+        margin: auto;
+    }
+
+    .satek-login-card {
+        display: grid;
+        grid-template-columns: 1.03fr 1fr;
+        background-color: #ffffff;
+        border: 1px solid #dfece9;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 24px 60px rgba(24, 62, 57, 0.09), 0 4px 14px rgba(24, 62, 57, 0.04);
+    }
+
+    .satek-login-visual {
+        background: linear-gradient(155deg, #f2f9f7 0%, #e4f1ee 100%);
+        border-right: 1px solid #e6f0ee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 36px 26px;
+        position: relative;
+    }
+
+    .satek-login-svg {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+    }
+
+    .satek-login-pane {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 46px 48px 36px;
+        background-color: #ffffff;
+    }
+
+    .satek-login-theme-btn {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        border: 1px solid @sogo-border;
+        background-color: #f6faf9;
+        color: @sogo-text-secondary;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+        &:before {
+            content: "\f186";
+            font-family: 'Icons';
+            font-weight: 900;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        &.is-dark:before {
+            content: "\f185";
+        }
+
+        &:hover {
+            background-color: @sogo-teal-soft;
+            border-color: rgba(82, 142, 134, 0.35);
+            color: @sogo-teal-dark;
+        }
+    }
+
+    .satek-login-brand {
+        text-align: center;
+        margin-bottom: 18px;
+    }
+
     #logo {
-        width: 220px !important;
-        max-width: 70%;
+        position: static !important;
+        top: auto !important;
+        margin: 0 auto !important;
+        width: 164px !important;
+        max-width: 68% !important;
         height: auto !important;
-        max-height: none !important;
-        top: 0 !important;
-        margin: 15vh auto 2vh !important;
+        max-height: 52px !important;
+        display: block !important;
+        object-fit: contain;
+    }
+
+    .satek-login-header {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .satek-login-heading {
+        margin: 0 0 6px;
+        font-size: 1.55rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #13292d;
+        line-height: 1.25;
+    }
+
+    .satek-login-subtitle {
+        margin: 0;
+        font-size: 0.85rem;
+        line-height: 1.45;
+        color: #5e7276;
+    }
+
+    .satek-login-pane.is-reset-mode .satek-login-header {
+        display: none;
+    }
+
+    #login-form.satek-reset-form .satek-reset-title {
+        color: #13292d !important;
     }
 
     #login-form {
-        background-color: @sogo-surface;
-        border: 1px solid @sogo-border;
-        border-top: 4px solid @sogo-teal;
-        border-radius: 12px;
-        padding: 28px 28px 24px;
-        box-shadow: 0 12px 32px rgba(24, 52, 48, 0.08);
+        position: static !important;
+        top: auto !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+
+        table,
+        tbody {
+            display: block;
+            width: 100%;
+        }
+
+        &:not(.satek-reset-form) {
+            table tr.form-group.row {
+                display: flex;
+                flex-direction: column;
+                margin: 0 0 16px;
+            }
+
+            td.title {
+                display: block !important;
+                width: 100%;
+                padding: 0 0 6px;
+                text-align: left;
+
+                label {
+                    margin: 0;
+                    font-size: 0.82rem;
+                    font-weight: 600;
+                    color: #243b3f;
+                }
+            }
+
+            td.input {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .input-group-prepend {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            bottom: 1px;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+
+            .input-group-text {
+                border: 0 !important;
+                background: transparent !important;
+                color: #7c9296 !important;
+                padding: 0 0 0 14px !important;
+                font-size: 14px;
+                min-width: 38px;
+                justify-content: flex-start;
+
+                &.user:before {
+                    content: "\f0e0" !important;
+                    font-family: 'Icons';
+                    font-weight: 400;
+                }
+            }
+        }
+
+        .form-control,
+        .custom-select {
+            height: 46px;
+            border-radius: 10px !important;
+            border: 1px solid #d7e4e2 !important;
+            background-color: #ffffff !important;
+            color: #14282c !important;
+            font-size: 0.92rem;
+            padding-left: 42px !important;
+            padding-right: 42px !important;
+            transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+
+            &::placeholder {
+                color: #93a6a9;
+            }
+
+            &:focus {
+                border-color: @sogo-teal !important;
+                box-shadow: 0 0 0 3px rgba(82, 142, 134, 0.16) !important;
+            }
+        }
+
+        .satek-pwd-toggle {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 5;
+            width: 36px;
+            height: 36px;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            color: #82989c;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            &:before {
+                content: "\f06e";
+                font-family: 'Icons';
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 1;
+            }
+
+            &.is-visible:before {
+                content: "\f070";
+            }
+
+            &:hover {
+                color: @sogo-teal-dark;
+                background-color: rgba(82, 142, 134, 0.08);
+            }
+        }
+
+        .formbuttons {
+            margin-top: 6px;
+        }
+
+        #rcmloginsubmit {
+            height: 46px;
+            border-radius: 10px !important;
+            text-transform: none !important;
+            font-size: 0.95rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.01em;
+            background-color: #2b6860 !important;
+            border-color: #2b6860 !important;
+            color: #ffffff !important;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 8px 18px rgba(43, 104, 96, 0.22);
+            transition: background-color 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease;
+
+            &:hover,
+            &:focus {
+                background-color: #21534c !important;
+                border-color: #21534c !important;
+                box-shadow: 0 10px 22px rgba(33, 83, 76, 0.28) !important;
+            }
+        }
+
+        &:not(.satek-reset-form) #rcmloginsubmit:after {
+            content: "\f061";
+            font-family: 'Icons';
+            font-weight: 900;
+            font-size: 13px;
+            line-height: 1;
+        }
+    }
+
+    #login-footer {
+        flex: 0 0 auto;
+        margin-top: 16px;
+        text-align: center;
+        font-size: 0.78rem;
+        color: @sogo-text-muted;
+
+        & > div {
+            background: transparent !important;
+            padding: 0 !important;
+            margin-top: 6px !important;
+        }
+
+        .satek-mailbox-reset-link {
+            margin: 10px 0 0;
+
+            a {
+                color: @sogo-teal-dark;
+                font-weight: 600;
+            }
+        }
+    }
+
+    @media screen and (max-width: 860px) {
+        .satek-login-card {
+            grid-template-columns: 1fr;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .satek-login-visual {
+            border-right: 0;
+            border-bottom: 1px solid #e6f0ee;
+            padding: 20px 24px 16px;
+        }
+
+        .satek-login-svg {
+            max-width: 245px;
+        }
+
+        .satek-login-pane {
+            padding: 28px 24px 24px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        #layout-content {
+            padding: 14px 12px;
+        }
+
+        .satek-login-card {
+            border-radius: 16px;
+        }
+
+        .satek-login-visual {
+            padding: 16px 16px 12px;
+        }
+
+        .satek-login-svg {
+            max-width: 205px;
+        }
+
+        .satek-login-pane {
+            padding: 24px 18px 20px;
+        }
+
+        .satek-login-heading {
+            font-size: 1.35rem;
+        }
     }
 }
 
@@ -2068,13 +2454,136 @@ html.dark-mode {
     }
 
     body.task-login {
-        background: linear-gradient(145deg, #101518 0%, #161d21 60%, #121b1a 100%);
+        --ill-blob: rgba(111, 194, 182, 0.10);
+        --ill-arc: rgba(111, 194, 182, 0.24);
+        --ill-dash: rgba(111, 194, 182, 0.42);
+        --ill-win-bg: #1f2d31;
+        --ill-win-border: #2f4349;
+        --ill-rail-bg: #192528;
+        --ill-hdr-a: #2d5d56;
+        --ill-hdr-b: #1e423d;
+        --ill-accent: #6fc2b6;
+        --ill-accent-deep: #3d8379;
+        --ill-accent-soft: rgba(111, 194, 182, 0.16);
+        --ill-icon-muted: #7c979c;
+        --ill-row-bg: #243338;
+        --ill-row-border: #30444a;
+        --ill-avatar: #344a50;
+        --ill-line-a: #466168;
+        --ill-line-b: #354b52;
+        --ill-tray-a: #60b2a6;
+        --ill-tray-b: #327068;
+        --ill-tray-back: #1a403b;
+        --ill-env-bg: #e8f3f1;
+        --ill-env-border: #b4d5cf;
+        --ill-env-stroke: #569188;
+        --ill-shadow: rgba(0, 0, 0, 0.42);
+
+        background:
+            radial-gradient(960px 560px at 16% 12%, rgba(82, 142, 134, 0.18) 0%, transparent 62%),
+            linear-gradient(145deg, #0d1315 0%, #11191b 55%, #0b1112 100%) !important;
+
+        .satek-login-card {
+            background-color: #161e21;
+            border-color: #253338;
+            box-shadow: 0 26px 64px rgba(0, 0, 0, 0.55);
+        }
+
+        .satek-login-visual {
+            background: linear-gradient(155deg, #1a2629 0%, #121c1e 100%);
+            border-color: #253338;
+        }
+
+        .satek-login-pane {
+            background-color: #161e21;
+        }
+
+        .satek-login-theme-btn {
+            background-color: #1f2a2e;
+            border-color: #2d3d42;
+            color: #9cb3b7;
+
+            &:hover {
+                background-color: rgba(111, 194, 182, 0.16);
+                border-color: rgba(111, 194, 182, 0.42);
+                color: @sogo-dm-teal-accent;
+            }
+        }
+
+        #logo {
+            filter: url(#satek-logo-dark) !important;
+        }
+
+        .satek-login-heading {
+            color: #ecf3f2;
+        }
+
+        .satek-login-subtitle {
+            color: #98acb0;
+        }
 
         #login-form {
-            background-color: @sogo-dm-surface;
-            border-color: @sogo-dm-border;
-            border-top-color: @sogo-dm-teal-accent;
-            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+
+            &.satek-reset-form .satek-reset-title {
+                color: #ecf3f2 !important;
+            }
+
+            &:not(.satek-reset-form) td.title label {
+                color: #d6e2e4;
+            }
+
+            .input-group-prepend .input-group-text {
+                color: #839ca0 !important;
+            }
+
+            .form-control,
+            .custom-select {
+                background-color: #1c262a !important;
+                border-color: #2c3b40 !important;
+                color: #ebf2f2 !important;
+
+                &::placeholder {
+                    color: #6c8286;
+                }
+
+                &:focus {
+                    border-color: @sogo-dm-teal-accent !important;
+                    box-shadow: 0 0 0 3px rgba(111, 194, 182, 0.22) !important;
+                }
+            }
+
+            .satek-pwd-toggle {
+                color: #839ca0;
+
+                &:hover {
+                    color: @sogo-dm-teal-accent;
+                    background-color: rgba(111, 194, 182, 0.12);
+                }
+            }
+
+            #rcmloginsubmit {
+                background-color: #4b988e !important;
+                border-color: #4b988e !important;
+                color: #ffffff !important;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+
+                &:hover,
+                &:focus {
+                    background-color: #59aa9f !important;
+                    border-color: #59aa9f !important;
+                }
+            }
+        }
+
+        #login-footer {
+            color: #8da1a5;
+
+            .satek-mailbox-reset-link a {
+                color: @sogo-dm-teal-accent;
+            }
         }
     }
 }

@@ -286,3 +286,11 @@ $labels['satekabout_guide_prefs_desc'] = 'Tùy chọn Satek hoặc Satek Dark, b
 $labels['satekabout_contact_title'] = 'Đồng hành & Hỗ trợ từ Satek';
 $labels['satekabout_contact_hours'] = 'Hỗ trợ 08:00 – 22:00 hằng ngày (Hotline / Zalo)';
 $labels['satekabout_company'] = 'CÔNG TY TNHH SATEK — 152 Phan Huy Chú, P. Tân An, TP. Cần Thơ';
+
+// Custom Satek Webmail Login Screen
+$labels['sateklogin_title'] = 'Đăng nhập Webmail';
+$labels['sateklogin_subtitle'] = 'Truy cập hộp thư điện tử của bạn trên nền tảng webmail.';
+$labels['sateklogin_email'] = 'Email';
+$labels['sateklogin_showpwd'] = 'Hiện mật khẩu';
+$labels['sateklogin_hidepwd'] = 'Ẩn mật khẩu';
+$labels['sateklogin_toggletheme'] = 'Chuyển giao diện Sáng / Tối';
