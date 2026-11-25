@@ -107,7 +107,8 @@ a {
 .sogo-topbar-date,
 .sogo-fab-compose,
 .sogo-fab-inbox,
-.sogo-sidebar-settings {
+.sogo-sidebar-settings,
+.sogo-sidebar-back-mail {
     display: none;
 }
 
@@ -156,8 +157,10 @@ a {
             font-size: 0.96rem;
             font-weight: 600;
         }
+    }
 
-        .header-title.username {
+    #layout-sidebar > .header {
+        .header-title {
             display: flex !important;
             align-items: center;
             justify-content: center;
@@ -188,6 +191,9 @@ a {
                 color: #ffffff !important;
             }
         }
+    }
+
+    #layout > div > .header {
 
         a.button,
         a.button.icon {
@@ -553,7 +559,7 @@ a {
         background-color: @sogo-sidebar-bg !important;
         justify-content: space-between;
 
-        .header-title.username {
+        .header-title {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -605,6 +611,14 @@ a {
                 overflow: hidden;
             }
         }
+    }
+
+    body.task-settings #layout-sidebar:not(.sidebar-right) > .header .sogo-username-icon:before {
+        content: "\f013";
+    }
+
+    body.task-addressbook #layout-sidebar:not(.sidebar-right) > .header .sogo-username-icon:before {
+        content: "\f0c0";
     }
 
     // List header across ALL tasks (Mail, Addressbook, Settings): clean title left, icons right
@@ -987,7 +1001,7 @@ a {
             }
         }
 
-        // Mail user card: single 34px avatar + top-right action icons, full-width wrapping email below
+        // Unified sidebar header card (Mail, Contacts, Settings): single 34px icon + top-right actions, full-width title below
         & > .header.sogo-has-usercard {
             height: auto !important;
             min-height: 0 !important;
@@ -999,7 +1013,7 @@ a {
             justify-content: flex-start !important;
             gap: 0 !important;
 
-            .header-title.username {
+            .header-title {
                 display: flex !important;
                 flex-direction: column !important;
                 align-items: flex-start !important;
@@ -1047,6 +1061,40 @@ a {
                 }
             }
 
+            & > a.sogo-sidebar-back-mail {
+                display: inline-flex !important;
+                align-items: center;
+                gap: 5px;
+                position: absolute !important;
+                top: 13px;
+                right: 12px;
+                height: 30px;
+                padding: 0 11px;
+                border-radius: 999px;
+                background-color: rgba(255, 255, 255, 0.16);
+                border: 1px solid rgba(255, 255, 255, 0.26);
+                color: #ffffff !important;
+                font-size: 12px;
+                font-weight: 600;
+                line-height: 1;
+                text-decoration: none !important;
+                white-space: nowrap;
+                transition: background-color 0.15s ease;
+
+                &:before {
+                    font-family: 'Icons';
+                    font-weight: 900;
+                    content: "\f060";
+                    font-size: 11px;
+                    line-height: 1;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.28) !important;
+                    color: #ffffff !important;
+                }
+            }
+
             & > a.sogo-sidebar-settings {
                 position: absolute !important;
                 top: 12px;
@@ -1076,22 +1124,37 @@ a {
                 }
             }
 
-            &.sogo-has-usercard .header-title.username {
-                .sogo-username-icon {
-                    background-color: rgba(255, 255, 255, 0.14) !important;
-                    border-color: rgba(255, 255, 255, 0.18);
-                    color: #ffffff !important;
+            &.sogo-has-usercard {
+                .header-title {
+                    .sogo-username-icon {
+                        background-color: rgba(255, 255, 255, 0.14) !important;
+                        border-color: rgba(255, 255, 255, 0.18);
+                        color: #ffffff !important;
+                    }
+
+                    .sogo-username-text {
+                        color: #ffffff !important;
+                    }
                 }
 
-                .sogo-username-text {
+                & > a.sogo-sidebar-back-mail {
+                    background-color: rgba(255, 255, 255, 0.14);
+                    border-color: rgba(255, 255, 255, 0.2);
                     color: #ffffff !important;
+
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.24) !important;
+                    }
                 }
             }
         }
     }
 
     body.task-settings.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header {
-        .header-title:before {
+        &:not(.sogo-has-usercard) .header-title:before {
+            content: "\f013";
+        }
+        &.sogo-has-usercard .sogo-username-icon:before {
             content: "\f013";
         }
         & > a.sogo-sidebar-settings {
@@ -1100,8 +1163,14 @@ a {
     }
 
     body.task-addressbook.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header {
-        .header-title:before {
+        &:not(.sogo-has-usercard) .header-title:before {
             content: "\f0c0";
+        }
+        &.sogo-has-usercard .sogo-username-icon:before {
+            content: "\f0c0";
+        }
+        &.sogo-has-usercard > a.sogo-sidebar-back-mail {
+            right: 80px;
         }
     }
 
@@ -1689,7 +1758,7 @@ html.dark-mode {
             border-bottom-color: @sogo-dm-border !important;
             color: @sogo-dm-text !important;
 
-            .header-title.username {
+            .header-title {
                 color: @sogo-dm-text;
 
                 .sogo-username-icon {

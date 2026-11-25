@@ -6822,7 +6822,8 @@ a:hover {
 .sogo-topbar-date,
 .sogo-fab-compose,
 .sogo-fab-inbox,
-.sogo-sidebar-settings {
+.sogo-sidebar-settings,
+.sogo-sidebar-back-mail {
   display: none;
 }
 .floating-action-buttons {
@@ -6863,7 +6864,7 @@ a:hover {
     font-size: 0.96rem;
     font-weight: 600;
   }
-  #layout > div > .header .header-title.username {
+  #layout-sidebar > .header .header-title {
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -6872,12 +6873,12 @@ a:hover {
     margin: 0 4px !important;
     overflow: hidden;
   }
-  #layout > div > .header .header-title.username:before,
-  #layout > div > .header .header-title.username .sogo-username-icon {
+  #layout-sidebar > .header .header-title:before,
+  #layout-sidebar > .header .header-title .sogo-username-icon {
     display: none !important;
     content: none !important;
   }
-  #layout > div > .header .header-title.username .sogo-username-text {
+  #layout-sidebar > .header .header-title .sogo-username-text {
     min-width: 0;
     max-width: 100%;
     font-size: 0.85rem;
@@ -7210,7 +7211,7 @@ a:hover {
     background-color: #f7f9fa !important;
     justify-content: space-between;
   }
-  #layout-sidebar > .header .header-title.username {
+  #layout-sidebar > .header .header-title {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -7224,11 +7225,11 @@ a:hover {
     flex: 1 1 auto;
     overflow: hidden;
   }
-  #layout-sidebar > .header .header-title.username:before {
+  #layout-sidebar > .header .header-title:before {
     content: none !important;
     display: none !important;
   }
-  #layout-sidebar > .header .header-title.username .sogo-username-icon {
+  #layout-sidebar > .header .header-title .sogo-username-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -7240,12 +7241,12 @@ a:hover {
     font-size: 11px;
     flex: 0 0 24px;
   }
-  #layout-sidebar > .header .header-title.username .sogo-username-icon:before {
+  #layout-sidebar > .header .header-title .sogo-username-icon:before {
     font-family: 'Icons';
     font-weight: 900;
     content: "\f007";
   }
-  #layout-sidebar > .header .header-title.username .sogo-username-text {
+  #layout-sidebar > .header .header-title .sogo-username-text {
     min-width: 0;
     flex: 1 1 auto;
     font-size: 0.84rem;
@@ -7257,6 +7258,12 @@ a:hover {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+  body.task-settings #layout-sidebar:not(.sidebar-right) > .header .sogo-username-icon:before {
+    content: "\f013";
+  }
+  body.task-addressbook #layout-sidebar:not(.sidebar-right) > .header .sogo-username-icon:before {
+    content: "\f0c0";
   }
   #layout-list > .header {
     justify-content: flex-start !important;
@@ -7591,7 +7598,7 @@ a:hover {
     justify-content: flex-start !important;
     gap: 0 !important;
   }
-  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title.username {
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title {
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -7603,11 +7610,11 @@ a:hover {
     white-space: normal !important;
     overflow: visible !important;
   }
-  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title.username:before {
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title:before {
     content: none !important;
     display: none !important;
   }
-  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title.username .sogo-username-icon {
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title .sogo-username-icon {
     width: 34px !important;
     height: 34px !important;
     flex: 0 0 34px !important;
@@ -7618,7 +7625,7 @@ a:hover {
     font-size: 15px !important;
     margin-right: 76px;
   }
-  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title.username .sogo-username-text {
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title .sogo-username-text {
     width: 100%;
     min-width: 0;
     flex: 0 0 auto !important;
@@ -7634,6 +7641,38 @@ a:hover {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-align: left;
+  }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard > a.sogo-sidebar-back-mail {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 5px;
+    position: absolute !important;
+    top: 15px;
+    right: 12px;
+    height: 30px;
+    padding: 0 11px;
+    border-radius: 999px;
+    background-color: #fff3e3;
+    border: 1px solid rgba(255, 140, 0, 0.35);
+    color: #d97700 !important;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard > a.sogo-sidebar-back-mail:before {
+    font-family: 'Icons';
+    font-weight: 900;
+    content: "\f060";
+    font-size: 11px;
+    line-height: 1;
+  }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard > a.sogo-sidebar-back-mail:hover {
+    background-color: #ff8c00 !important;
+    border-color: #e07f00;
+    color: #141414 !important;
   }
   body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard > a.sogo-sidebar-settings {
     position: absolute !important;
@@ -7659,13 +7698,23 @@ a:hover {
     background-color: rgba(255, 255, 255, 0.14);
     color: #ffffff;
   }
-  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title.username .sogo-username-icon {
+  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title .sogo-username-icon {
     background-color: rgba(255, 140, 0, 0.22) !important;
     border-color: rgba(255, 167, 51, 0.35);
     color: #ffa733 !important;
   }
-  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title.username .sogo-username-text {
+  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title .sogo-username-text {
     color: #ffffff !important;
+  }
+  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard > a.sogo-sidebar-back-mail {
+    background-color: rgba(255, 140, 0, 0.18);
+    border-color: rgba(255, 167, 51, 0.38);
+    color: #ffa733 !important;
+  }
+  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard > a.sogo-sidebar-back-mail:hover {
+    background-color: #ff8c00 !important;
+    border-color: #ff8c00;
+    color: #141414 !important;
   }
   html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard > a.button.icon {
     color: rgba(255, 255, 255, 0.85) !important;
@@ -7674,14 +7723,23 @@ a:hover {
     background-color: rgba(255, 140, 0, 0.2) !important;
     color: #ffa733 !important;
   }
-  body.task-settings.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header .header-title:before {
+  body.task-settings.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header:not(.sogo-has-usercard) .header-title:before {
+    content: "\f013";
+  }
+  body.task-settings.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .sogo-username-icon:before {
     content: "\f013";
   }
   body.task-settings.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header > a.sogo-sidebar-settings {
     display: none !important;
   }
-  body.task-addressbook.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header .header-title:before {
+  body.task-addressbook.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header:not(.sogo-has-usercard) .header-title:before {
     content: "\f0c0";
+  }
+  body.task-addressbook.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .sogo-username-icon:before {
+    content: "\f0c0";
+  }
+  body.task-addressbook.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard > a.sogo-sidebar-back-mail {
+    right: 80px;
   }
   #layout-list > .header > .toolbar.menu,
   #layout-list > .header > ul#toolbar-list-menu {
@@ -8204,10 +8262,10 @@ html.dark-mode .floating-action-buttons a.button:hover {
     border-bottom-color: #2e2823 !important;
     color: #e5ebf0 !important;
   }
-  html.dark-mode #layout-sidebar > .header .header-title.username {
+  html.dark-mode #layout-sidebar > .header .header-title {
     color: #e5ebf0;
   }
-  html.dark-mode #layout-sidebar > .header .header-title.username .sogo-username-icon {
+  html.dark-mode #layout-sidebar > .header .header-title .sogo-username-icon {
     background-color: rgba(255, 140, 0, 0.14);
     color: #ffa733;
   }
@@ -8481,10 +8539,10 @@ html.dark-mode body.task-login #login-form {
     background-color: #ffffff !important;
     border-bottom: 1px solid #e6ebee !important;
   }
-  #layout-sidebar > .header .header-title.username {
+  #layout-sidebar > .header .header-title {
     color: #1f2933 !important;
   }
-  #layout-sidebar > .header .header-title.username .sogo-username-icon {
+  #layout-sidebar > .header .header-title .sogo-username-icon {
     background-color: rgba(255, 140, 0, 0.14) !important;
     color: #d97700 !important;
   }
@@ -8492,10 +8550,10 @@ html.dark-mode body.task-login #login-form {
     background-color: #1e1a16 !important;
     border-bottom: 1px solid #2e2823 !important;
   }
-  html.dark-mode #layout-sidebar > .header .header-title.username {
+  html.dark-mode #layout-sidebar > .header .header-title {
     color: #f5ede2 !important;
   }
-  html.dark-mode #layout-sidebar > .header .header-title.username .sogo-username-icon {
+  html.dark-mode #layout-sidebar > .header .header-title .sogo-username-icon {
     background-color: rgba(255, 140, 0, 0.18) !important;
     color: #ff8c00 !important;
   }

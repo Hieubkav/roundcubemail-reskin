@@ -42,6 +42,11 @@
         return lang.indexOf('vi') === 0 ? 'Về Hộp thư đến (INBOX)' : 'Go to Inbox';
     }
 
+    function backToMailLabel() {
+        var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
+        return lang.indexOf('vi') === 0 ? 'Về Mail' : 'Inbox';
+    }
+
     function quoteToggleText(expanded) {
         var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
         if (lang.indexOf('vi') === 0) {
@@ -258,31 +263,42 @@
         var layoutMenu = document.getElementById('layout-menu');
         var sidebar = document.querySelector('#layout-sidebar:not(.sidebar-right)');
 
-        // 1. Sleek SOGo-style user badge + date block in topbar (#layout-menu)
-        // Wrap sidebar username text in ellipsis span (long addresses get cut + tooltip).
-        var sideUser = document.querySelector('#layout-sidebar > .header .header-title.username');
-        if (sideUser && !sideUser.querySelector('.sogo-username-text')) {
-            var fullMail = sideUser.textContent.trim();
-            sideUser.setAttribute('title', fullMail);
-            sideUser.innerHTML = '';
+        // 1. Sleek SOGo-style user/task header card + date block in topbar (#layout-menu)
+        // Wrap sidebar header title into unified 2-row card (Mail email / Contacts / Settings).
+        var sideTitle = document.querySelector('#layout-sidebar:not(.sidebar-right) > .header .header-title');
+        if (sideTitle && !sideTitle.querySelector('.sogo-username-text')) {
+            var fullTitle = sideTitle.textContent.trim();
+            sideTitle.setAttribute('title', fullTitle);
+            sideTitle.innerHTML = '';
             var uIcon = document.createElement('span');
             uIcon.className = 'sogo-username-icon';
             uIcon.setAttribute('aria-hidden', 'true');
             var uText = document.createElement('span');
             uText.className = 'sogo-username-text';
-            uText.setAttribute('title', fullMail);
-            var atIdx = fullMail.indexOf('@');
+            uText.setAttribute('title', fullTitle);
+            var atIdx = sideTitle.classList.contains('username') ? fullTitle.indexOf('@') : -1;
             if (atIdx > 0) {
-                uText.appendChild(document.createTextNode(fullMail.slice(0, atIdx)));
+                uText.appendChild(document.createTextNode(fullTitle.slice(0, atIdx)));
                 uText.appendChild(document.createElement('wbr'));
-                uText.appendChild(document.createTextNode(fullMail.slice(atIdx)));
+                uText.appendChild(document.createTextNode(fullTitle.slice(atIdx)));
             } else {
-                uText.textContent = fullMail;
+                uText.textContent = fullTitle;
             }
-            sideUser.appendChild(uIcon);
-            sideUser.appendChild(uText);
-            if (sideUser.parentElement) {
-                sideUser.parentElement.classList.add('sogo-has-usercard');
+            sideTitle.appendChild(uIcon);
+            sideTitle.appendChild(uText);
+            if (sideTitle.parentElement) {
+                sideTitle.parentElement.classList.add('sogo-has-usercard');
+                if (!sideTitle.classList.contains('username') && !sideTitle.parentElement.querySelector('.sogo-sidebar-back-mail')) {
+                    var backMailLink = document.createElement('a');
+                    backMailLink.className = 'sogo-sidebar-back-mail';
+                    backMailLink.href = '?_task=mail&_mbox=INBOX';
+                    backMailLink.setAttribute('title', inboxShortcutLabel());
+                    backMailLink.setAttribute('aria-label', inboxShortcutLabel());
+                    var backMailText = document.createElement('span');
+                    backMailText.textContent = backToMailLabel();
+                    backMailLink.appendChild(backMailText);
+                    sideTitle.parentElement.appendChild(backMailLink);
+                }
             }
         }
         if (layoutMenu && !layoutMenu.querySelector('.sogo-topbar-date')) {
