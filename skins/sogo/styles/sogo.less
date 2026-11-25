@@ -1036,6 +1036,62 @@ a {
             }
         }
 
+        // Contacts & Settings compact header: 52px flush with topbar, crisp "Về Hộp thư" action left + actions right
+        & > .header.sogo-compact-nav {
+            height: @sogo-topbar-h !important;
+            min-height: @sogo-topbar-h !important;
+            flex: 0 0 auto !important;
+            padding: 0 10px 0 14px !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 2px !important;
+
+            & > .header-title {
+                display: none !important;
+            }
+
+            & > a.sogo-sidebar-mail-btn {
+                width: auto !important;
+                max-width: 100%;
+                min-width: 0;
+                height: 36px !important;
+                flex: 0 1 auto !important;
+                margin-left: -4px !important;
+                margin-right: auto !important;
+                padding: 0 11px 0 9px;
+                gap: 8px;
+                border-radius: 8px;
+
+                &:before {
+                    font-size: 18px;
+                    flex: 0 0 auto;
+                }
+
+                .sogo-mail-btn-label {
+                    font-size: 13.5px;
+                    font-weight: 600;
+                    line-height: 1.2;
+                    letter-spacing: -0.01em;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                &:hover:not(.is-disabled) {
+                    transform: none;
+                }
+            }
+
+            & > a.sogo-sidebar-settings,
+            & > a.sidebar-menu {
+                position: static !important;
+                margin: 0 !important;
+                flex: 0 0 auto;
+            }
+        }
+
         // Mail account card: disabled Mail icon top-left + top-right actions, full-width email below
         & > .header.sogo-has-usercard {
             height: auto !important;
@@ -1100,33 +1156,6 @@ a {
                 position: absolute !important;
                 top: 10px;
                 right: 10px;
-                margin: 0 !important;
-            }
-        }
-
-        // Contacts & Settings compact header: 52px flush with topbar, pure Mail circle left + actions right
-        & > .header.sogo-compact-nav {
-            height: @sogo-topbar-h !important;
-            min-height: @sogo-topbar-h !important;
-            flex: 0 0 auto !important;
-            padding: 0 10px 0 16px !important;
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            justify-content: flex-start !important;
-            gap: 2px !important;
-
-            & > .header-title {
-                display: none !important;
-            }
-
-            & > a.sogo-sidebar-mail-btn {
-                margin-right: auto !important;
-            }
-
-            & > a.sogo-sidebar-settings,
-            & > a.sidebar-menu {
-                position: static !important;
                 margin: 0 !important;
             }
         }

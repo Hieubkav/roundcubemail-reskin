@@ -7618,6 +7618,58 @@ a:hover {
     cursor: default !important;
     pointer-events: none !important;
   }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav {
+    height: 60px !important;
+    min-height: 60px !important;
+    flex: 0 0 auto !important;
+    padding: 0 10px 0 14px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 2px !important;
+  }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > .header-title {
+    display: none !important;
+  }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn {
+    width: auto !important;
+    max-width: 100%;
+    min-width: 0;
+    height: 36px !important;
+    flex: 0 1 auto !important;
+    margin-left: -4px !important;
+    margin-right: auto !important;
+    padding: 0 11px 0 9px;
+    gap: 8px;
+    border-radius: 10px;
+    color: #1f2933 !important;
+  }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn:before {
+    font-size: 18px;
+    color: #d97700;
+    flex: 0 0 auto;
+  }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn .sogo-mail-btn-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn:hover:not(.is-disabled) {
+    background-color: rgba(255, 140, 0, 0.12) !important;
+    color: #d97700 !important;
+    transform: none;
+  }
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-settings,
+  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sidebar-menu {
+    position: static !important;
+    margin: 0 !important;
+    flex: 0 0 auto;
+  }
   body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard {
     height: auto !important;
     min-height: 0 !important;
@@ -7678,28 +7730,6 @@ a:hover {
     right: 10px;
     margin: 0 !important;
   }
-  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav {
-    height: 60px !important;
-    min-height: 60px !important;
-    flex: 0 0 auto !important;
-    padding: 0 10px 0 16px !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 2px !important;
-  }
-  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > .header-title {
-    display: none !important;
-  }
-  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn {
-    margin-right: auto !important;
-  }
-  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-settings,
-  body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sidebar-menu {
-    position: static !important;
-    margin: 0 !important;
-  }
   html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header {
     background-color: #3a2408 !important;
     border-bottom-color: #2a1a05 !important;
@@ -7725,6 +7755,19 @@ a:hover {
     background: transparent !important;
     border: 0 !important;
     color: rgba(255, 167, 51, 0.34) !important;
+  }
+  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn {
+    color: #f5ede2 !important;
+  }
+  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn:before {
+    color: #ffa733;
+  }
+  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn:hover:not(.is-disabled) {
+    background-color: rgba(255, 140, 0, 0.2) !important;
+    color: #ffb85c !important;
+  }
+  html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn:hover:not(.is-disabled):before {
+    color: #ffb85c;
   }
   html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard .header-title .sogo-username-text,
   html.dark-mode body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav .header-title .sogo-username-text {
