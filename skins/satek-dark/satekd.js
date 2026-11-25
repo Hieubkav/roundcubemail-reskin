@@ -37,6 +37,11 @@
         return lang.indexOf('vi') === 0 ? 'Nhập nội dung trả lời tại đây...' : 'Type your reply here...';
     }
 
+    function inboxShortcutLabel() {
+        var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
+        return lang.indexOf('vi') === 0 ? 'Về Hộp thư đến (INBOX)' : 'Go to Inbox';
+    }
+
     function quoteToggleText(expanded) {
         var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
         if (lang.indexOf('vi') === 0) {
@@ -107,33 +112,74 @@
         }
     }
 
-    function buildQuoteSeparator(editor, introText) {
-        var sep = editor.dom.create('div', { 'class': 'sogo-quote-sep', 'contenteditable': 'false' });
-        var label = introText || '';
-        if (label && !/[:：]$/.test(label)) {
-            label += ':';
+    function makeEmptyEditorParagraph(editor, cls) {
+        var p = editor.dom.create('p', cls ? { 'class': cls } : {});
+        p.innerHTML = '<br data-mce-bogus="1">';
+        return p;
+    }
+
+    function isNodeEmptyLine(node) {
+        if (!node) {
+            return false;
         }
-        sep.innerHTML = '<span class="sogo-quote-sep-line"></span>' +
-            '<span class="sogo-quote-sep-label">' + escapeHtml(label) + '</span>' +
-            '<span class="sogo-quote-sep-line"></span>';
-        return sep;
+        if (node.nodeType === 3) {
+            return !node.nodeValue || !node.nodeValue.replace(/\u00a0|\s+/g, '');
+        }
+        if (node.nodeName === 'BR') {
+            return true;
+        }
+        if (node.nodeName === 'P' || node.nodeName === 'DIV') {
+            if (node.querySelector('img, table, blockquote, hr, iframe')) {
+                return false;
+            }
+            return !(node.textContent || '').replace(/\u00a0|\s+/g, '');
+        }
+        return false;
+    }
+
+    function ensureReplyLeadingLines(editor, bodyEl, count) {
+        while (bodyEl.firstChild && isNodeEmptyLine(bodyEl.firstChild)) {
+            bodyEl.removeChild(bodyEl.firstChild);
+        }
+        var anchor = bodyEl.firstChild;
+        for (var idx = 0; idx < count; idx++) {
+            var cls = idx === 0 ? 'sogo-reply-start' : 'sogo-reply-spacer';
+            var line = makeEmptyEditorParagraph(editor, cls);
+            if (anchor) {
+                bodyEl.insertBefore(line, anchor);
+            } else {
+                bodyEl.appendChild(line);
+            }
+        }
+        return bodyEl.querySelector('.sogo-reply-start') || bodyEl.firstChild;
     }
 
     function beautifyComposeQuote() {
         var tm = window.tinymce;
         var editor = tm && tm.get ? tm.get('composebody') : null;
-        if (!editor || !editor.getBody) {
+        if (!editor || !editor.initialized || !editor.getBody) {
             return false;
         }
         var bodyEl = editor.getBody();
-        if (!bodyEl || bodyEl.getAttribute('data-sogo-quote') === '1') {
-            if (bodyEl) { armQuoteExpandOnSend(editor); }
-            return !!bodyEl;
+        if (!bodyEl) {
+            return false;
+        }
+        if (bodyEl.getAttribute('data-sogo-quote') === '1') {
+            armQuoteExpandOnSend(editor);
+            return true;
         }
 
-        var intro = bodyEl.querySelector('#reply-intro');
+        var intro = bodyEl.querySelector('#reply-intro, .sogo-reply-intro');
         var quotes = bodyEl.querySelectorAll('blockquote');
         var pre = bodyEl.querySelector('div.pre');
+        var bodyText = (bodyEl.textContent || '').trim();
+        var isForwardHtml = !intro && !quotes.length && !pre && /-{4,}/.test(bodyText);
+
+        if (!intro && !quotes.length && !pre && !isForwardHtml) {
+            bodyEl.setAttribute('data-sogo-quote', '1');
+            armQuoteExpandOnSend(editor);
+            return true;
+        }
 
         if (pre && !quotes.length) {
             var chunks = pre.innerHTML.replace(/\r/g, '').split(/<br\s*\/?>/i);
@@ -155,51 +201,37 @@
                 }
             }
 
-            var html = '<p class="sogo-reply-start" data-sogo-placeholder="' + escapeHtml(replyPlaceholderText()) + '"><br data-mce-bogus="1"></p>';
-            html += '__SOGO_SEP__';
-            html += '<blockquote class="sogo-quote">';
-            if (!quoteLines.length) {
-                html += '<p><br></p>';
-            } else {
+            if (quoteLines.length) {
+                var html = '';
+                if (introText) {
+                    var label = /[:：]$/.test(introText) ? introText : (introText + ':');
+                    html += '<p class="sogo-reply-intro">' + escapeHtml(label) + '</p>';
+                }
+                html += '<blockquote class="sogo-quote">';
                 for (i = 0; i < quoteLines.length; i++) {
                     html += '<p>' + (quoteLines[i] ? escapeHtml(quoteLines[i]) : '<br>') + '</p>';
                 }
-            }
-            html += '</blockquote>';
+                html += '</blockquote>';
 
-            var wrap = editor.dom.create('div');
-            wrap.innerHTML = html;
-            var sepKids = wrap.childNodes;
-            for (var sk = 0; sk < sepKids.length; sk++) {
-                if (sepKids[sk].nodeType === 3 && sepKids[sk].nodeValue === '__SOGO_SEP__') {
-                    wrap.replaceChild(buildQuoteSeparator(editor, introText), sepKids[sk]);
-                    break;
+                var wrap = editor.dom.create('div');
+                wrap.innerHTML = html;
+                pre.parentNode.insertBefore(wrap, pre);
+                pre.parentNode.removeChild(pre);
+                while (wrap.firstChild) {
+                    wrap.parentNode.insertBefore(wrap.firstChild, wrap);
                 }
+                wrap.parentNode.removeChild(wrap);
             }
-            pre.parentNode.insertBefore(wrap, pre);
-            pre.parentNode.removeChild(pre);
-            while (wrap.firstChild) {
-                wrap.parentNode.insertBefore(wrap.firstChild, wrap);
-            }
-            wrap.parentNode.removeChild(wrap);
         } else {
             if (intro) {
-                var sep2 = buildQuoteSeparator(editor, intro.textContent || '');
-                intro.parentNode.insertBefore(sep2, intro);
-                intro.parentNode.removeChild(intro);
+                intro.classList.add('sogo-reply-intro');
             }
             for (var q = 0; q < quotes.length; q++) {
                 quotes[q].classList.add('sogo-quote');
             }
-            if (!bodyEl.querySelector('.sogo-reply-start')) {
-                var start = editor.dom.create('p', {
-                    'class': 'sogo-reply-start',
-                    'data-sogo-placeholder': replyPlaceholderText()
-                });
-                start.innerHTML = '<br data-mce-bogus="1">';
-                bodyEl.insertBefore(start, bodyEl.firstChild);
-            }
         }
+
+        var firstLine = ensureReplyLeadingLines(editor, bodyEl, 2);
 
         var built = bodyEl.querySelectorAll('blockquote');
         for (var b = 0; b < built.length; b++) {
@@ -208,9 +240,8 @@
 
         bodyEl.setAttribute('data-sogo-quote', '1');
         armQuoteExpandOnSend(editor);
-        var caret = bodyEl.querySelector('.sogo-reply-start');
-        if (caret && editor.selection) {
-            editor.selection.setCursorLocation(caret, 0);
+        if (firstLine && editor.selection) {
+            editor.selection.setCursorLocation(firstLine, 0);
             editor.focus();
         }
         return true;
@@ -356,15 +387,68 @@
             body.classList.add('sogo-has-fab');
         }
 
+        // 3b. Quick Inbox FAB on right corner (Compose, Contacts, Settings, non-INBOX folders)
+        if (window.location.search.indexOf('_extwin=1') === -1 && !document.querySelector('.sogo-fab-inbox')) {
+            var inboxFab = document.createElement('a');
+            var inboxLabel = inboxShortcutLabel();
+            inboxFab.href = '?_task=mail&_mbox=INBOX';
+            inboxFab.className = 'sogo-fab-inbox';
+            inboxFab.setAttribute('title', inboxLabel);
+            inboxFab.setAttribute('aria-label', inboxLabel);
+            inboxFab.setAttribute('role', 'button');
+
+            var syncInboxFabVisibility = function () {
+                var onMailList = body.classList.contains('task-mail') && body.classList.contains('action-none');
+                var mbox = window.rcmail && window.rcmail.env ? window.rcmail.env.mailbox : null;
+                var inInbox = false;
+                if (onMailList) {
+                    if (mbox) {
+                        inInbox = (mbox === 'INBOX');
+                    } else {
+                        var qs = window.location.search;
+                        inInbox = qs.indexOf('_mbox=') === -1 || /[?&]_mbox=INBOX(?:&|$)/.test(qs);
+                    }
+                }
+                inboxFab.classList.toggle('sogo-fab-hidden', inInbox);
+            };
+
+            syncInboxFabVisibility();
+            body.appendChild(inboxFab);
+
+            if (window.rcmail && typeof window.rcmail.addEventListener === 'function') {
+                window.rcmail.addEventListener('init', syncInboxFabVisibility);
+                window.rcmail.addEventListener('listupdate', syncInboxFabVisibility);
+                window.rcmail.addEventListener('selectfolder', syncInboxFabVisibility);
+            }
+        }
+
         // 4. Auto-open Rich Text Editor (TinyMCE) on Compose screen (once per load)
         if (body.classList.contains('task-mail') && body.classList.contains('action-compose')) {
+            var scheduleQuoteBeautify = function () {
+                var tries = 0;
+                var waitEditor = function () {
+                    if (beautifyComposeQuote() || ++tries > 50) {
+                        return;
+                    }
+                    setTimeout(waitEditor, 80);
+                };
+                setTimeout(waitEditor, 60);
+            };
+
             var autoEnableRichEditor = function () {
                 var textarea = document.getElementById('composebody');
                 if (!textarea || textarea.readOnly || textarea.disabled) {
                     return;
                 }
                 var parent = textarea.parentElement;
-                if (!parent || parent.classList.contains('ishtml') || parent.dataset.sogoEditorInit) {
+                if (!parent) {
+                    return;
+                }
+                if (parent.classList.contains('ishtml')) {
+                    scheduleQuoteBeautify();
+                    return;
+                }
+                if (parent.dataset.sogoEditorInit) {
                     return;
                 }
                 parent.dataset.sogoEditorInit = '1';
@@ -384,23 +468,15 @@
                     }
                 }
 
-                var tries = 0;
-                var waitEditor = function () {
-                    if (beautifyComposeQuote() || ++tries > 40) {
-                        return;
-                    }
-                    setTimeout(waitEditor, 80);
-                };
-                setTimeout(waitEditor, 120);
+                scheduleQuoteBeautify();
             };
 
             if (window.rcmail && typeof window.rcmail.addEventListener === 'function') {
                 window.rcmail.addEventListener('init', function () {
                     setTimeout(autoEnableRichEditor, 60);
                 });
-                window.rcmail.addEventListener('editor-init', function () {
-                    setTimeout(beautifyComposeQuote, 30);
-                });
+                window.rcmail.addEventListener('editor-init', scheduleQuoteBeautify);
+                window.rcmail.addEventListener('editor-load', scheduleQuoteBeautify);
             }
             setTimeout(autoEnableRichEditor, 180);
         }

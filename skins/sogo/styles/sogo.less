@@ -106,6 +106,7 @@ a {
 .sogo-topbar-user,
 .sogo-topbar-date,
 .sogo-fab-compose,
+.sogo-fab-inbox,
 .sogo-sidebar-settings {
     display: none;
 }
@@ -672,6 +673,51 @@ a {
 
 // Inline content toolbar on Desktop (>= 769px; on <= 768px it stays a dropdown menu triggered by 3-dot icon)
 @media screen and (min-width: 769px) {
+    #layout-sidebar.sidebar-right > .scroller {
+        padding-bottom: 72px;
+    }
+
+    // Floating circular Quick-Inbox FAB on right corner (Contacts, Settings, Compose, non-INBOX folders)
+    body > a.sogo-fab-inbox {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 25;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background-color: @sogo-green;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        box-shadow: 0 4px 12px rgba(56, 138, 60, 0.36), 0 1px 3px rgba(0, 0, 0, 0.14);
+        transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+
+        &:before {
+            font-family: 'Icons';
+            font-weight: 900;
+            content: "\f01c";
+            font-size: 17px;
+            line-height: 1;
+        }
+
+        &:hover {
+            background-color: @sogo-green-hover;
+            transform: translateY(-1px) scale(1.04);
+            box-shadow: 0 6px 16px rgba(56, 138, 60, 0.42), 0 2px 5px rgba(0, 0, 0, 0.16);
+        }
+
+        &:active {
+            transform: scale(0.97);
+        }
+
+        &.sogo-fab-hidden {
+            display: none !important;
+        }
+    }
+
     #layout > div > .header > a.toolbar-menu-button,
     #layout-content > .header > .header-title {
         display: none !important;
@@ -1682,7 +1728,8 @@ html.dark-mode {
             background-color: @sogo-dm-border;
         }
 
-        #layout-list > a.sogo-fab-compose {
+        #layout-list > a.sogo-fab-compose,
+        body > a.sogo-fab-inbox {
             background-color: @sogo-dm-green;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
 
