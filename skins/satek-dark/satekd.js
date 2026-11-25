@@ -39,7 +39,7 @@
 
     function inboxShortcutLabel() {
         var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
-        return lang.indexOf('vi') === 0 ? 'Quay lại Hộp thư' : 'Back to Inbox';
+        return lang.indexOf('vi') === 0 ? 'Hộp thư' : 'Inbox';
     }
 
     function quoteToggleText(expanded) {
@@ -258,44 +258,51 @@
         var layoutMenu = document.getElementById('layout-menu');
         var sidebar = document.querySelector('#layout-sidebar:not(.sidebar-right)');
 
-        // 1. Sleek SOGo-style user/task header card + date block in topbar (#layout-menu)
-        // Wrap sidebar header title into unified 2-row card (Mail email / Contacts / Settings).
+        // 1. Unified sidebar header + date block in topbar (#layout-menu)
+        // - Mail: disabled Mail icon button top-left + account email below
+        // - Contacts/Settings: compact topbar-aligned Mail return button (no section title/avatar clutter)
         var sideTitle = document.querySelector('#layout-sidebar:not(.sidebar-right) > .header .header-title');
-        if (sideTitle && !sideTitle.querySelector('.sogo-username-text')) {
-            var fullTitle = sideTitle.textContent.trim();
-            sideTitle.setAttribute('title', fullTitle);
-            sideTitle.innerHTML = '';
-            var uIcon = document.createElement('span');
-            uIcon.className = 'sogo-username-icon';
-            uIcon.setAttribute('aria-hidden', 'true');
-            var uText = document.createElement('span');
-            uText.className = 'sogo-username-text';
-            uText.setAttribute('title', fullTitle);
-            var atIdx = sideTitle.classList.contains('username') ? fullTitle.indexOf('@') : -1;
-            if (atIdx > 0) {
-                uText.appendChild(document.createTextNode(fullTitle.slice(0, atIdx)));
-                uText.appendChild(document.createElement('wbr'));
-                uText.appendChild(document.createTextNode(fullTitle.slice(atIdx)));
-            } else {
-                uText.textContent = fullTitle;
+        if (sideTitle) {
+            var sidebarHdr = sideTitle.parentElement;
+            var isMailTask = body.classList.contains('task-mail') || sideTitle.classList.contains('username');
+            if (sideTitle.classList.contains('username') && !sideTitle.querySelector('.sogo-username-text')) {
+                var fullTitle = sideTitle.textContent.trim();
+                sideTitle.setAttribute('title', fullTitle);
+                sideTitle.innerHTML = '';
+                var uIcon = document.createElement('span');
+                uIcon.className = 'sogo-username-icon';
+                uIcon.setAttribute('aria-hidden', 'true');
+                var uText = document.createElement('span');
+                uText.className = 'sogo-username-text';
+                uText.setAttribute('title', fullTitle);
+                var atIdx = fullTitle.indexOf('@');
+                if (atIdx > 0) {
+                    uText.appendChild(document.createTextNode(fullTitle.slice(0, atIdx)));
+                    uText.appendChild(document.createElement('wbr'));
+                    uText.appendChild(document.createTextNode(fullTitle.slice(atIdx)));
+                } else {
+                    uText.textContent = fullTitle;
+                }
+                sideTitle.appendChild(uIcon);
+                sideTitle.appendChild(uText);
             }
-            sideTitle.appendChild(uIcon);
-            sideTitle.appendChild(uText);
-            if (sideTitle.parentElement) {
-                sideTitle.parentElement.classList.add('sogo-has-usercard');
-                if (!sideTitle.classList.contains('username') && !sideTitle.parentElement.querySelector('.sogo-sidebar-back-mail')) {
-                    var backMailLink = document.createElement('a');
-                    backMailLink.className = 'sogo-sidebar-back-mail';
-                    backMailLink.href = '?_task=mail&_mbox=INBOX';
-                    backMailLink.setAttribute('title', inboxShortcutLabel());
-                    backMailLink.setAttribute('aria-label', inboxShortcutLabel());
-                    backMailLink.innerHTML =
-                        '<svg class="sogo-back-mail-svg" viewBox="0 0 24 20" width="20" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-                            '<path d="M5.5 6.5 L2 10 L5.5 13.5"/>' +
-                            '<rect x="8.5" y="4.5" width="13.5" height="11" rx="2.2"/>' +
-                            '<path d="M8.5 6.8 L15.25 11.4 L22 6.8"/>' +
-                        '</svg>';
-                    sideTitle.parentElement.appendChild(backMailLink);
+            if (sidebarHdr) {
+                sidebarHdr.classList.add(isMailTask ? 'sogo-has-usercard' : 'sogo-compact-nav');
+                if (!sidebarHdr.querySelector('.sogo-sidebar-mail-btn')) {
+                    var mailBtn = document.createElement('a');
+                    var mailLabel = inboxShortcutLabel();
+                    mailBtn.className = 'sogo-sidebar-mail-btn' + (isMailTask ? ' is-disabled' : '');
+                    mailBtn.href = '?_task=mail&_mbox=INBOX';
+                    mailBtn.setAttribute('title', mailLabel);
+                    mailBtn.setAttribute('aria-label', mailLabel);
+                    if (isMailTask) {
+                        mailBtn.setAttribute('aria-disabled', 'true');
+                        mailBtn.setAttribute('tabindex', '-1');
+                        mailBtn.addEventListener('click', function (e) {
+                            e.preventDefault();
+                        });
+                    }
+                    sidebarHdr.insertBefore(mailBtn, sidebarHdr.firstChild);
                 }
             }
         }
