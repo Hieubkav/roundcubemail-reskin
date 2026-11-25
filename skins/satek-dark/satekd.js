@@ -239,9 +239,20 @@
             uIcon.setAttribute('aria-hidden', 'true');
             var uText = document.createElement('span');
             uText.className = 'sogo-username-text';
-            uText.textContent = fullMail;
+            uText.setAttribute('title', fullMail);
+            var atIdx = fullMail.indexOf('@');
+            if (atIdx > 0) {
+                uText.appendChild(document.createTextNode(fullMail.slice(0, atIdx)));
+                uText.appendChild(document.createElement('wbr'));
+                uText.appendChild(document.createTextNode(fullMail.slice(atIdx)));
+            } else {
+                uText.textContent = fullMail;
+            }
             sideUser.appendChild(uIcon);
             sideUser.appendChild(uText);
+            if (sideUser.parentElement) {
+                sideUser.parentElement.classList.add('sogo-has-usercard');
+            }
         }
         if (layoutMenu && !layoutMenu.querySelector('.sogo-topbar-date')) {
             var userBadge = document.createElement('a');
