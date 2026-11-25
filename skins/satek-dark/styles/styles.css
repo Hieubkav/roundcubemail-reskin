@@ -8207,6 +8207,8 @@ body.task-login #layout-content {
   display: flex !important;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
   min-height: 100vh;
   padding: 24px 16px;
   text-align: left !important;
@@ -8214,12 +8216,14 @@ body.task-login #layout-content {
 }
 body.task-login .satek-login-shell {
   width: 100%;
+  min-width: 0;
   max-width: 960px;
   margin: auto;
 }
 body.task-login .satek-login-card {
   display: grid;
-  grid-template-columns: 1.03fr 1fr;
+  grid-template-columns: minmax(0, 1.03fr) minmax(0, 1fr);
+  width: 100%;
   background-color: #ffffff;
   border: 1px solid #ebe2d5;
   border-radius: 22px;
@@ -8234,6 +8238,7 @@ body.task-login .satek-login-visual {
   justify-content: center;
   padding: 24px 18px;
   position: relative;
+  min-width: 0;
 }
 body.task-login .satek-login-svg {
   display: block;
@@ -8246,6 +8251,9 @@ body.task-login .satek-login-pane {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
   padding: 44px 48px 36px;
   background-color: #ffffff;
 }
@@ -8483,37 +8491,26 @@ body.task-login #login-footer .satek-mailbox-reset-link a {
 }
 @media screen and (max-width: 860px) {
   body.task-login .satek-login-card {
-    grid-template-columns: 1fr;
-    max-width: 480px;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 440px;
     margin: 0 auto;
   }
   body.task-login .satek-login-visual {
-    border-right: 0;
-    border-bottom: 1px solid #efe5d8;
-    padding: 20px 24px 16px;
-  }
-  body.task-login .satek-login-svg {
-    max-width: 245px;
+    display: none !important;
   }
   body.task-login .satek-login-pane {
-    padding: 28px 24px 24px;
+    padding: 36px 30px 28px;
   }
 }
 @media screen and (max-width: 480px) {
   body.task-login #layout-content {
-    padding: 14px 12px;
+    padding: 16px 12px;
   }
   body.task-login .satek-login-card {
     border-radius: 16px;
   }
-  body.task-login .satek-login-visual {
-    padding: 16px 16px 12px;
-  }
-  body.task-login .satek-login-svg {
-    max-width: 205px;
-  }
   body.task-login .satek-login-pane {
-    padding: 24px 18px 20px;
+    padding: 28px 20px 22px;
   }
   body.task-login .satek-login-heading {
     font-size: 1.35rem;

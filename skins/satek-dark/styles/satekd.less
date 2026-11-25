@@ -1737,6 +1737,8 @@ body.task-login {
         display: flex !important;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
+        width: 100%;
         min-height: 100vh;
         padding: 24px 16px;
         text-align: left !important;
@@ -1745,13 +1747,15 @@ body.task-login {
 
     .satek-login-shell {
         width: 100%;
+        min-width: 0;
         max-width: 960px;
         margin: auto;
     }
 
     .satek-login-card {
         display: grid;
-        grid-template-columns: 1.03fr 1fr;
+        grid-template-columns: minmax(0, 1.03fr) minmax(0, 1fr);
+        width: 100%;
         background-color: #ffffff;
         border: 1px solid #ebe2d5;
         border-radius: 22px;
@@ -1767,6 +1771,7 @@ body.task-login {
         justify-content: center;
         padding: 24px 18px;
         position: relative;
+        min-width: 0;
     }
 
     .satek-login-svg {
@@ -1781,6 +1786,9 @@ body.task-login {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
         padding: 44px 48px 36px;
         background-color: #ffffff;
     }
@@ -2049,45 +2057,31 @@ body.task-login {
 
     @media screen and (max-width: 860px) {
         .satek-login-card {
-            grid-template-columns: 1fr;
-            max-width: 480px;
+            grid-template-columns: minmax(0, 1fr);
+            max-width: 440px;
             margin: 0 auto;
         }
 
         .satek-login-visual {
-            border-right: 0;
-            border-bottom: 1px solid #efe5d8;
-            padding: 20px 24px 16px;
-        }
-
-        .satek-login-svg {
-            max-width: 245px;
+            display: none !important;
         }
 
         .satek-login-pane {
-            padding: 28px 24px 24px;
+            padding: 36px 30px 28px;
         }
     }
 
     @media screen and (max-width: 480px) {
         #layout-content {
-            padding: 14px 12px;
+            padding: 16px 12px;
         }
 
         .satek-login-card {
             border-radius: 16px;
         }
 
-        .satek-login-visual {
-            padding: 16px 16px 12px;
-        }
-
-        .satek-login-svg {
-            max-width: 205px;
-        }
-
         .satek-login-pane {
-            padding: 24px 18px 20px;
+            padding: 28px 20px 22px;
         }
 
         .satek-login-heading {
