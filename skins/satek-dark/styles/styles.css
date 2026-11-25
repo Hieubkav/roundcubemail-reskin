@@ -7640,7 +7640,7 @@ a:hover {
     flex: 0 1 auto !important;
     margin-left: -4px !important;
     margin-right: auto !important;
-    padding: 0 9px 0 8px;
+    padding: 0 8px;
     gap: 7px;
     border-radius: 10px;
     color: #3e4c59 !important;
@@ -7652,10 +7652,12 @@ a:hover {
   }
   body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-compact-nav > a.sogo-sidebar-mail-btn .sogo-mail-btn-label {
     font-family: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 500;
-    line-height: 1;
+    line-height: 1.45;
+    padding: 1px 3px 1px 0;
     letter-spacing: 0.01em;
+    opacity: 0.92;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
