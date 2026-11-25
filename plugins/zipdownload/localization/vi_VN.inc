@@ -17,3 +17,6 @@ $labels['downloadmbox'] = 'Định dạng mbox (.zip)';
 $labels['downloadmaildir'] = 'Định dạng Maildir (.zip)';
 $labels['downloademl'] = 'Mã nguồn (.eml)';
 $labels['download'] = 'Tải xuống...';
+$labels['export'] = 'Xuất...';
+$labels['sizelimiterror'] = 'Tổng dung lượng các thư đã chọn vượt quá giới hạn ($size)';
+$labels['exportmenu'] = 'Menu tùy chọn xuất thư';

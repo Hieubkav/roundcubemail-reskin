@@ -42,6 +42,11 @@
         return lang.indexOf('vi') === 0 ? 'Về hộp thư' : 'Back to Inbox';
     }
 
+    function settingsShortcutLabel() {
+        var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
+        return lang.indexOf('vi') === 0 ? 'Thiết lập cấu hình' : 'Settings';
+    }
+
     function quoteToggleText(expanded) {
         var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
         if (lang.indexOf('vi') === 0) {
@@ -315,8 +320,8 @@
             var userBadge = document.createElement('a');
             userBadge.className = 'sogo-topbar-user';
             userBadge.href = '?_task=settings';
-            userBadge.setAttribute('title', 'Settings');
-            userBadge.setAttribute('aria-label', 'Account settings');
+            userBadge.setAttribute('title', settingsShortcutLabel());
+            userBadge.setAttribute('aria-label', settingsShortcutLabel());
 
             var now = new Date();
             var lang = (html.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
@@ -363,8 +368,8 @@
                 var settingsLink = document.createElement('a');
                 settingsLink.className = 'button icon sogo-sidebar-settings';
                 settingsLink.href = '?_task=settings';
-                settingsLink.setAttribute('title', 'Settings');
-                settingsLink.setAttribute('aria-label', 'Settings');
+                settingsLink.setAttribute('title', settingsShortcutLabel());
+                settingsLink.setAttribute('aria-label', settingsShortcutLabel());
                 sidebarHeader.appendChild(settingsLink);
             }
 

@@ -2013,6 +2013,78 @@ class rcmail extends rcube
     }
 
     /**
+     * Load a localization package and apply active skin localization overrides.
+     *
+     * @param string|null $lang  Language ID
+     * @param array       $add   Additional text labels/messages (non-overwriting)
+     * @param array       $merge Additional text labels/messages to merge
+     */
+    #[\Override]
+    public function load_language($lang = null, $add = [], $merge = [])
+    {
+        $sess_lang = !empty($_SESSION['language']) ? $_SESSION['language'] : 'en_US';
+        $target_lang = $this->language_prop($lang ?: $sess_lang);
+        $reloaded = empty($this->texts) || $target_lang !== $sess_lang;
+
+        parent::load_language($lang, $add, $merge);
+
+        if ($reloaded && empty($merge)) {
+            $skin_texts = $this->read_skin_localization($target_lang);
+            if (!empty($skin_texts)) {
+                $this->texts = array_merge($this->texts, $skin_texts);
+            }
+        }
+    }
+
+    /**
+     * Read localization overrides from the active skin and its parent extends chain.
+     *
+     * @param string|null $lang Language code to load
+     *
+     * @return array<string, string>
+     */
+    protected function read_skin_localization(?string $lang): array
+    {
+        $skin = $this->config->get('skin');
+        if (!is_string($skin) || $skin === '' || str_contains($skin, '/') || str_contains($skin, '\\')) {
+            return [];
+        }
+
+        $chain = [];
+        $seen = [];
+        $cur = $skin;
+
+        for ($depth = 0; $depth < 5 && $cur && !isset($seen[$cur]); $depth++) {
+            $seen[$cur] = true;
+            $meta_file = RCUBE_INSTALL_PATH . "skins/{$cur}/meta.json";
+            if (!is_readable($meta_file)) {
+                break;
+            }
+            $meta = json_decode((string) file_get_contents($meta_file), true);
+            if (!is_array($meta)) {
+                break;
+            }
+            array_unshift($chain, ['skin' => $cur, 'meta' => $meta]);
+            $cur = !empty($meta['extends']) && is_string($meta['extends']) ? $meta['extends'] : null;
+        }
+
+        $texts = [];
+        foreach ($chain as $entry) {
+            $meta = $entry['meta'];
+            if (empty($meta['localization'])) {
+                continue;
+            }
+            $locdir = $meta['localization'] === true ? 'localization' : $meta['localization'];
+            $dir = RCUBE_INSTALL_PATH . 'skins/' . $entry['skin'] . '/' . $locdir;
+            if ($skin_texts = $this->read_localization($dir, $lang)) {
+                $texts = array_merge($texts, $skin_texts);
+            }
+        }
+
+        return $texts;
+    }
+
+    /**
      * Connect to the mail storage server with stored session data
      *
      * @return bool True on success, False on error
