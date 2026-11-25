@@ -269,3 +269,20 @@ $messages['emptyattachment'] = 'Tệp đính kèm này có vẻ đang trống.<b
 $messages['oauthloginfailed'] = 'Đăng nhập OAuth thất bại. Vui lòng thử lại.';
 $messages['oauthinvalidrequest'] = 'Yêu cầu xác thực OAuth không hợp lệ hoặc bị thiếu.';
 $messages['oauthaccessdenied'] = 'Máy chủ xác thực hoặc người dùng đã từ chối yêu cầu.';
+
+// Custom Satek Webmail "Lời ngõ" & User Guide
+$labels['satekabout_tagline'] = 'Đơn giản hóa công nghệ — Email doanh nghiệp tin cậy';
+$labels['satekabout_greeting_title'] = 'Lời ngõ từ Satek';
+$labels['satekabout_greeting_body'] = 'Cảm ơn Quý khách đã tin tưởng lựa chọn Satek Webmail đồng hành cùng công việc mỗi ngày. Với tinh thần Tận tâm và Đổi mới, Satek vận hành hạ tầng Email chuyên biệt, bảo mật chuẩn SPF, DKIM và DMARC để mỗi thư gửi đi luôn ổn định, an toàn và đúng hẹn 24/7.';
+$labels['satekabout_guide_title'] = 'Hướng dẫn sử dụng nhanh';
+$labels['satekabout_guide_mail_title'] = 'Đọc & Tìm kiếm thư';
+$labels['satekabout_guide_mail_desc'] = 'Chọn thư mục bên trái (Hộp thư, Đã gửi, Lưu trữ...) và dùng ô Tìm kiếm... để lọc nhanh theo người gửi hoặc tiêu đề.';
+$labels['satekabout_guide_compose_title'] = 'Soạn & Trả lời thư';
+$labels['satekabout_guide_compose_desc'] = 'Nhấn nút tròn Soạn thư ở góc dưới bên phải; trình soạn thảo HTML sẵn sàng và tự thu gọn trích dẫn dài.';
+$labels['satekabout_guide_contacts_title'] = 'Danh bạ & Điều hướng';
+$labels['satekabout_guide_contacts_desc'] = 'Quản lý liên hệ cá nhân, người nhận đã lưu, người gửi tin cậy và nhấn Về hộp thư ở góc trên trái bất kỳ lúc nào.';
+$labels['satekabout_guide_prefs_title'] = 'Giao diện & Tài khoản';
+$labels['satekabout_guide_prefs_desc'] = 'Tùy chọn Satek hoặc Satek Dark, bật chế độ Sáng/Tối trên thanh trên cùng hoặc khôi phục mật khẩu ngay tại trang đăng nhập.';
+$labels['satekabout_contact_title'] = 'Đồng hành & Hỗ trợ từ Satek';
+$labels['satekabout_contact_hours'] = 'Hỗ trợ 08:00 – 22:00 hằng ngày (Hotline / Zalo)';
+$labels['satekabout_company'] = 'CÔNG TY TNHH SATEK — 152 Phan Huy Chú, P. Tân An, TP. Cần Thơ';

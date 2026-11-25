@@ -2078,3 +2078,253 @@ html.dark-mode {
         }
     }
 }
+
+
+// ---------------- Custom Satek "Lời ngõ" & User Guide (about.html) ----------------
+.frame-content.satek-about {
+    padding: 18px 20px 20px !important;
+    font-family: @sogo-font-sans;
+    color: @sogo-text;
+
+    .satek-about-hero {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 14px;
+    }
+
+    .satek-about-logo img {
+        display: block;
+        height: 38px;
+        width: auto;
+    }
+
+    .satek-about-brand {
+        min-width: 0;
+
+        .sysname {
+            margin: 0 !important;
+            font-size: 1.12rem;
+            font-weight: 700;
+            line-height: 1.25;
+            color: @sogo-text;
+        }
+
+        .satek-about-tagline {
+            margin: 2px 0 0;
+            font-size: 0.82rem;
+            color: @sogo-text-muted;
+        }
+    }
+
+    .satek-about-message {
+        background-color: @sogo-teal-soft;
+        border-left: 3px solid @sogo-teal;
+        border-radius: 8px;
+        padding: 12px 14px;
+        margin-bottom: 16px;
+
+        h3 {
+            margin: 0 0 5px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: @sogo-teal-dark;
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.84rem;
+            line-height: 1.55;
+            color: @sogo-text;
+        }
+    }
+
+    .satek-about-section {
+        h3 {
+            margin: 0 0 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: @sogo-text;
+        }
+    }
+
+    .satek-guide-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    @media screen and (max-width: 520px) {
+        .satek-guide-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .satek-guide-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+        border: 1px solid @sogo-border;
+        border-radius: 8px;
+        background-color: @sogo-surface;
+
+        .satek-guide-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            flex: 0 0 28px;
+            border-radius: 7px;
+            background-color: @sogo-teal-soft;
+            color: @sogo-teal;
+            font-size: 13px;
+
+            &:before {
+                font-family: 'Icons';
+                font-weight: 900;
+                line-height: 1;
+            }
+
+            &.icon-mail:before { content: "\f0e0"; }
+            &.icon-compose:before { content: "\f304"; }
+            &.icon-contacts:before { content: "\f0c0"; }
+            &.icon-prefs:before { content: "\f013"; }
+        }
+
+        .satek-guide-body {
+            min-width: 0;
+
+            h4 {
+                margin: 0 0 3px;
+                font-size: 0.84rem;
+                font-weight: 600;
+                color: @sogo-text;
+            }
+
+            p {
+                margin: 0;
+                font-size: 0.78rem;
+                line-height: 1.45;
+                color: @sogo-text-secondary;
+            }
+        }
+    }
+
+    .satek-about-footer {
+        border-top: 1px solid @sogo-border;
+        padding-top: 12px;
+        font-size: 0.8rem;
+
+        .satek-about-support-title {
+            font-weight: 600;
+            color: @sogo-text;
+            margin-bottom: 4px;
+        }
+
+        .satek-about-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 5px;
+
+            a {
+                color: @sogo-teal-dark;
+                font-weight: 600;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .sep {
+                color: @sogo-text-muted;
+            }
+        }
+
+        .satek-about-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 0.76rem;
+            color: @sogo-text-muted;
+        }
+    }
+}
+
+html.dark-mode .frame-content.satek-about {
+    color: @sogo-dm-text;
+
+    .satek-about-logo {
+        background-color: rgba(255, 255, 255, 0.92);
+        padding: 5px 10px;
+        border-radius: 8px;
+    }
+
+    .satek-about-brand {
+        .sysname {
+            color: @sogo-dm-text;
+        }
+
+        .satek-about-tagline {
+            color: @sogo-dm-text-muted;
+        }
+    }
+
+    .satek-about-message {
+        background-color: @sogo-dm-teal-soft;
+        border-left-color: @sogo-dm-teal-accent;
+
+        h3 {
+            color: @sogo-dm-teal-accent;
+        }
+
+        p {
+            color: @sogo-dm-text;
+        }
+    }
+
+    .satek-about-section h3 {
+        color: @sogo-dm-text;
+    }
+
+    .satek-guide-card {
+        background-color: @sogo-dm-surface;
+        border-color: @sogo-dm-border;
+
+        .satek-guide-icon {
+            background-color: @sogo-dm-teal-soft;
+            color: @sogo-dm-teal-accent;
+        }
+
+        .satek-guide-body {
+            h4 {
+                color: @sogo-dm-text;
+            }
+
+            p {
+                color: @sogo-dm-text-secondary;
+            }
+        }
+    }
+
+    .satek-about-footer {
+        border-top-color: @sogo-dm-border;
+
+        .satek-about-support-title {
+            color: @sogo-dm-text;
+        }
+
+        .satek-about-links a {
+            color: @sogo-dm-teal-accent;
+        }
+
+        .satek-about-meta {
+            color: @sogo-dm-text-muted;
+        }
+    }
+}

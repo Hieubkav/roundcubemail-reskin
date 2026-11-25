@@ -8666,3 +8666,211 @@ html.dark-mode #layout-sidebar {
   background-color: #ff8c00 !important;
   color: #141414 !important;
 }
+.frame-content.satek-about {
+  padding: 18px 20px 20px !important;
+  font-family: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1f2933;
+}
+.frame-content.satek-about .satek-about-hero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.frame-content.satek-about .satek-about-logo img {
+  display: block;
+  height: 38px;
+  width: auto;
+}
+.frame-content.satek-about .satek-about-brand {
+  min-width: 0;
+}
+.frame-content.satek-about .satek-about-brand .sysname {
+  margin: 0 !important;
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #1f2933;
+}
+.frame-content.satek-about .satek-about-brand .satek-about-tagline {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  color: #7b8794;
+}
+.frame-content.satek-about .satek-about-message {
+  background-color: #fff7ed;
+  border-left: 3px solid #ff8c00;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+.frame-content.satek-about .satek-about-message h3 {
+  margin: 0 0 5px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #c25e00;
+}
+.frame-content.satek-about .satek-about-message p {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: #1f2933;
+}
+.frame-content.satek-about .satek-about-section h3 {
+  margin: 0 0 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1f2933;
+}
+.frame-content.satek-about .satek-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+@media screen and (max-width: 520px) {
+  .frame-content.satek-about .satek-guide-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.frame-content.satek-about .satek-guide-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #e6ebee;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+.frame-content.satek-about .satek-guide-card .satek-guide-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border-radius: 7px;
+  background-color: rgba(255, 140, 0, 0.14);
+  color: #d97700;
+  font-size: 13px;
+}
+.frame-content.satek-about .satek-guide-card .satek-guide-icon:before {
+  font-family: 'Icons';
+  font-weight: 900;
+  line-height: 1;
+}
+.frame-content.satek-about .satek-guide-card .satek-guide-icon.icon-mail:before {
+  content: "\f0e0";
+}
+.frame-content.satek-about .satek-guide-card .satek-guide-icon.icon-compose:before {
+  content: "\f304";
+}
+.frame-content.satek-about .satek-guide-card .satek-guide-icon.icon-contacts:before {
+  content: "\f0c0";
+}
+.frame-content.satek-about .satek-guide-card .satek-guide-icon.icon-prefs:before {
+  content: "\f013";
+}
+.frame-content.satek-about .satek-guide-card .satek-guide-body {
+  min-width: 0;
+}
+.frame-content.satek-about .satek-guide-card .satek-guide-body h4 {
+  margin: 0 0 3px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #1f2933;
+}
+.frame-content.satek-about .satek-guide-card .satek-guide-body p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #52606d;
+}
+.frame-content.satek-about .satek-about-footer {
+  border-top: 1px solid #e6ebee;
+  padding-top: 12px;
+  font-size: 0.8rem;
+}
+.frame-content.satek-about .satek-about-footer .satek-about-support-title {
+  font-weight: 600;
+  color: #1f2933;
+  margin-bottom: 4px;
+}
+.frame-content.satek-about .satek-about-footer .satek-about-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+.frame-content.satek-about .satek-about-footer .satek-about-links a {
+  color: #d97700;
+  font-weight: 600;
+  text-decoration: none;
+}
+.frame-content.satek-about .satek-about-footer .satek-about-links a:hover {
+  text-decoration: underline;
+}
+.frame-content.satek-about .satek-about-footer .satek-about-links .sep {
+  color: #7b8794;
+}
+.frame-content.satek-about .satek-about-footer .satek-about-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.76rem;
+  color: #7b8794;
+}
+html.dark-mode .frame-content.satek-about {
+  color: #e5ebf0;
+}
+html.dark-mode .frame-content.satek-about .satek-about-logo {
+  background-color: rgba(255, 255, 255, 0.92);
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+html.dark-mode .frame-content.satek-about .satek-about-brand .sysname {
+  color: #e5ebf0;
+}
+html.dark-mode .frame-content.satek-about .satek-about-brand .satek-about-tagline {
+  color: #7d8c99;
+}
+html.dark-mode .frame-content.satek-about .satek-about-message {
+  background-color: rgba(255, 140, 0, 0.12);
+  border-left-color: #ff8c00;
+}
+html.dark-mode .frame-content.satek-about .satek-about-message h3 {
+  color: #ffa733;
+}
+html.dark-mode .frame-content.satek-about .satek-about-message p {
+  color: #e5ebf0;
+}
+html.dark-mode .frame-content.satek-about .satek-about-section h3 {
+  color: #e5ebf0;
+}
+html.dark-mode .frame-content.satek-about .satek-guide-card {
+  background-color: #171412;
+  border-color: #2e2823;
+}
+html.dark-mode .frame-content.satek-about .satek-guide-card .satek-guide-icon {
+  background-color: rgba(255, 140, 0, 0.16);
+  color: #ffa733;
+}
+html.dark-mode .frame-content.satek-about .satek-guide-card .satek-guide-body h4 {
+  color: #e5ebf0;
+}
+html.dark-mode .frame-content.satek-about .satek-guide-card .satek-guide-body p {
+  color: #a7b4bf;
+}
+html.dark-mode .frame-content.satek-about .satek-about-footer {
+  border-top-color: #2e2823;
+}
+html.dark-mode .frame-content.satek-about .satek-about-footer .satek-about-support-title {
+  color: #e5ebf0;
+}
+html.dark-mode .frame-content.satek-about .satek-about-footer .satek-about-links a {
+  color: #ffa733;
+}
+html.dark-mode .frame-content.satek-about .satek-about-footer .satek-about-meta {
+  color: #7d8c99;
+}

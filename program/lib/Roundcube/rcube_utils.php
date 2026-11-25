@@ -2098,10 +2098,14 @@ class rcube_utils
      */
     public static function asort(array &$array): void
     {
-        $collator = collator_create('') ?: collator_create('en_US');
+        $collator = function_exists('collator_create')
+            ? (collator_create('') ?: collator_create('en_US'))
+            : null;
 
         if ($collator) {
             $collator->asort($array, \Collator::SORT_STRING);
+        } else {
+            asort($array, \SORT_LOCALE_STRING);
         }
     }
 
@@ -2110,10 +2114,14 @@ class rcube_utils
      */
     public static function ksort(array &$array): void
     {
-        $collator = collator_create('') ?: collator_create('en_US');
+        $collator = function_exists('collator_create')
+            ? (collator_create('') ?: collator_create('en_US'))
+            : null;
 
         if ($collator) {
             uksort($array, static fn ($a, $b) => $collator->compare($a, $b));
+        } else {
+            ksort($array, \SORT_LOCALE_STRING);
         }
     }
 }

@@ -2,14 +2,69 @@
 
 <h1 class="voice"><roundcube:label name="about" /></h1>
 
-<div class="frame-content">
-	<roundcube:object name="logo" src="/images/logo-satek.png" id="logo" alt="Satek" />
-	<h2 class="sysname"><roundcube:object name="productname" /> <roundcube:object name="version" /></h2>
-	<div class="readtext">
-		<h3><roundcube:label name="skin" /></h3>
-		<roundcube:object name="skininfo" />
-		<h3><roundcube:label name="installedplugins" /></h3>
-		<roundcube:object name="pluginlist" id="pluginlist" class="records-table" />
+<div class="frame-content satek-about">
+	<div class="satek-about-hero">
+		<div class="satek-about-logo">
+			<roundcube:object name="logo" src="/images/logo-satek.png" id="logo" alt="Satek" />
+		</div>
+		<div class="satek-about-brand">
+			<h2 class="sysname"><roundcube:object name="productname" /></h2>
+			<p class="satek-about-tagline"><roundcube:label name="satekabout_tagline" /></p>
+		</div>
+	</div>
+
+	<div class="satek-about-message">
+		<h3><roundcube:label name="satekabout_greeting_title" /></h3>
+		<p><roundcube:label name="satekabout_greeting_body" /></p>
+	</div>
+
+	<div class="satek-about-section">
+		<h3><roundcube:label name="satekabout_guide_title" /></h3>
+		<div class="satek-guide-grid">
+			<div class="satek-guide-card">
+				<span class="satek-guide-icon icon-mail" aria-hidden="true"></span>
+				<div class="satek-guide-body">
+					<h4><roundcube:label name="satekabout_guide_mail_title" /></h4>
+					<p><roundcube:label name="satekabout_guide_mail_desc" /></p>
+				</div>
+			</div>
+			<div class="satek-guide-card">
+				<span class="satek-guide-icon icon-compose" aria-hidden="true"></span>
+				<div class="satek-guide-body">
+					<h4><roundcube:label name="satekabout_guide_compose_title" /></h4>
+					<p><roundcube:label name="satekabout_guide_compose_desc" /></p>
+				</div>
+			</div>
+			<div class="satek-guide-card">
+				<span class="satek-guide-icon icon-contacts" aria-hidden="true"></span>
+				<div class="satek-guide-body">
+					<h4><roundcube:label name="satekabout_guide_contacts_title" /></h4>
+					<p><roundcube:label name="satekabout_guide_contacts_desc" /></p>
+				</div>
+			</div>
+			<div class="satek-guide-card">
+				<span class="satek-guide-icon icon-prefs" aria-hidden="true"></span>
+				<div class="satek-guide-body">
+					<h4><roundcube:label name="satekabout_guide_prefs_title" /></h4>
+					<p><roundcube:label name="satekabout_guide_prefs_desc" /></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="satek-about-footer">
+		<div class="satek-about-support-title"><roundcube:label name="satekabout_contact_title" /></div>
+		<div class="satek-about-links">
+			<a href="https://satek.vn" target="_blank" rel="noopener">satek.vn</a>
+			<span class="sep">&bull;</span>
+			<a href="tel:0988434937">0988 434 937</a>
+			<span class="sep">&bull;</span>
+			<a href="mailto:info@satek.vn">info@satek.vn</a>
+		</div>
+		<div class="satek-about-meta">
+			<span><roundcube:label name="satekabout_contact_hours" /></span>
+			<span><roundcube:label name="satekabout_company" /></span>
+		</div>
 	</div>
 </div>
 
