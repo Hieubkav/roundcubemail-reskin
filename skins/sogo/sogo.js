@@ -39,7 +39,7 @@
 
     function inboxShortcutLabel() {
         var lang = (document.documentElement.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
-        return lang.indexOf('vi') === 0 ? 'Hộp thư' : 'Inbox';
+        return lang.indexOf('vi') === 0 ? 'Về hộp thư' : 'Back to Inbox';
     }
 
     function quoteToggleText(expanded) {
