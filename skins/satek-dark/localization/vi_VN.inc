@@ -293,4 +293,3 @@ $labels['sateklogin_subtitle'] = 'Truy cập hộp thư điện tử của bạn
 $labels['sateklogin_email'] = 'Email';
 $labels['sateklogin_showpwd'] = 'Hiện mật khẩu';
 $labels['sateklogin_hidepwd'] = 'Ẩn mật khẩu';
-$labels['sateklogin_toggletheme'] = 'Chuyển giao diện Sáng / Tối';

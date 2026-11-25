@@ -28,4 +28,3 @@ $labels['sateklogin_subtitle'] = 'Access your email inbox on the Satek webmail p
 $labels['sateklogin_email'] = 'Email';
 $labels['sateklogin_showpwd'] = 'Show password';
 $labels['sateklogin_hidepwd'] = 'Hide password';
-$labels['sateklogin_toggletheme'] = 'Switch Light / Dark mode';

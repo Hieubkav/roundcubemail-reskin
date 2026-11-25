@@ -1700,17 +1700,18 @@ a {
 // ---------------- Login Screen (Split Card + Custom SVG, Satek Black & Orange) ----------------
 
 body.task-login {
-    --ill-blob: rgba(255, 140, 0, 0.12);
-    --ill-arc: rgba(224, 118, 0, 0.25);
+    --ill-blob: rgba(255, 140, 0, 0.10);
+    --ill-arc: rgba(224, 118, 0, 0.24);
     --ill-dash: rgba(224, 118, 0, 0.45);
     --ill-win-bg: #ffffff;
     --ill-win-border: rgba(217, 119, 0, 0.22);
     --ill-rail-bg: #faf7f3;
-    --ill-hdr-a: #231f1b;
-    --ill-hdr-b: #13110f;
+    --ill-hdr-a: #26221e;
+    --ill-hdr-b: #141210;
     --ill-accent: #f58600;
-    --ill-accent-deep: #cc6600;
     --ill-accent-soft: #fff0db;
+    --ill-plane-a: #ff9a1f;
+    --ill-plane-b: #d66d00;
     --ill-icon-muted: #8a8178;
     --ill-row-bg: #ffffff;
     --ill-row-border: #efe6da;
@@ -1723,7 +1724,7 @@ body.task-login {
     --ill-env-bg: #ffffff;
     --ill-env-border: #eadbc8;
     --ill-env-stroke: #c9ae8c;
-    --ill-shadow: rgba(45, 28, 10, 0.14);
+    --ill-shadow: rgba(45, 28, 10, 0.12);
 
     background:
         radial-gradient(920px 560px at 14% 12%, rgba(255, 140, 0, 0.11) 0%, transparent 64%),
@@ -1764,14 +1765,14 @@ body.task-login {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 36px 26px;
+        padding: 24px 18px;
         position: relative;
     }
 
     .satek-login-svg {
         display: block;
         width: 100%;
-        max-width: 400px;
+        max-width: 410px;
         height: auto;
     }
 
@@ -1780,43 +1781,8 @@ body.task-login {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 46px 48px 36px;
+        padding: 44px 48px 36px;
         background-color: #ffffff;
-    }
-
-    .satek-login-theme-btn {
-        position: absolute;
-        top: 18px;
-        right: 18px;
-        width: 34px;
-        height: 34px;
-        border-radius: 999px;
-        border: 1px solid #e8dfd2;
-        background-color: #faf6f0;
-        color: #6b6258;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-
-        &:before {
-            content: "\f186";
-            font-family: 'Icons';
-            font-weight: 900;
-            font-size: 14px;
-            line-height: 1;
-        }
-
-        &.is-dark:before {
-            content: "\f185";
-        }
-
-        &:hover {
-            background-color: #fff2e0;
-            border-color: rgba(255, 140, 0, 0.4);
-            color: #d97300;
-        }
     }
 
     .satek-login-brand {
@@ -1906,17 +1872,20 @@ body.task-login {
             }
 
             td.input {
-                display: block;
-                width: 100%;
+                display: flex !important;
+                align-items: stretch;
+                flex-wrap: nowrap !important;
+                width: 100% !important;
                 padding: 0;
             }
         }
 
         .input-group {
             position: relative;
-            display: flex;
+            display: flex !important;
             align-items: stretch;
-            width: 100%;
+            flex-wrap: nowrap !important;
+            width: 100% !important;
         }
 
         .input-group-prepend {
@@ -1948,7 +1917,12 @@ body.task-login {
 
         .form-control,
         .custom-select {
+            display: block !important;
+            flex: 1 1 100% !important;
+            width: 100% !important;
+            min-width: 0;
             height: 46px;
+            box-sizing: border-box;
             border-radius: 10px !important;
             border: 1px solid #e4dcd0 !important;
             background-color: #ffffff !important;
@@ -1965,6 +1939,14 @@ body.task-login {
             &:focus {
                 border-color: #f58600 !important;
                 box-shadow: 0 0 0 3px rgba(245, 134, 0, 0.16) !important;
+            }
+
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover,
+            &:-webkit-autofill:focus {
+                -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+                -webkit-text-fill-color: #191614 !important;
+                transition: background-color 5000s ease-in-out 0s;
             }
         }
 
@@ -2486,11 +2468,12 @@ html.dark-mode {
         --ill-win-bg: #251f19;
         --ill-win-border: #3a3026;
         --ill-rail-bg: #1d1814;
-        --ill-hdr-a: #141210;
-        --ill-hdr-b: #0a0908;
+        --ill-hdr-a: #181512;
+        --ill-hdr-b: #0b0a09;
         --ill-accent: #ff941a;
-        --ill-accent-deep: #d46b00;
         --ill-accent-soft: rgba(255, 140, 0, 0.16);
+        --ill-plane-a: #ffa438;
+        --ill-plane-b: #d66b00;
         --ill-icon-muted: #988b7e;
         --ill-row-bg: #2b241d;
         --ill-row-border: #3b3127;
@@ -2503,7 +2486,7 @@ html.dark-mode {
         --ill-env-bg: #f6efe7;
         --ill-env-border: #cfb79c;
         --ill-env-stroke: #a6825b;
-        --ill-shadow: rgba(0, 0, 0, 0.52);
+        --ill-shadow: rgba(0, 0, 0, 0.48);
 
         background:
             radial-gradient(980px 560px at 18% 12%, rgba(255, 140, 0, 0.16) 0%, transparent 62%),
@@ -2522,18 +2505,6 @@ html.dark-mode {
 
         .satek-login-pane {
             background-color: #171412;
-        }
-
-        .satek-login-theme-btn {
-            background-color: #241e19;
-            border-color: #362e26;
-            color: #c5b6a6;
-
-            &:hover {
-                background-color: rgba(255, 140, 0, 0.16);
-                border-color: rgba(255, 140, 0, 0.45);
-                color: #ffa733;
-            }
         }
 
         #logo {
@@ -2578,6 +2549,13 @@ html.dark-mode {
                 &:focus {
                     border-color: #ff941a !important;
                     box-shadow: 0 0 0 3px rgba(255, 148, 26, 0.22) !important;
+                }
+
+                &:-webkit-autofill,
+                &:-webkit-autofill:hover,
+                &:-webkit-autofill:focus {
+                    -webkit-box-shadow: 0 0 0 1000px #211c17 inset !important;
+                    -webkit-text-fill-color: #f6f0e8 !important;
                 }
             }
 

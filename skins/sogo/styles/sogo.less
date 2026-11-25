@@ -1675,30 +1675,31 @@ a {
 // ---------------- Login Screen (Split Card + Custom SVG, Satek Teal) ----------------
 
 body.task-login {
-    --ill-blob: rgba(82, 142, 134, 0.13);
-    --ill-arc: rgba(82, 142, 134, 0.25);
-    --ill-dash: rgba(66, 119, 112, 0.42);
+    --ill-blob: rgba(82, 142, 134, 0.11);
+    --ill-arc: rgba(76, 150, 140, 0.24);
+    --ill-dash: rgba(66, 132, 123, 0.45);
     --ill-win-bg: #ffffff;
-    --ill-win-border: rgba(82, 142, 134, 0.20);
-    --ill-rail-bg: #f3f9f8;
-    --ill-hdr-a: #528e86;
-    --ill-hdr-b: #32665f;
-    --ill-accent: #4c8c84;
-    --ill-accent-deep: #30625b;
-    --ill-accent-soft: #e2f1ee;
-    --ill-icon-muted: #768e92;
+    --ill-win-border: rgba(76, 150, 140, 0.22);
+    --ill-rail-bg: #f3faf8;
+    --ill-hdr-a: #53a298;
+    --ill-hdr-b: #337970;
+    --ill-accent: #44958b;
+    --ill-accent-soft: #e2f3f0;
+    --ill-plane-a: #55a89e;
+    --ill-plane-b: #327a71;
+    --ill-icon-muted: #789397;
     --ill-row-bg: #ffffff;
-    --ill-row-border: #e3eeec;
-    --ill-avatar: #dae7e5;
-    --ill-line-a: #c6dad7;
-    --ill-line-b: #e0ecea;
-    --ill-tray-a: #5da299;
-    --ill-tray-b: #387169;
-    --ill-tray-back: #234d47;
+    --ill-row-border: #e2efed;
+    --ill-avatar: #daeae7;
+    --ill-line-a: #c3dcd8;
+    --ill-line-b: #e0efec;
+    --ill-tray-a: #5ab0a5;
+    --ill-tray-b: #357c73;
+    --ill-tray-back: #255a53;
     --ill-env-bg: #ffffff;
-    --ill-env-border: #d7e6e3;
-    --ill-env-stroke: #b0cdc7;
-    --ill-shadow: rgba(20, 56, 51, 0.14);
+    --ill-env-border: #d7e8e5;
+    --ill-env-stroke: #a5cbc4;
+    --ill-shadow: rgba(24, 72, 66, 0.12);
 
     background:
         radial-gradient(920px 560px at 14% 12%, #e4f3f0 0%, transparent 64%),
@@ -1734,19 +1735,19 @@ body.task-login {
     }
 
     .satek-login-visual {
-        background: linear-gradient(155deg, #f2f9f7 0%, #e4f1ee 100%);
+        background: linear-gradient(155deg, #f3faf8 0%, #e7f3f0 100%);
         border-right: 1px solid #e6f0ee;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 36px 26px;
+        padding: 24px 18px;
         position: relative;
     }
 
     .satek-login-svg {
         display: block;
         width: 100%;
-        max-width: 400px;
+        max-width: 410px;
         height: auto;
     }
 
@@ -1755,43 +1756,8 @@ body.task-login {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 46px 48px 36px;
+        padding: 44px 48px 36px;
         background-color: #ffffff;
-    }
-
-    .satek-login-theme-btn {
-        position: absolute;
-        top: 18px;
-        right: 18px;
-        width: 34px;
-        height: 34px;
-        border-radius: 999px;
-        border: 1px solid @sogo-border;
-        background-color: #f6faf9;
-        color: @sogo-text-secondary;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-
-        &:before {
-            content: "\f186";
-            font-family: 'Icons';
-            font-weight: 900;
-            font-size: 14px;
-            line-height: 1;
-        }
-
-        &.is-dark:before {
-            content: "\f185";
-        }
-
-        &:hover {
-            background-color: @sogo-teal-soft;
-            border-color: rgba(82, 142, 134, 0.35);
-            color: @sogo-teal-dark;
-        }
     }
 
     .satek-login-brand {
@@ -1880,17 +1846,20 @@ body.task-login {
             }
 
             td.input {
-                display: block;
-                width: 100%;
+                display: flex !important;
+                align-items: stretch;
+                flex-wrap: nowrap !important;
+                width: 100% !important;
                 padding: 0;
             }
         }
 
         .input-group {
             position: relative;
-            display: flex;
+            display: flex !important;
             align-items: stretch;
-            width: 100%;
+            flex-wrap: nowrap !important;
+            width: 100% !important;
         }
 
         .input-group-prepend {
@@ -1922,7 +1891,12 @@ body.task-login {
 
         .form-control,
         .custom-select {
+            display: block !important;
+            flex: 1 1 100% !important;
+            width: 100% !important;
+            min-width: 0;
             height: 46px;
+            box-sizing: border-box;
             border-radius: 10px !important;
             border: 1px solid #d7e4e2 !important;
             background-color: #ffffff !important;
@@ -1939,6 +1913,14 @@ body.task-login {
             &:focus {
                 border-color: @sogo-teal !important;
                 box-shadow: 0 0 0 3px rgba(82, 142, 134, 0.16) !important;
+            }
+
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover,
+            &:-webkit-autofill:focus {
+                -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+                -webkit-text-fill-color: #14282c !important;
+                transition: background-color 5000s ease-in-out 0s;
             }
         }
 
@@ -2456,15 +2438,16 @@ html.dark-mode {
     body.task-login {
         --ill-blob: rgba(111, 194, 182, 0.10);
         --ill-arc: rgba(111, 194, 182, 0.24);
-        --ill-dash: rgba(111, 194, 182, 0.42);
+        --ill-dash: rgba(111, 194, 182, 0.45);
         --ill-win-bg: #1f2d31;
         --ill-win-border: #2f4349;
         --ill-rail-bg: #192528;
-        --ill-hdr-a: #2d5d56;
-        --ill-hdr-b: #1e423d;
+        --ill-hdr-a: #346f67;
+        --ill-hdr-b: #214a44;
         --ill-accent: #6fc2b6;
-        --ill-accent-deep: #3d8379;
         --ill-accent-soft: rgba(111, 194, 182, 0.16);
+        --ill-plane-a: #74ccc0;
+        --ill-plane-b: #449288;
         --ill-icon-muted: #7c979c;
         --ill-row-bg: #243338;
         --ill-row-border: #30444a;
@@ -2477,7 +2460,7 @@ html.dark-mode {
         --ill-env-bg: #e8f3f1;
         --ill-env-border: #b4d5cf;
         --ill-env-stroke: #569188;
-        --ill-shadow: rgba(0, 0, 0, 0.42);
+        --ill-shadow: rgba(0, 0, 0, 0.40);
 
         background:
             radial-gradient(960px 560px at 16% 12%, rgba(82, 142, 134, 0.18) 0%, transparent 62%),
@@ -2496,18 +2479,6 @@ html.dark-mode {
 
         .satek-login-pane {
             background-color: #161e21;
-        }
-
-        .satek-login-theme-btn {
-            background-color: #1f2a2e;
-            border-color: #2d3d42;
-            color: #9cb3b7;
-
-            &:hover {
-                background-color: rgba(111, 194, 182, 0.16);
-                border-color: rgba(111, 194, 182, 0.42);
-                color: @sogo-dm-teal-accent;
-            }
         }
 
         #logo {
@@ -2552,6 +2523,13 @@ html.dark-mode {
                 &:focus {
                     border-color: @sogo-dm-teal-accent !important;
                     box-shadow: 0 0 0 3px rgba(111, 194, 182, 0.22) !important;
+                }
+
+                &:-webkit-autofill,
+                &:-webkit-autofill:hover,
+                &:-webkit-autofill:focus {
+                    -webkit-box-shadow: 0 0 0 1000px #1c262a inset !important;
+                    -webkit-text-fill-color: #ebf2f2 !important;
                 }
             }
 

@@ -253,35 +253,9 @@
     }
 
     function enhanceSatekLogin() {
-        var html = document.documentElement;
         var card = document.querySelector('.satek-login-card');
         if (!card) {
             return;
-        }
-
-        // Theme switch button (Light / Dark)
-        var themeBtn = card.querySelector('.satek-login-theme-btn');
-        if (themeBtn && !themeBtn.dataset.satekBound) {
-            themeBtn.dataset.satekBound = '1';
-            var syncThemeBtn = function () {
-                var isDark = html.classList.contains('dark-mode');
-                themeBtn.classList.toggle('is-dark', isDark);
-                themeBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-            };
-            syncThemeBtn();
-            themeBtn.addEventListener('click', function () {
-                var nextDark = !html.classList.contains('dark-mode');
-                html.classList.toggle('dark-mode', nextDark);
-                var mode = nextDark ? 'dark' : 'light';
-                if (window.rcmail && typeof window.rcmail.set_cookie === 'function') {
-                    window.rcmail.set_cookie('colorMode', mode, false);
-                } else {
-                    try {
-                        document.cookie = 'colorMode=' + mode + ';path=/;samesite=lax';
-                    } catch (e) { /* ignore */ }
-                }
-                syncThemeBtn();
-            });
         }
 
         var form = document.getElementById('login-form');
