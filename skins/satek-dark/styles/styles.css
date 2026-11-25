@@ -217,37 +217,37 @@ body.status-flagged #message-header > .subject:before,
   font-family: 'Icons';
   font-style: normal;
   font-weight: 900;
-  src: url("../fonts/fa-solid-900.woff2") format('woff2'), url("../fonts/fa-solid-900.woff") format('woff');
+  src: url("../../elastic/fonts/fa-solid-900.woff2") format('woff2'), url("../../elastic/fonts/fa-solid-900.woff") format('woff');
 }
 @font-face {
   font-family: 'Icons';
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/fa-regular-400.woff2") format('woff2'), url("../fonts/fa-regular-400.woff") format('woff');
+  src: url("../../elastic/fonts/fa-regular-400.woff2") format('woff2'), url("../../elastic/fonts/fa-regular-400.woff") format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'), url('../fonts/roboto-v29-regular.woff2') format('woff2'), url('../fonts/roboto-v29-regular.woff') format('woff');
+  src: local('Roboto'), local('Roboto-Regular'), url('../../elastic/fonts/roboto-v29-regular.woff2') format('woff2'), url('../../elastic/fonts/roboto-v29-regular.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 400;
-  src: local('Roboto Italic'), local('Roboto-Italic'), url('../fonts/roboto-v29-italic.woff2') format('woff2'), url('../fonts/roboto-v29-italic.woff') format('woff');
+  src: local('Roboto Italic'), local('Roboto-Italic'), url('../../elastic/fonts/roboto-v29-italic.woff2') format('woff2'), url('../../elastic/fonts/roboto-v29-italic.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src: local('Roboto Bold'), local('Roboto-Bold'), url('../fonts/roboto-v29-regular-700.woff2') format('woff2'), url('../fonts/roboto-v29-regular-700.woff') format('woff');
+  src: local('Roboto Bold'), local('Roboto-Bold'), url('../../elastic/fonts/roboto-v29-regular-700.woff2') format('woff2'), url('../../elastic/fonts/roboto-v29-regular-700.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 700;
-  src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'), url('../fonts/roboto-v29-italic-700.woff2') format('woff2'), url('../fonts/roboto-v29-italic-700.woff') format('woff');
+  src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'), url('../../elastic/fonts/roboto-v29-italic-700.woff2') format('woff2'), url('../../elastic/fonts/roboto-v29-italic-700.woff') format('woff');
 }
 /* Reset some Bootstrap style */
 body,
@@ -1288,11 +1288,11 @@ button.btn.oauth.outlook:before {
 }
 a.btn.oauth.google:before,
 button.btn.oauth.google:before {
-  background: url('../images/google-icon.svg') top left no-repeat;
+  background: url('../../elastic/styles/images/google-icon.svg') top left no-repeat;
 }
 a.btn.oauth.outlook:before,
 button.btn.oauth.outlook:before {
-  background: url('../images/microsoft-icon.svg') top left no-repeat;
+  background: url('../../elastic/styles/images/microsoft-icon.svg') top left no-repeat;
 }
 a.button.icon.dropdown:before {
   content: "\f0d7";
@@ -1554,7 +1554,7 @@ html.touch .btn:focus {
   box-sizing: initial;
 }
 .ui-widget-content .ui-icon.ui-resizable-se {
-  background: url("../images/corner-handle.svg");
+  background: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%0D%0A%20%20%3Cpath%20fill%3D%22%23888%22%20d%3D%22M6.7%2016L16%206.7V5.3L5.3%2016zM9.7%2016L16%209.7V8.3L8.3%2016zM12.7%2016l3.3-3.3v-1.4L11.3%2016zM15.7%2016l.3-.3v-1.4L14.3%2016z%22%2F%3E%0D%0A%3C%2Fsvg%3E%0D%0A");
 }
 /* FIXME: why do I need !important here? */
 @media screen and (max-width: 480px) {
@@ -4605,7 +4605,7 @@ fieldset .file-upload {
   padding-bottom: 0.5rem !important;
 }
 .file-upload.droptarget:after {
-  content: url("../images/download.svg");
+  content: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20960%20560%22%3E%0D%0A%3Cpath%20fill%3D%22%23d4dbde%22%20d%3D%22M690%20245c0%209.2-3.5%2017.9-10.1%2024.9l-175%20175c-6.6%206.6-15.3%2010.1-24.9%2010.1-9.2%200-18.4-3.5-24.9-10.1l-175-175c-6.6-7-10.1-15.8-10.1-24.9%200-4.4.9-9.2%202.6-13.6C277.9%20218.3%20291%20210%20305%20210h87.5V35c0-19.2%2015.8-35%2035-35h105c19.2%200%2035%2015.8%2035%2035v175H655c14%200%2027.1%208.3%2032.4%2021.4%201.7%204.4%202.6%209.2%202.6%2013.6zm0%20245H270V350h-70v140c0%2038.5%2031.5%2070%2070%2070h420c38.5%200%2070-31.5%2070-70V350h-70v140z%22%2F%3E%0D%0A%3C%2Fsvg%3E%0D%0A");
   width: 10rem;
   margin: 5rem auto 0 auto;
   display: block;
@@ -7539,7 +7539,10 @@ a:hover {
     order: 10;
   }
   body.sogo-docked-sidebar #layout-sidebar:not(.sidebar-right) > .header.sogo-has-usercard {
-    padding: 13px 12px 10px 16px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    flex: 0 0 auto !important;
+    padding: 12px 12px 13px 16px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -7551,7 +7554,7 @@ a:hover {
     flex-direction: column !important;
     align-items: flex-start !important;
     justify-content: flex-start !important;
-    gap: 8px !important;
+    gap: 6px !important;
     width: 100%;
     margin: 0 !important;
     padding: 0 !important;
