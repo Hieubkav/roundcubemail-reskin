@@ -3,7 +3,7 @@
 $labels['forgotlink'] = 'Quên mật khẩu hộp thư?';
 $labels['forgottitle'] = 'Khôi phục mật khẩu hộp thư';
 $labels['forgotsubtitle'] = 'Nhập email hộp thư và email khôi phục để nhận liên kết đặt lại mật khẩu.';
-$labels['forgotnote'] = 'Nếu bạn quên email khôi phục, không truy cập được hộp thư hoặc không nhận được liên kết, vui lòng liên hệ Quản trị viên của đơn vị bạn để được hỗ trợ.';
+$labels['forgotnote'] = 'Quên email khôi phục hoặc không nhận được thư? Liên hệ Quản trị viên để được hỗ trợ.';
 $labels['resettitle'] = 'Đặt mật khẩu hộp thư mới';
 $labels['resetsubtitle'] = 'Tạo mật khẩu mới có tối thiểu 8 ký tự gồm chữ hoa, chữ thường, số và ký tự đặc biệt.';
 $labels['mailboxemail'] = 'Email hộp thư';
