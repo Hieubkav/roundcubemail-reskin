@@ -115,20 +115,53 @@
             keepTriggerActive();
         }
 
+        function closeSignatureMenu(e) {
+            var popId = $toolbarBtn.attr('aria-describedby');
+            if (popId && $('#' + popId).length) {
+                try {
+                    $toolbarBtn.popover('hide');
+                } catch (err) { /* ignore */ }
+            }
+            rcmail.triggerEvent('menu-close', {
+                event: 'menu-close',
+                name: 'satek-signature-menu',
+                originalEvent: e || null
+            });
+        }
+
+        function isSignatureMenuOpen() {
+            var popId = $toolbarBtn.attr('aria-describedby');
+            return !!(popId && $('#' + popId).is(':visible'));
+        }
+
         // Convert toolbar button into popover trigger (mirrors #responses-menu)
         document.body.classList.add('satek-sig-enabled');
         keepTriggerActive();
         renderMenuItems();
 
-        $toolbarBtn.removeAttr('onclick').off('click');
+        $toolbarBtn
+            .data('popup-pos', 'bottom')
+            .removeAttr('onclick')
+            .off('click');
+
         $toolbarBtn[0].addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
             if (typeof e.stopImmediatePropagation === 'function') {
                 e.stopImmediatePropagation();
             }
+            if (isSignatureMenuOpen()) {
+                closeSignatureMenu(e);
+                return;
+            }
             renderMenuItems();
-            rcmail.command('menu-open', 'satek-signature-menu', this, e);
+            rcmail.triggerEvent('menu-open', {
+                event: 'menu-open',
+                name: 'satek-signature-menu',
+                obj: $menu,
+                props: { link: this },
+                originalEvent: e
+            });
         }, true);
 
         // Prevent Roundcube's change_identity / enable_command from graying out the Signature menu button
@@ -148,12 +181,12 @@
             .on('click.sateksig', '#satek-signature-menu a.satek-sig-item, #satek-signature-menu-clone a.satek-sig-item', function (e) {
                 e.preventDefault();
                 var iid = $(this).attr('data-iid');
-                rcmail.command('menu-close', 'satek-signature-menu', null, e);
+                closeSignatureMenu(e);
                 insertSignatureById(iid);
             })
             .on('click.sateksig', '#satek-signature-menu a.satek-sig-manage, #satek-signature-menu-clone a.satek-sig-manage', function (e) {
                 e.preventDefault();
-                rcmail.command('menu-close', 'satek-signature-menu', null, e);
+                closeSignatureMenu(e);
                 openSignatureModal();
             });
 

@@ -20,6 +20,10 @@ class satek_signature_quick extends rcube_plugin
         $this->add_texts('localization/', false);
 
         if ($this->rc->task === 'mail') {
+            if ($this->rc->action === 'compose') {
+                $this->include_stylesheet('satek_signature_quick.css');
+                $this->include_script('satek_signature_quick.js');
+            }
             $this->add_hook('render_page', [$this, 'on_mail_render']);
         } elseif ($this->rc->task === 'settings') {
             $this->register_action('plugin.satek_signature', [$this, 'action_modal']);
@@ -32,9 +36,6 @@ class satek_signature_quick extends rcube_plugin
         if (($args['template'] ?? '') !== 'compose') {
             return $args;
         }
-
-        $this->include_stylesheet('satek_signature_quick.css');
-        $this->include_script('satek_signature_quick.js');
 
         $identities = [];
         if ($this->rc->user && !empty($this->rc->user->ID)) {
