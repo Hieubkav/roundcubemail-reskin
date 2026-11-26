@@ -8477,6 +8477,9 @@ body.task-login #login-footer {
   font-size: 0.78rem;
   color: #7d7368 !important;
 }
+body.task-login #login-footer:empty {
+  display: none;
+}
 body.task-login #login-footer > div {
   background: transparent !important;
   padding: 0 !important;
