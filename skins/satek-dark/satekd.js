@@ -456,6 +456,62 @@
                 sidebarHeader.appendChild(settingsLink);
             }
 
+            // 2b. Subtle Satek brand footer at bottom of docked desktop sidebar (opens About/Guide dialog)
+            if (!sidebar.querySelector('.sogo-sidebar-brand')) {
+                if (!document.getElementById('satek-logo-dark')) {
+                    var svgNs = 'http://www.w3.org/2000/svg';
+                    var filterSvg = document.createElementNS(svgNs, 'svg');
+                    filterSvg.setAttribute('width', '0');
+                    filterSvg.setAttribute('height', '0');
+                    filterSvg.setAttribute('aria-hidden', 'true');
+                    filterSvg.style.cssText = 'position:absolute;pointer-events:none;opacity:0';
+                    filterSvg.innerHTML = '<defs><filter id="satek-logo-dark" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.05 0 0 0 0.95 -0.40 0 0.40 0 0.96 -0.97 0 0.97 0 0.97 0 0 0 1 0" /></filter></defs>';
+                    body.appendChild(filterSvg);
+                }
+
+                var menuLogo = document.querySelector('#layout-menu #logo');
+                var logoSrc = (menuLogo && menuLogo.getAttribute('src')) || 'skins/satek-dark/images/logo-satek.png';
+                var langCode = (html.getAttribute('lang') || navigator.language || 'vi').toLowerCase();
+                var brandLabel = langCode.indexOf('vi') === 0
+                    ? 'Lời ngõ & Hướng dẫn Satek Webmail'
+                    : 'About Satek Webmail & Guide';
+
+                var brandWrap = document.createElement('div');
+                brandWrap.className = 'sogo-sidebar-brand';
+
+                var brandBtn = document.createElement('button');
+                brandBtn.type = 'button';
+                brandBtn.className = 'sogo-sidebar-brand-btn';
+                brandBtn.setAttribute('title', brandLabel);
+                brandBtn.setAttribute('aria-label', brandLabel);
+
+                var brandImg = document.createElement('img');
+                brandImg.className = 'sogo-sidebar-brand-logo';
+                brandImg.src = logoSrc;
+                brandImg.alt = '';
+                brandImg.setAttribute('aria-hidden', 'true');
+
+                var brandText = document.createElement('span');
+                brandText.className = 'sogo-sidebar-brand-name';
+                brandText.textContent = 'Webmail';
+
+                brandBtn.appendChild(brandImg);
+                brandBtn.appendChild(brandText);
+                brandBtn.addEventListener('click', function () {
+                    if (window.UI && typeof window.UI.about_dialog === 'function') {
+                        window.UI.about_dialog(brandBtn);
+                    } else {
+                        var aboutLink = document.querySelector('#taskmenu a.about');
+                        if (aboutLink) {
+                            aboutLink.click();
+                        }
+                    }
+                });
+
+                brandWrap.appendChild(brandBtn);
+                sidebar.appendChild(brandWrap);
+            }
+
             var syncTopbarOffset = function () {
                 if (!layoutMenu) {
                     return;

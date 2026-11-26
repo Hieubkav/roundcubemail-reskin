@@ -31,7 +31,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #f3f5f6;
-    color: #6c7883;
+    color: #52606d;
 }
 .sogo-empty-state {
     display: flex;
@@ -40,29 +40,44 @@ body {
     justify-content: center;
     text-align: center;
     padding: 24px;
-    max-width: 340px;
+    max-width: 360px;
     user-select: none;
 }
-.sogo-empty-badge {
-    display: flex;
+.sogo-empty-logo {
+    display: block;
+    width: 156px;
+    max-width: 68%;
+    height: auto;
+    margin-bottom: 18px;
+    filter: grayscale(100%);
+    opacity: 0.24;
+    pointer-events: none;
+}
+.sogo-empty-divider {
+    width: 32px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: rgba(82, 142, 134, 0.28);
+    margin-bottom: 16px;
+}
+.sogo-empty-heading {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 148px;
-    height: 148px;
-    border-radius: 50%;
-    background-color: rgba(82, 142, 134, 0.08);
-    margin-bottom: 18px;
+    gap: 8px;
+    margin: 0 0 6px;
 }
 .sogo-empty-icon {
-    width: 88px;
-    height: 88px;
-    color: #b7c2c9;
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    color: #528e86;
 }
 .sogo-empty-title {
-    margin: 0 0 6px;
-    font-size: 16px;
+    margin: 0;
+    font-size: 15px;
     font-weight: 600;
-    color: #52606d;
+    color: #3e4c59;
     letter-spacing: -0.01em;
 }
 .sogo-empty-sub {
@@ -70,24 +85,28 @@ body {
     font-size: 13px;
     font-weight: 400;
     line-height: 1.5;
-    color: #84929e;
+    color: #52606d;
 }
 
 html.dark-mode body {
     background-color: #1b2025;
-    color: #8796a3;
+    color: #9aa9b6;
 }
-html.dark-mode .sogo-empty-badge {
-    background-color: rgba(111, 194, 182, 0.08);
+html.dark-mode .sogo-empty-logo {
+    filter: brightness(0) invert(1);
+    opacity: 0.16;
+}
+html.dark-mode .sogo-empty-divider {
+    background-color: rgba(111, 194, 182, 0.28);
 }
 html.dark-mode .sogo-empty-icon {
-    color: #3d4954;
+    color: #6fc2b6;
 }
 html.dark-mode .sogo-empty-title {
-    color: #b8c4ce;
+    color: #dce4eb;
 }
 html.dark-mode .sogo-empty-sub {
-    color: #778694;
+    color: #9aa9b6;
 }
 </style>
 <script>
@@ -109,12 +128,14 @@ html.dark-mode .sogo-empty-sub {
 </head>
 <body>
   <div class="sogo-empty-state">
-    <div class="sogo-empty-badge">
+    <img class="sogo-empty-logo" src="images/logo-satek.png" alt="" aria-hidden="true">
+    <span class="sogo-empty-divider" aria-hidden="true"></span>
+    <div class="sogo-empty-heading">
       <svg id="empty-icon" class="sogo-empty-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12h-3.13c-.47 0-.89.29-1.06.73-.44 1.13-1.53 1.94-2.81 1.94s-2.37-.81-2.81-1.94A1.13 1.13 0 0 0 8.13 15H5V5h14v10z"/>
       </svg>
+      <p id="empty-title" class="sogo-empty-title"></p>
     </div>
-    <p id="empty-title" class="sogo-empty-title"></p>
     <p id="empty-sub" class="sogo-empty-sub"></p>
   </div>
   <script>
