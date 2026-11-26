@@ -17,3 +17,11 @@ if (
 ) {
     $config['language'] = $_COOKIE['rc_lang'];
 }
+
+// Enable unified quick signature popover & settings modal on Compose screen.
+if (!isset($config['plugins']) || !is_array($config['plugins'])) {
+    $config['plugins'] = [];
+}
+if (!in_array('satek_signature_quick', $config['plugins'], true)) {
+    $config['plugins'][] = 'satek_signature_quick';
+}

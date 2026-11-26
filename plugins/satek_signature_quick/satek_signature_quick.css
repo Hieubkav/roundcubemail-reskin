@@ -1,0 +1,346 @@
+/* Satek Quick Signature Popover & Unified Settings Modal */
+
+body.satek-sig-enabled #messagetoolbar a.signature,
+body.satek-sig-enabled #messagetoolbar a.signature.disabled {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+#satek-signature-menu ul.menu li > a.satek-sig-item:before {
+  content: "\f5b7";
+  font-family: 'Icons';
+  font-weight: 900;
+}
+
+#satek-signature-menu ul.menu li > a.satek-sig-item.is-current:after {
+  content: "\f00c";
+  font-family: 'Icons';
+  font-weight: 900;
+  font-size: 11px;
+  margin-left: auto;
+  padding-left: 10px;
+  opacity: 0.8;
+}
+
+#satek-signature-menu ul.menu li > a.satek-sig-manage:before {
+  content: "\f304";
+  font-family: 'Icons';
+  font-weight: 900;
+}
+
+#satek-signature-menu ul.menu li > a.satek-sig-empty {
+  opacity: 0.58;
+  cursor: default;
+  pointer-events: none;
+}
+
+#satek-signature-menu ul.menu li > a.satek-sig-empty:before {
+  content: "\f5b7";
+  font-family: 'Icons';
+  font-weight: 900;
+}
+
+/* Modal iframe content (inherits active Satek / Satek Dark tokens) */
+.frame-content.satek-sig-modal {
+  padding: 0 !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.satek-sig-modal #satek-sig-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.satek-sig-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 14px 18px 12px;
+}
+
+.satek-sig-section {
+  margin-bottom: 14px;
+}
+
+.satek-sig-section:last-child {
+  margin-bottom: 0;
+}
+
+.satek-sig-section-title {
+  margin: 0 0 10px !important;
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  color: #1f2933;
+  letter-spacing: -0.01em;
+}
+
+.satek-sig-field {
+  margin-bottom: 10px;
+}
+
+.satek-sig-field:last-child {
+  margin-bottom: 0;
+}
+
+.satek-sig-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.satek-sig-label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3e4c59;
+}
+
+.satek-sig-label-row .satek-sig-label {
+  margin-bottom: 0;
+}
+
+.satek-sig-html-toggle .custom-control-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #52606d;
+  cursor: pointer;
+}
+
+.satek-sig-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  background-color: #f4f7f8;
+  border: 1px solid #d9e2e7;
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+}
+
+.satek-fmt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 28px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #3e4c59;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.satek-fmt-btn:hover {
+  background-color: rgba(82, 142, 134, 0.14);
+  color: #1f2933;
+}
+
+.satek-fmt-btn:focus-visible {
+  outline: 2px solid #528e86;
+  outline-offset: -1px;
+}
+
+.satek-fmt-icon:before {
+  font-family: 'Icons';
+  font-weight: 900;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.satek-fmt-icon.icon-link:before {
+  content: "\f0c1";
+}
+
+.satek-fmt-icon.icon-clear:before {
+  content: "\f87d";
+}
+
+.satek-fmt-sep {
+  width: 1px;
+  height: 16px;
+  background-color: #d0dbe0;
+  margin: 0 3px;
+}
+
+.satek-sig-rich {
+  min-height: 88px;
+  max-height: 160px;
+  overflow-y: auto;
+  height: auto !important;
+  padding: 9px 12px !important;
+  border-radius: 0 0 8px 8px !important;
+  font-size: 0.86rem;
+  line-height: 1.48;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.satek-sig-rich:empty:before {
+  content: attr(data-placeholder);
+  color: #84929e;
+  pointer-events: none;
+}
+
+.satek-sig-plain {
+  min-height: 94px;
+  border-radius: 8px !important;
+  padding: 9px 12px !important;
+  font-size: 0.86rem;
+  line-height: 1.48;
+  resize: vertical;
+}
+
+.satek-sig-switches {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: #f7f9fa;
+  border: 1px solid #e6ebee;
+  border-radius: 10px;
+}
+
+.satek-sig-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 26px;
+}
+
+.satek-sig-switch-label {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #3e4c59;
+  cursor: pointer;
+  flex: 1 1 auto;
+}
+
+.satek-sig-footer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  border-top: 1px solid #e6ebee;
+  background-color: #ffffff;
+}
+
+.satek-sig-status {
+  font-size: 0.8rem;
+  min-height: 18px;
+  color: #52606d;
+}
+
+.satek-sig-status.is-success {
+  color: #2f7d43;
+  font-weight: 500;
+}
+
+.satek-sig-status.is-error {
+  color: #c53030;
+  font-weight: 500;
+}
+
+.satek-sig-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.satek-sig-actions .btn {
+  min-height: 36px;
+  padding: 6px 14px;
+  font-size: 0.84rem;
+  border-radius: 7px;
+  font-weight: 600;
+}
+
+/* Dark Mode support */
+html.dark-mode .satek-sig-modal .custom-select,
+html.dark-mode .satek-sig-modal .form-control {
+  background-color: #1f262c !important;
+  border-color: #323c46 !important;
+  color: #e8eef3 !important;
+}
+
+html.dark-mode .satek-sig-section-title {
+  color: #e5ebf0;
+}
+
+html.dark-mode .satek-sig-label,
+html.dark-mode .satek-sig-switch-label {
+  color: #cbd5de;
+}
+
+html.dark-mode .satek-sig-html-toggle .custom-control-label {
+  color: #a7b4bf;
+}
+
+html.dark-mode .satek-sig-toolbar {
+  background-color: #22282f;
+  border-color: #323c46;
+}
+
+html.dark-mode .satek-fmt-btn {
+  color: #cbd5de;
+}
+
+html.dark-mode .satek-fmt-btn:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+}
+
+html.dark-mode .satek-fmt-sep {
+  background-color: #38434e;
+}
+
+html.dark-mode .satek-sig-switches {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: #2a323a;
+}
+
+html.dark-mode .satek-sig-footer {
+  background-color: #1b2025;
+  border-top-color: #2a323a;
+}
+
+html.dark-mode .satek-sig-status {
+  color: #a7b4bf;
+}
+
+html.dark-mode .satek-sig-status.is-success {
+  color: #6fc2b6;
+}
+
+html.dark-mode .satek-sig-status.is-error {
+  color: #f07171;
+}
+
+@media screen and (max-width: 520px) {
+  .satek-sig-body {
+    padding: 14px 14px 10px;
+  }
+
+  .satek-sig-footer {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 14px;
+  }
+
+  .satek-sig-actions {
+    justify-content: flex-end;
+  }
+}

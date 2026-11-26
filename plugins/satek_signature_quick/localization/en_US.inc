@@ -1,0 +1,34 @@
+<?php
+
+$labels = [];
+$labels['insertsig_section'] = 'Insert signature';
+$labels['managesig_section'] = 'Manage signatures';
+$labels['nosigavailable'] = 'No signature configured';
+$labels['configsig'] = 'Configure & edit signature';
+$labels['modaltitle'] = 'Signature settings';
+$labels['sectioncontent'] = 'Signature content';
+$labels['sectionoptions'] = 'Auto-insert options';
+$labels['identity'] = 'Identity (From)';
+$labels['signature'] = 'Signature content';
+$labels['htmlsignature'] = 'HTML formatting';
+$labels['sigplaceholder'] = 'Enter your name, title, phone number, or company info...';
+$labels['showsig'] = 'Automatically add signature';
+$labels['showsig_never'] = 'Never';
+$labels['showsig_always'] = 'Always';
+$labels['showsig_newonly'] = 'New messages only';
+$labels['showsig_replyonly'] = 'Replies and forwards only';
+$labels['sigbelow'] = 'Place signature below the quoted message';
+$labels['stripexistingsig'] = 'Remove original signature from message on reply';
+$labels['sigseparator'] = 'Force standard separator (--) in signatures';
+$labels['save'] = 'Save';
+$labels['saveandinsert'] = 'Save & Insert';
+$labels['saving'] = 'Saving...';
+$labels['saved'] = 'Signature settings saved.';
+$labels['saveerror'] = 'Could not save signature settings. Please try again.';
+$labels['invalididentity'] = 'Valid identity not found.';
+$labels['fmt_bold'] = 'Bold';
+$labels['fmt_italic'] = 'Italic';
+$labels['fmt_underline'] = 'Underline';
+$labels['fmt_link'] = 'Insert link';
+$labels['fmt_clear'] = 'Clear formatting';
+$labels['prompt_link'] = 'Enter URL (https://...):';

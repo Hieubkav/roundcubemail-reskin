@@ -1,0 +1,6 @@
+{
+    "name": "satek/satek_signature_quick",
+    "type": "roundcube-plugin",
+    "description": "Unified quick signature popover menu and settings modal on Compose screen",
+    "license": "GPL-3.0-or-later"
+}

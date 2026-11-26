@@ -1,0 +1,88 @@
+<roundcube:include file="includes/layout.html" />
+
+<div class="frame-content satek-sig-modal" role="main">
+	<form id="satek-sig-form" novalidate>
+		<div class="satek-sig-body">
+			<section class="satek-sig-section" aria-labelledby="satek-sig-sec-content">
+				<h2 id="satek-sig-sec-content" class="satek-sig-section-title"><roundcube:label name="satek_signature_quick.sectioncontent" /></h2>
+
+				<div class="satek-sig-field">
+					<label for="satek-sig-iid" class="satek-sig-label"><roundcube:label name="satek_signature_quick.identity" /></label>
+					<select id="satek-sig-iid" name="_iid" class="custom-select"></select>
+				</div>
+
+				<div class="satek-sig-field">
+					<div class="satek-sig-label-row">
+						<label for="satek-sig-plain" class="satek-sig-label"><roundcube:label name="satek_signature_quick.signature" /></label>
+						<div class="custom-control custom-switch satek-sig-html-toggle">
+							<input type="checkbox" class="custom-control-input" id="satek-sig-html" name="_html_signature" value="1">
+							<label class="custom-control-label" for="satek-sig-html"><roundcube:label name="satek_signature_quick.htmlsignature" /></label>
+						</div>
+					</div>
+
+					<div id="satek-sig-toolbar" class="satek-sig-toolbar" role="toolbar" aria-label="Formatting" hidden>
+						<button type="button" class="satek-fmt-btn" data-cmd="bold" title="<roundcube:label name='satek_signature_quick.fmt_bold' />" aria-label="<roundcube:label name='satek_signature_quick.fmt_bold' />"><b>B</b></button>
+						<button type="button" class="satek-fmt-btn" data-cmd="italic" title="<roundcube:label name='satek_signature_quick.fmt_italic' />" aria-label="<roundcube:label name='satek_signature_quick.fmt_italic' />"><i>I</i></button>
+						<button type="button" class="satek-fmt-btn" data-cmd="underline" title="<roundcube:label name='satek_signature_quick.fmt_underline' />" aria-label="<roundcube:label name='satek_signature_quick.fmt_underline' />"><u>U</u></button>
+						<span class="satek-fmt-sep" aria-hidden="true"></span>
+						<button type="button" class="satek-fmt-btn satek-fmt-icon icon-link" data-cmd="createLink" title="<roundcube:label name='satek_signature_quick.fmt_link' />" aria-label="<roundcube:label name='satek_signature_quick.fmt_link' />"></button>
+						<button type="button" class="satek-fmt-btn satek-fmt-icon icon-clear" data-cmd="removeFormat" title="<roundcube:label name='satek_signature_quick.fmt_clear' />" aria-label="<roundcube:label name='satek_signature_quick.fmt_clear' />"></button>
+					</div>
+
+					<div id="satek-sig-rich" class="form-control satek-sig-rich" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="<roundcube:label name='satek_signature_quick.sigplaceholder' />" hidden></div>
+					<textarea id="satek-sig-plain" class="form-control satek-sig-plain" rows="5" placeholder="<roundcube:label name='satek_signature_quick.sigplaceholder' />"></textarea>
+				</div>
+			</section>
+
+			<section class="satek-sig-section" aria-labelledby="satek-sig-sec-options">
+				<h2 id="satek-sig-sec-options" class="satek-sig-section-title"><roundcube:label name="satek_signature_quick.sectionoptions" /></h2>
+
+				<div class="satek-sig-field" id="satek-sig-row-show">
+					<label for="satek-sig-show" class="satek-sig-label"><roundcube:label name="satek_signature_quick.showsig" /></label>
+					<select id="satek-sig-show" name="_show_sig" class="custom-select">
+						<option value="1"><roundcube:label name="satek_signature_quick.showsig_always" /></option>
+						<option value="2"><roundcube:label name="satek_signature_quick.showsig_newonly" /></option>
+						<option value="3"><roundcube:label name="satek_signature_quick.showsig_replyonly" /></option>
+						<option value="0"><roundcube:label name="satek_signature_quick.showsig_never" /></option>
+					</select>
+				</div>
+
+				<div class="satek-sig-switches">
+					<div class="satek-sig-switch-row" id="satek-sig-row-below">
+						<label class="satek-sig-switch-label" for="satek-sig-below"><roundcube:label name="satek_signature_quick.sigbelow" /></label>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" id="satek-sig-below" name="_sig_below" value="1">
+							<label class="custom-control-label" for="satek-sig-below"><span class="voice"><roundcube:label name="satek_signature_quick.sigbelow" /></span></label>
+						</div>
+					</div>
+
+					<div class="satek-sig-switch-row" id="satek-sig-row-strip">
+						<label class="satek-sig-switch-label" for="satek-sig-strip"><roundcube:label name="satek_signature_quick.stripexistingsig" /></label>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" id="satek-sig-strip" name="_strip_existing_sig" value="1">
+							<label class="custom-control-label" for="satek-sig-strip"><span class="voice"><roundcube:label name="satek_signature_quick.stripexistingsig" /></span></label>
+						</div>
+					</div>
+
+					<div class="satek-sig-switch-row" id="satek-sig-row-sep">
+						<label class="satek-sig-switch-label" for="satek-sig-sep"><roundcube:label name="satek_signature_quick.sigseparator" /></label>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" id="satek-sig-sep" name="_sig_separator" value="1">
+							<label class="custom-control-label" for="satek-sig-sep"><span class="voice"><roundcube:label name="satek_signature_quick.sigseparator" /></span></label>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<div class="satek-sig-footer">
+			<div id="satek-sig-status" class="satek-sig-status" role="status" aria-live="polite"></div>
+			<div class="satek-sig-actions">
+				<button type="button" id="satek-sig-save" class="btn btn-secondary"><roundcube:label name="satek_signature_quick.save" /></button>
+				<button type="button" id="satek-sig-save-insert" class="btn btn-primary mainaction" hidden><roundcube:label name="satek_signature_quick.saveandinsert" /></button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<roundcube:include file="includes/footer.html" />

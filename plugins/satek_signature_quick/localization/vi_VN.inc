@@ -1,0 +1,34 @@
+<?php
+
+$labels = [];
+$labels['insertsig_section'] = 'Chèn chữ ký';
+$labels['managesig_section'] = 'Quản lý chữ ký';
+$labels['nosigavailable'] = 'Chưa có chữ ký nào';
+$labels['configsig'] = 'Cài đặt & sửa chữ ký';
+$labels['modaltitle'] = 'Cài đặt chữ ký';
+$labels['sectioncontent'] = 'Nội dung chữ ký';
+$labels['sectionoptions'] = 'Tuỳ chọn tự động chèn';
+$labels['identity'] = 'Nhận diện (Gửi từ)';
+$labels['signature'] = 'Nội dung chữ ký';
+$labels['htmlsignature'] = 'Định dạng HTML';
+$labels['sigplaceholder'] = 'Nhập tên, chức danh, số điện thoại hoặc thông tin liên hệ của bạn...';
+$labels['showsig'] = 'Tự động thêm chữ ký';
+$labels['showsig_never'] = 'Không bao giờ';
+$labels['showsig_always'] = 'Luôn luôn';
+$labels['showsig_newonly'] = 'Chỉ thư mới';
+$labels['showsig_replyonly'] = 'Chỉ khi trả lời và chuyển tiếp';
+$labels['sigbelow'] = 'Đặt chữ ký phía dưới nội dung trích dẫn';
+$labels['stripexistingsig'] = 'Khi trả lời bỏ chữ ký cũ khỏi nội dung thư';
+$labels['sigseparator'] = 'Dùng dấu phân cách chuẩn (--) trước chữ ký';
+$labels['save'] = 'Lưu';
+$labels['saveandinsert'] = 'Lưu & Chèn vào thư';
+$labels['saving'] = 'Đang lưu...';
+$labels['saved'] = 'Đã lưu cài đặt chữ ký.';
+$labels['saveerror'] = 'Không thể lưu cài đặt chữ ký. Vui lòng thử lại.';
+$labels['invalididentity'] = 'Không tìm thấy nhận diện hợp lệ.';
+$labels['fmt_bold'] = 'In đậm';
+$labels['fmt_italic'] = 'In nghiêng';
+$labels['fmt_underline'] = 'Gạch chân';
+$labels['fmt_link'] = 'Chèn liên kết';
+$labels['fmt_clear'] = 'Xóa định dạng';
+$labels['prompt_link'] = 'Nhập đường dẫn URL (https://...):';
