@@ -203,6 +203,11 @@ class rcmail extends rcube
         $lang = $this->language_prop($this->config->get('language', $session_lang));
         $_SESSION['language'] = $this->user->language = $lang;
 
+        if (!empty($this->user->ID) && \PHP_SAPI !== 'cli' && ($_COOKIE['rc_lang'] ?? '') !== $lang) {
+            rcube_utils::setcookie('rc_lang', $lang, time() + 31536000, true);
+            $_COOKIE['rc_lang'] = $lang;
+        }
+
         // set localization
         setlocale(\LC_ALL, $lang . '.utf8', $lang . '.UTF-8', 'en_US.utf8', 'en_US.UTF-8');
         ini_set('intl.default_locale', $lang);

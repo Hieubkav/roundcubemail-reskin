@@ -174,6 +174,8 @@ class rcmail_action_settings_prefs_save extends rcmail_action
                 // switch UI language
                 if (isset($_POST['_language']) && $a_user_prefs['language'] != $_SESSION['language']) {
                     $rcmail->load_language($a_user_prefs['language']);
+                    rcube_utils::setcookie('rc_lang', $a_user_prefs['language'], time() + 31536000, true);
+                    $_COOKIE['rc_lang'] = $a_user_prefs['language'];
                     $rcmail->output->command('reload', 500);
                 }
 
