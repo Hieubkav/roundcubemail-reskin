@@ -39,53 +39,35 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 24px;
-    max-width: 360px;
+    padding: 24px 24px 8vh;
+    max-width: 420px;
     user-select: none;
 }
 .sogo-empty-logo {
     display: block;
-    width: 156px;
-    max-width: 68%;
+    width: clamp(190px, 34vw, 250px);
     height: auto;
-    margin-bottom: 18px;
+    margin-bottom: 24px;
     filter: grayscale(100%);
-    opacity: 0.24;
+    opacity: 0.19;
     pointer-events: none;
 }
-.sogo-empty-divider {
-    width: 32px;
-    height: 2px;
-    border-radius: 2px;
-    background-color: rgba(82, 142, 134, 0.28);
-    margin-bottom: 16px;
-}
-.sogo-empty-heading {
+.sogo-empty-hint {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin: 0 0 6px;
-}
-.sogo-empty-icon {
-    flex: 0 0 auto;
-    width: 18px;
-    height: 18px;
-    color: #528e86;
-}
-.sogo-empty-title {
     margin: 0;
-    font-size: 15px;
-    font-weight: 600;
-    color: #3e4c59;
-    letter-spacing: -0.01em;
-}
-.sogo-empty-sub {
-    margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
     color: #52606d;
+}
+.sogo-empty-icon {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    color: #7b8794;
 }
 
 html.dark-mode body {
@@ -94,19 +76,13 @@ html.dark-mode body {
 }
 html.dark-mode .sogo-empty-logo {
     filter: brightness(0) invert(1);
-    opacity: 0.16;
+    opacity: 0.14;
 }
-html.dark-mode .sogo-empty-divider {
-    background-color: rgba(111, 194, 182, 0.28);
+html.dark-mode .sogo-empty-hint {
+    color: #9aa9b6;
 }
 html.dark-mode .sogo-empty-icon {
-    color: #6fc2b6;
-}
-html.dark-mode .sogo-empty-title {
-    color: #dce4eb;
-}
-html.dark-mode .sogo-empty-sub {
-    color: #9aa9b6;
+    color: #7d8c99;
 }
 </style>
 <script>
@@ -129,32 +105,30 @@ html.dark-mode .sogo-empty-sub {
 <body>
   <div class="sogo-empty-state">
     <img class="sogo-empty-logo" src="images/logo-satek.png" alt="" aria-hidden="true">
-    <span class="sogo-empty-divider" aria-hidden="true"></span>
-    <div class="sogo-empty-heading">
+    <p class="sogo-empty-hint">
       <svg id="empty-icon" class="sogo-empty-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12h-3.13c-.47 0-.89.29-1.06.73-.44 1.13-1.53 1.94-2.81 1.94s-2.37-.81-2.81-1.94A1.13 1.13 0 0 0 8.13 15H5V5h14v10z"/>
       </svg>
-      <p id="empty-title" class="sogo-empty-title"></p>
-    </div>
-    <p id="empty-sub" class="sogo-empty-sub"></p>
+      <span id="empty-text"></span>
+    </p>
   </div>
   <script>
     (function () {
       var i18n = {
         mail: {
-          vi: ['Chưa chọn thư nào', 'Chọn một thư từ danh sách bên trái để xem nội dung.'],
-          en: ['No message selected', 'Select a message from the list to read its content.'],
-          fr: ['Aucun message sélectionné', 'Sélectionnez un message dans la liste pour le lire.']
+          vi: 'Chọn một thư để xem nội dung',
+          en: 'Select a message to read',
+          fr: 'Sélectionnez un message à lire'
         },
         addressbook: {
-          vi: ['Chưa chọn liên hệ nào', 'Chọn một liên hệ từ danh sách để xem thông tin chi tiết.'],
-          en: ['No contact selected', 'Select a contact from the list to view details.'],
-          fr: ['Aucun contact sélectionné', 'Sélectionnez un contact dans la liste pour voir les détails.']
+          vi: 'Chọn một liên hệ để xem chi tiết',
+          en: 'Select a contact to view',
+          fr: 'Sélectionnez un contact à afficher'
         },
         settings: {
-          vi: ['Chưa chọn mục cài đặt', 'Chọn một mục ở danh sách bên trái để tùy chỉnh.'],
-          en: ['No section selected', 'Choose a setting from the list on the left.'],
-          fr: ['Aucune section sélectionnée', 'Choisissez une option dans la liste à gauche.']
+          vi: 'Chọn một mục để tùy chỉnh',
+          en: 'Select a setting to configure',
+          fr: 'Sélectionnez un paramètre'
         }
       };
 
@@ -188,13 +162,12 @@ html.dark-mode .sogo-empty-sub {
       }
 
       var map = i18n[task] || i18n.mail;
-      var pair = map[lang] || map.en;
+      var text = map[lang] || map.en;
       var pathEl = document.querySelector('#empty-icon path');
       if (pathEl && iconPaths[task]) {
         pathEl.setAttribute('d', iconPaths[task]);
       }
-      document.getElementById('empty-title').textContent = pair[0];
-      document.getElementById('empty-sub').textContent = pair[1];
+      document.getElementById('empty-text').textContent = text;
     })();
   </script>
 </body>
