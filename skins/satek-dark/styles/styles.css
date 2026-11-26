@@ -8297,6 +8297,21 @@ body.task-login .satek-login-pane.is-reset-mode .satek-login-header {
 body.task-login #login-form.satek-reset-form .satek-reset-title {
   color: #191614 !important;
 }
+body.task-login #login-form.satek-reset-form .satek-reset-subtitle {
+  color: #6b6258;
+}
+body.task-login #login-form.satek-reset-form .satek-reset-note {
+  background-color: #fef6eb;
+  border-color: #f4dec1;
+  color: #5c4223;
+}
+body.task-login #login-form.satek-reset-form .satek-reset-note-icon {
+  color: #e07600;
+}
+body.task-login #login-form .satek-mailbox-reset-link a {
+  color: #d97300 !important;
+  font-weight: 600;
+}
 body.task-login #login-form {
   position: static !important;
   top: auto !important;
@@ -8869,6 +8884,20 @@ html.dark-mode body.task-login #login-form {
 }
 html.dark-mode body.task-login #login-form.satek-reset-form .satek-reset-title {
   color: #f6f0e8 !important;
+}
+html.dark-mode body.task-login #login-form.satek-reset-form .satek-reset-subtitle {
+  color: #a89b8d;
+}
+html.dark-mode body.task-login #login-form.satek-reset-form .satek-reset-note {
+  background-color: rgba(255, 148, 26, 0.1);
+  border-color: rgba(255, 148, 26, 0.26);
+  color: #decab2;
+}
+html.dark-mode body.task-login #login-form.satek-reset-form .satek-reset-note-icon {
+  color: #ffa438;
+}
+html.dark-mode body.task-login #login-form .satek-mailbox-reset-link a {
+  color: #ffb347 !important;
 }
 html.dark-mode body.task-login #login-form:not(.satek-reset-form) td.title label {
   color: #e6ddd2;

@@ -2,7 +2,10 @@
 
 $labels['forgotlink'] = 'Forgot mailbox password?';
 $labels['forgottitle'] = 'Reset mailbox password';
+$labels['forgotsubtitle'] = 'Enter your mailbox email and recovery email to receive a password reset link.';
+$labels['forgotnote'] = 'If you forgot your recovery email, cannot access it, or did not receive the reset link, please contact your organization\'s Administrator for assistance.';
 $labels['resettitle'] = 'Set a new mailbox password';
+$labels['resetsubtitle'] = 'Create a new password (min 8 chars) with uppercase, lowercase, number, and special character.';
 $labels['mailboxemail'] = 'Mailbox email';
 $labels['personalemail'] = 'Recovery email';
 $labels['sendreset'] = 'Send reset link';

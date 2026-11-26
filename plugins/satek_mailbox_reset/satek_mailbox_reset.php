@@ -148,6 +148,7 @@ class satek_mailbox_reset extends rcube_plugin
             'token' => (new html_hiddenfield(['name' => '_token', 'value' => $this->rc->get_request_token()]))->show(),
         ];
         $this->rc->output->set_env('satek_reset_title', $this->gettext('forgottitle'));
+        $this->rc->output->set_env('satek_reset_subtitle', $this->gettext('forgotsubtitle'));
         $form['inputs'] = [
             'mailbox' => [
                 'title' => html::label('satek-mailbox-email', rcube::Q($this->gettext('mailboxemail'))),
@@ -183,6 +184,11 @@ class satek_mailbox_reset extends rcube_plugin
                     'class' => 'button mainaction submit',
                 ], rcube::Q($this->gettext('sendreset'))),
             ],
+            'note' => [
+                'outterclass' => 'satek-reset-note',
+                'content' => html::span(['class' => 'satek-reset-note-icon', 'aria-hidden' => 'true'], '')
+                    . html::span(['class' => 'satek-reset-note-text'], rcube::Q($this->gettext('forgotnote'))),
+            ],
             'back' => [
                 'outterclass' => 'satek-mailbox-reset-link',
                 'content' => html::a([
@@ -207,6 +213,7 @@ class satek_mailbox_reset extends rcube_plugin
             'email' => (new html_hiddenfield(['name' => '_mailbox_email', 'value' => $email]))->show(),
         ];
         $this->rc->output->set_env('satek_reset_title', $this->gettext('resettitle'));
+        $this->rc->output->set_env('satek_reset_subtitle', $this->gettext('resetsubtitle'));
         $form['inputs'] = [
             'mailbox' => [
                 'title' => html::label('satek-mailbox-email', rcube::Q($this->gettext('mailboxemail'))),

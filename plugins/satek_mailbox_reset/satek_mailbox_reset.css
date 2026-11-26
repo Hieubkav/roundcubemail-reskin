@@ -9,22 +9,77 @@
 }
 
 .satek-reset-title {
-  font-size: 17px;
+  font-size: 1.42rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
   text-align: center;
-  margin: 0 0 18px;
-  line-height: 1.35;
-  color: #1b4f47;
+  margin: 0 0 6px;
+  line-height: 1.28;
+  color: #13292d;
 }
 
-html.dark-mode .satek-reset-title,
-#login-form.satek-reset-form[data-skin="satek-dark"] .satek-reset-title {
-  color: #f5ede2;
+.satek-reset-subtitle {
+  font-size: 0.84rem;
+  line-height: 1.48;
+  text-align: center;
+  margin: 0 0 20px;
+  color: #5e7276;
 }
 
-html.dark-mode .satek-mailbox-reset-link a,
-#login-form.satek-reset-form[data-skin="satek-dark"] .satek-mailbox-reset-link a {
-  color: #ffb347;
+.satek-reset-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 11px 13px;
+  border-radius: 10px;
+  background-color: #eff7f5;
+  border: 1px solid #d5e8e4;
+  color: #315652;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.satek-reset-note-icon {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: #3b7d75;
+  line-height: 1;
+}
+
+.satek-reset-note-icon:before {
+  content: "\f05a";
+  font-family: 'Icons';
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.satek-reset-note-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+html.dark-mode .satek-reset-title {
+  color: #ecf3f2;
+}
+
+html.dark-mode .satek-reset-subtitle {
+  color: #98acb0;
+}
+
+html.dark-mode .satek-reset-note {
+  background-color: rgba(111, 194, 182, 0.10);
+  border-color: rgba(111, 194, 182, 0.24);
+  color: #c5dad7;
+}
+
+html.dark-mode .satek-reset-note-icon {
+  color: #6fc2b6;
+}
+
+html.dark-mode .satek-mailbox-reset-link a {
+  color: #6fc2b6;
 }
 
 #login-form.satek-reset-form table {
@@ -51,13 +106,19 @@ html.dark-mode .satek-mailbox-reset-link a,
 
 #login-form.satek-reset-form .satek-field .input-group-prepend,
 #login-form.satek-reset-form .satek-field .input-group-text {
-  flex: 0 0 44px;
+  flex: 0 0 42px;
+}
+
+#login-form.satek-reset-form .satek-field .input-group-text.icon.email:before {
+  content: "\f2b6";
+  font-family: 'Icons';
+  font-weight: 400;
 }
 
 #login-form.satek-reset-form .satek-field .form-control {
   flex: 1 1 auto;
   min-width: 0;
-  width: auto;
+  width: 100%;
 }
 
 #login-form.satek-reset-form .formbuttons button {

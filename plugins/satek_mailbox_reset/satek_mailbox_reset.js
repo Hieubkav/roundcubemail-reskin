@@ -13,6 +13,13 @@ if (window.rcmail) {
             title.className = 'satek-reset-title';
             title.textContent = rcmail.env.satek_reset_title;
             form.insertBefore(title, form.firstChild);
+
+            if (rcmail.env.satek_reset_subtitle) {
+                var subtitle = document.createElement('p');
+                subtitle.className = 'satek-reset-subtitle';
+                subtitle.textContent = rcmail.env.satek_reset_subtitle;
+                title.insertAdjacentElement('afterend', subtitle);
+            }
         }
 
         $('#login-form.satek-reset-form td.input').each(function () {
