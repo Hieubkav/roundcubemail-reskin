@@ -16,14 +16,13 @@
         }
         $toolbarBtn.data('satek-sig-ready', true);
 
-        // Build popover menu mirroring Elastic's #responses-menu
+        // Build popover menu mirroring Elastic's #responses-menu (flat <li> items under ul.menu.listing)
         var $menu = $('#satek-signature-menu');
         if (!$menu.length) {
             $menu = $('<div id="satek-signature-menu" class="popupmenu">');
             var $ul = $('<ul class="menu listing" role="menu">');
-            $ul.append($('<li role="separator" class="separator">').append($('<label>').text(labels.insertsig_section || 'Insert signature')));
-            $ul.append($('<ul id="satek-sig-list" class="rounded-0">'));
-            $ul.append($('<li role="separator" class="separator">').append($('<label>').text(labels.managesig_section || 'Manage signatures')));
+            $ul.append($('<li role="separator" class="separator satek-sig-insert-sep">').append($('<label>').text(labels.insertsig_section || 'Insert signature')));
+            $ul.append($('<li role="separator" class="separator satek-sig-manage-sep">').append($('<label>').text(labels.managesig_section || 'Manage signatures')));
             $ul.append(
                 $('<li role="menuitem">').append(
                     $('<a href="#satek-sig-config" class="satek-sig-manage active">').text(labels.configsig || 'Configure & edit signature')
@@ -41,11 +40,12 @@
         }
 
         function renderMenuItems() {
-            var $list = $('#satek-sig-list');
-            if (!$list.length) {
+            var $ul = $('#satek-signature-menu > ul.menu');
+            var $manageSep = $ul.children('li.satek-sig-manage-sep');
+            if (!$ul.length || !$manageSep.length) {
                 return;
             }
-            $list.empty();
+            $ul.children('li.satek-sig-dynamic').remove();
 
             var sigs = rcmail.env.signatures || {};
             var currentIid = String($('[name="_from"]').val() || rcmail.env.identity || '');
@@ -63,16 +63,14 @@
                 if (id === currentIid) {
                     $a.addClass('is-current');
                 }
-                $list.append($('<li role="menuitem">').append($a));
+                $('<li role="menuitem" class="satek-sig-dynamic">').append($a).insertBefore($manageSep);
             });
 
             if (count === 0) {
-                $list.append(
-                    $('<li role="menuitem">').append(
-                        $('<a href="#no-sig" class="satek-sig-empty disabled" aria-disabled="true" tabindex="-1">')
-                            .text(labels.nosigavailable || 'No signature configured')
-                    )
-                );
+                $('<li role="menuitem" class="satek-sig-dynamic">').append(
+                    $('<a href="#no-sig" class="satek-sig-empty disabled" aria-disabled="true" tabindex="-1">')
+                        .text(labels.nosigavailable || 'No signature configured')
+                ).insertBefore($manageSep);
             }
         }
 
