@@ -23,6 +23,8 @@
             return;
         }
 
+        document.documentElement.classList.add('satek-sig-frame-html');
+
         // Sync dark-mode class from parent immediately
         try {
             if (window.parent && window.parent.document && window.parent.document.documentElement.classList.contains('dark-mode')) {
@@ -137,13 +139,23 @@
 
         loadIdentity(currentIid);
 
-        iidSelect.addEventListener('change', function () {
+        var bodyEl = document.querySelector('.satek-sig-body');
+        if (bodyEl) {
+            bodyEl.scrollTop = 0;
+        }
+        window.scrollTo(0, 0);
+
+        function onIdentityChange() {
+            var nextIid = String(iidSelect.value || '');
+            if (!nextIid || nextIid === currentIid) {
+                return;
+            }
             captureCurrentDraft();
             setStatus('', '');
-            loadIdentity(iidSelect.value);
-        });
+            loadIdentity(nextIid);
+        }
 
-        htmlToggle.addEventListener('change', function () {
+        function onHtmlModeChange() {
             var toHtml = htmlToggle.checked;
             if (toHtml) {
                 richEl.innerHTML = textToHtml(plainEl.value);
@@ -153,7 +165,17 @@
             applyEditorMode(toHtml);
             captureCurrentDraft();
             (toHtml ? richEl : plainEl).focus();
-        });
+        }
+
+        // Bind via jQuery when available because Elastic's pretty_select() calls $(select).val(v).change(),
+        // which invokes jQuery handlers but does NOT fire native addEventListener('change')!
+        if (window.jQuery) {
+            window.jQuery(iidSelect).off('change.sateksig').on('change.sateksig', onIdentityChange);
+            window.jQuery(htmlToggle).off('change.sateksig').on('change.sateksig', onHtmlModeChange);
+        } else {
+            iidSelect.addEventListener('change', onIdentityChange);
+            htmlToggle.addEventListener('change', onHtmlModeChange);
+        }
 
         toolbar.addEventListener('mousedown', function (e) {
             if (e.target.closest('button')) {

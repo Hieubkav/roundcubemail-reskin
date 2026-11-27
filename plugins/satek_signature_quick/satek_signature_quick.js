@@ -99,6 +99,7 @@
             var src = cfg.modal_url + sep + '_compose=1' + (currentIid ? '&_iid=' + encodeURIComponent(currentIid) : '');
             var $iframe = $('<iframe>').attr({
                 id: 'satek-sig-frame',
+                'class': 'iframe',
                 src: src,
                 title: labels.modaltitle || 'Signature settings'
             }).css({
@@ -108,8 +109,8 @@
             });
 
             activeDialog = rcmail.simple_dialog($iframe, labels.modaltitle || 'Signature settings', null, {
-                cancel_button: 'close',
-                height: 540,
+                cancel_button: false,
+                height: 585,
                 width: 580
             });
         }
@@ -125,7 +126,7 @@
                 rcmail.change_identity($from[0], true);
             } else if (rcmail.editor && typeof rcmail.editor.change_signature === 'function') {
                 rcmail.editor.change_signature(String(iid), true);
-                rcmail.display_message('siginserted', 'confirmation');
+                rcmail.display_message(rcmail.get_label('siginserted'), 'confirmation');
             } else if ($from.length) {
                 rcmail.change_identity($from[0], true);
             }
@@ -209,6 +210,22 @@
             if (!data) {
                 return;
             }
+            var oldSignatures = rcmail.env.signatures || {};
+            var oldIdentity = String(rcmail.env.identity || '');
+
+            // In plain-text mode, strip the previous signature before replacing rcmail.env.signatures
+            if (insertNow && rcmail.editor && !rcmail.editor.editor && oldIdentity && oldSignatures[oldIdentity]) {
+                var $ta = $('#' + rcmail.editor.id);
+                if ($ta.length) {
+                    var oldText = String(oldSignatures[oldIdentity].text || '').replace(/\r\n/g, '\n');
+                    var val = String($ta.val() || '');
+                    var pos = rcmail.env.top_posting ? val.indexOf(oldText) : val.lastIndexOf(oldText);
+                    if (oldText && pos >= 0) {
+                        $ta.val(val.substring(0, pos) + val.substring(pos + oldText.length));
+                    }
+                }
+            }
+
             rcmail.env.signatures = data.signatures || {};
             if (data.prefs && typeof data.prefs.sig_below !== 'undefined') {
                 rcmail.env.sig_below = !!data.prefs.sig_below;

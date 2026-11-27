@@ -131,146 +131,179 @@ class satek_signature_quick extends rcube_plugin
         $this->rc->output->send('satek_signature_quick.signature_modal');
     }
 
+    private function sanitize_html_signature($html)
+    {
+        if (class_exists('rcmail_action_settings_index') && method_exists('rcmail_action_settings_index', 'wash_html')) {
+            return rcmail_action_settings_index::wash_html($html);
+        }
+
+        $wrapped = '<html><head>'
+            . '<meta http-equiv="Content-Type" content="text/html; charset=' . RCUBE_CHARSET . '" />'
+            . '</head><body>' . $html . '</body></html>';
+
+        $washer = new rcube_washtml([
+            'show_washed' => false,
+            'allow_remote' => 1,
+            'charset' => RCUBE_CHARSET,
+            'html_elements' => ['body', 'link'],
+            'ignore_elements' => ['body'],
+            'html_attribs' => ['rel', 'type', 'target'],
+            'add_comments' => false,
+        ]);
+
+        return $washer->wash(rcube_charset::clean($wrapped));
+    }
+
+    private function send_json($payload, $status = 200)
+    {
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+        http_response_code($status);
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode($payload, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
     public function action_save()
     {
-        header('Content-Type: application/json; charset=UTF-8');
-
-        if (!$this->rc->user || empty($this->rc->user->ID)) {
-            http_response_code(401);
-            echo json_encode(['ok' => false, 'message' => $this->gettext('saveerror')]);
-            exit;
-        }
-
-        if (!$this->rc->check_request()) {
-            http_response_code(403);
-            echo json_encode(['ok' => false, 'message' => $this->gettext('saveerror')]);
-            exit;
-        }
-
-        $iid = rcube_utils::get_input_string('_iid', rcube_utils::INPUT_POST);
-        $identity = $iid !== '' ? $this->rc->user->get_identity($iid) : null;
-        if (!$identity || empty($identity['identity_id'])) {
-            http_response_code(400);
-            echo json_encode(['ok' => false, 'message' => $this->gettext('invalididentity')]);
-            exit;
-        }
-
-        $html_sig = rcube_utils::get_input_string('_html_signature', rcube_utils::INPUT_POST) === '1' ? 1 : 0;
-        $signature = rcube_utils::get_input_string('_signature', rcube_utils::INPUT_POST, true);
-
-        if ($html_sig && $signature !== '') {
-            $signature = rcmail_action::wash_html($signature);
-            // Treat visually empty HTML (<br>, empty <p>, whitespace only) as empty signature
-            $plain_check = trim(html_entity_decode(strip_tags($signature), \ENT_QUOTES | \ENT_HTML5, 'UTF-8'));
-            if ($plain_check === '' && stripos($signature, '<img') === false) {
-                $signature = '';
+        try {
+            if (!$this->rc->user || empty($this->rc->user->ID)) {
+                $this->send_json(['ok' => false, 'message' => $this->gettext('saveerror')], 401);
             }
-        } else {
-            $signature = trim($signature, "\r\n");
-        }
 
-        $save_data = $identity;
-        unset($save_data['changed'], $save_data['del'], $save_data['user_id'], $save_data['identity_id']);
-        $save_data['signature'] = $signature;
-        $save_data['html_signature'] = $html_sig;
-
-        $plugin = $this->rc->plugins->exec_hook('identity_update', ['id' => $iid, 'record' => $save_data]);
-        $save_data = $plugin['record'];
-        if (!empty($save_data['email'])) {
-            $save_data['email'] = rcube_utils::idn_to_ascii($save_data['email']);
-        }
-
-        $updated_id = false;
-        if (empty($plugin['abort'])) {
-            $updated_id = $this->rc->user->update_identity($iid, $save_data);
-        }
-
-        if (!$updated_id) {
-            http_response_code(500);
-            echo json_encode(['ok' => false, 'message' => $this->gettext('saveerror')]);
-            exit;
-        }
-        $this->rc->plugins->exec_hook('identity_update_after', ['id' => $iid, 'record' => $save_data]);
-
-        // Save signature preferences (respecting dont_override)
-        $no_override = array_flip((array) $this->rc->config->get('dont_override'));
-        $save_prefs = [];
-
-        if (!isset($no_override['show_sig'])) {
-            $show_sig = (int) rcube_utils::get_input_string('_show_sig', rcube_utils::INPUT_POST);
-            if ($show_sig < 0 || $show_sig > 3) {
-                $show_sig = 1;
+            if (!$this->rc->check_request()) {
+                $this->send_json(['ok' => false, 'message' => $this->gettext('saveerror')], 403);
             }
-            $save_prefs['show_sig'] = $show_sig;
-        }
-        if (!isset($no_override['sig_below'])) {
-            $save_prefs['sig_below'] = rcube_utils::get_input_string('_sig_below', rcube_utils::INPUT_POST) === '1';
-        }
-        if (!isset($no_override['strip_existing_sig'])) {
-            $save_prefs['strip_existing_sig'] = rcube_utils::get_input_string('_strip_existing_sig', rcube_utils::INPUT_POST) === '1';
-        }
-        if (!isset($no_override['sig_separator'])) {
-            $save_prefs['sig_separator'] = rcube_utils::get_input_string('_sig_separator', rcube_utils::INPUT_POST) === '1';
-        }
 
-        if (!empty($save_prefs)) {
-            $this->rc->user->save_prefs($save_prefs);
-        }
+            $iid = rcube_utils::get_input_string('_iid', rcube_utils::INPUT_POST);
+            $identity = $iid !== '' ? $this->rc->user->get_identity($iid) : null;
+            if (!$identity || empty($identity['identity_id'])) {
+                $this->send_json(['ok' => false, 'message' => $this->gettext('invalididentity')], 400);
+            }
 
-        // Rebuild compose signatures map matching rcmail_sendmail::compose_header_from()
-        $sig_below = isset($save_prefs['sig_below']) ? $save_prefs['sig_below'] : (bool) $this->rc->config->get('sig_below', false);
-        $add_separator = isset($save_prefs['sig_separator']) ? $save_prefs['sig_separator'] : (bool) $this->rc->config->get('sig_separator', true);
-        $strip_existing = isset($save_prefs['strip_existing_sig']) ? $save_prefs['strip_existing_sig'] : (bool) $this->rc->config->get('strip_existing_sig', true);
-        $show_sig_val = isset($save_prefs['show_sig']) ? $save_prefs['show_sig'] : (int) $this->rc->config->get('show_sig', 1);
+            $html_sig = rcube_utils::get_input_string('_html_signature', rcube_utils::INPUT_POST) === '1' ? 1 : 0;
+            $signature = rcube_utils::get_input_string('_signature', rcube_utils::INPUT_POST, true);
 
-        $signatures = [];
-        $identities_out = [];
-        foreach ((array) $this->rc->user->list_identities() as $row) {
-            $row_id = (string) $row['identity_id'];
-            $sig_raw = (string) ($row['signature'] ?? '');
-            $has_sig = trim($sig_raw) !== '';
-            $identities_out[] = [
-                'id' => $row_id,
-                'label' => format_email_recipient(rcube_utils::idn_to_utf8($row['email']), $row['name']),
-                'has_sig' => $has_sig,
-                'signature' => $sig_raw,
-                'html_signature' => !empty($row['html_signature']),
-            ];
-
-            if ($has_sig) {
-                $text = $html = $sig_raw;
-                if (!empty($row['html_signature'])) {
-                    $text = trim($this->rc->html2text($html, ['links' => false]), "\r\n");
-                } else {
-                    $t2h = new rcube_text2html($text, false);
-                    $html = $t2h->get_html();
+            if ($html_sig && $signature !== '') {
+                $signature = $this->sanitize_html_signature($signature);
+                // Treat visually empty HTML (<br>, empty <p>, whitespace only) as empty signature
+                $plain_check = trim(html_entity_decode(strip_tags($signature), \ENT_QUOTES | \ENT_HTML5, 'UTF-8'));
+                if ($plain_check === '' && stripos($signature, '<img') === false) {
+                    $signature = '';
                 }
+            } else {
+                $signature = trim($signature, "\r\n");
+            }
 
-                if ($add_separator && !preg_match('/^--[ -]\r?\n/m', $text)) {
-                    $text = "-- \n" . ltrim($text, "\r\n");
-                    $html = '-- <br>' . $html;
+            $save_data = $identity;
+            unset($save_data['changed'], $save_data['del'], $save_data['user_id'], $save_data['identity_id']);
+            $save_data['signature'] = $signature;
+            $save_data['html_signature'] = $html_sig;
+
+            $plugin = $this->rc->plugins->exec_hook('identity_update', ['id' => $iid, 'record' => $save_data]);
+            $save_data = $plugin['record'];
+            if (!empty($save_data['email'])) {
+                $save_data['email'] = rcube_utils::idn_to_ascii($save_data['email']);
+            }
+
+            if (!empty($plugin['abort'])) {
+                $this->send_json(['ok' => false, 'message' => $this->gettext('saveerror')], 400);
+            }
+
+            $this->rc->user->update_identity($iid, $save_data);
+            if ($this->rc->db && $this->rc->db->is_error()) {
+                $this->send_json(['ok' => false, 'message' => $this->gettext('saveerror')], 500);
+            }
+            $this->rc->plugins->exec_hook('identity_update_after', ['id' => $iid, 'record' => $save_data]);
+
+            // Save signature preferences (respecting dont_override)
+            $no_override = array_flip((array) $this->rc->config->get('dont_override'));
+            $save_prefs = [];
+
+            if (!isset($no_override['show_sig'])) {
+                $show_sig = (int) rcube_utils::get_input_string('_show_sig', rcube_utils::INPUT_POST);
+                if ($show_sig < 0 || $show_sig > 3) {
+                    $show_sig = 1;
                 }
+                $save_prefs['show_sig'] = $show_sig;
+            }
+            if (!isset($no_override['sig_below'])) {
+                $save_prefs['sig_below'] = rcube_utils::get_input_string('_sig_below', rcube_utils::INPUT_POST) === '1';
+            }
+            if (!isset($no_override['strip_existing_sig'])) {
+                $save_prefs['strip_existing_sig'] = rcube_utils::get_input_string('_strip_existing_sig', rcube_utils::INPUT_POST) === '1';
+            }
+            if (!isset($no_override['sig_separator'])) {
+                $save_prefs['sig_separator'] = rcube_utils::get_input_string('_sig_separator', rcube_utils::INPUT_POST) === '1';
+            }
 
-                $signatures[$row_id] = [
-                    'text' => $text,
-                    'html' => $html,
+            if (!empty($save_prefs)) {
+                $this->rc->user->save_prefs($save_prefs);
+            }
+
+            // Rebuild compose signatures map matching rcmail_sendmail::compose_header_from()
+            $sig_below = isset($save_prefs['sig_below']) ? $save_prefs['sig_below'] : (bool) $this->rc->config->get('sig_below', false);
+            $add_separator = isset($save_prefs['sig_separator']) ? $save_prefs['sig_separator'] : (bool) $this->rc->config->get('sig_separator', true);
+            $strip_existing = isset($save_prefs['strip_existing_sig']) ? $save_prefs['strip_existing_sig'] : (bool) $this->rc->config->get('strip_existing_sig', true);
+            $show_sig_val = isset($save_prefs['show_sig']) ? $save_prefs['show_sig'] : (int) $this->rc->config->get('show_sig', 1);
+
+            $signatures = [];
+            $identities_out = [];
+            foreach ((array) $this->rc->user->list_identities() as $row) {
+                $row_id = (string) $row['identity_id'];
+                $sig_raw = (string) ($row['signature'] ?? '');
+                $has_sig = trim($sig_raw) !== '';
+                $identities_out[] = [
+                    'id' => $row_id,
+                    'label' => format_email_recipient(rcube_utils::idn_to_utf8($row['email']), $row['name']),
+                    'has_sig' => $has_sig,
+                    'signature' => $sig_raw,
+                    'html_signature' => !empty($row['html_signature']),
                 ];
-            }
-        }
 
-        echo json_encode([
-            'ok' => true,
-            'message' => $this->gettext('saved'),
-            'iid' => (string) $iid,
-            'signatures' => (object) $signatures,
-            'identities' => $identities_out,
-            'prefs' => [
-                'show_sig' => $show_sig_val,
-                'sig_below' => $sig_below,
-                'strip_existing_sig' => $strip_existing,
-                'sig_separator' => $add_separator,
-            ],
-        ]);
-        exit;
+                if ($has_sig) {
+                    $text = $html = $sig_raw;
+                    if (!empty($row['html_signature'])) {
+                        $text = trim($this->rc->html2text($html, ['links' => false]), "\r\n");
+                    } else {
+                        $t2h = new rcube_text2html($text, false);
+                        $html = $t2h->get_html();
+                    }
+
+                    if ($add_separator && !preg_match('/^--[ -]\r?\n/m', $text)) {
+                        $text = "-- \n" . ltrim($text, "\r\n");
+                        $html = '-- <br>' . $html;
+                    }
+
+                    $signatures[$row_id] = [
+                        'text' => $text,
+                        'html' => $html,
+                    ];
+                }
+            }
+
+            $this->send_json([
+                'ok' => true,
+                'message' => $this->gettext('saved'),
+                'iid' => (string) $iid,
+                'signatures' => (object) $signatures,
+                'identities' => $identities_out,
+                'prefs' => [
+                    'show_sig' => $show_sig_val,
+                    'sig_below' => $sig_below,
+                    'strip_existing_sig' => $strip_existing,
+                    'sig_separator' => $add_separator,
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            rcube::raise_error([
+                'code' => 500,
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'message' => 'satek_signature_quick save error: ' . $e->getMessage(),
+            ], true, false);
+            $this->send_json(['ok' => false, 'message' => $this->gettext('saveerror')], 500);
+        }
     }
 }
