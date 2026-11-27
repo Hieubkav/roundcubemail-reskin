@@ -10,17 +10,28 @@
 
         var cfg = rcmail.env.satek_sig_quick;
         var labels = cfg.labels || {};
-        var $toolbarBtn = $('#messagetoolbar a.signature').first();
+        // Note: Elastic's UI.toolbar_init() replaces #messagetoolbar with ul#toolbar-menu before rcmail.init()
+        var $toolbarBtn = $('#toolbar-menu a.signature, #messagetoolbar a.signature, #layout-content .header a.signature').first();
         if (!$toolbarBtn.length || $toolbarBtn.data('satek-sig-ready')) {
             return;
         }
         $toolbarBtn.data('satek-sig-ready', true);
 
+        // Detach this button from Roundcube's insert-sig button registry so enable_command('insert-sig', false)
+        // never re-adds .disabled / aria-disabled="true" / tabindex="-1"
+        var btnId = $toolbarBtn.attr('id');
+        if (btnId && rcmail.buttons && Array.isArray(rcmail.buttons['insert-sig'])) {
+            rcmail.buttons['insert-sig'] = rcmail.buttons['insert-sig'].filter(function (b) {
+                return b && b.id !== btnId;
+            });
+        }
+
         // Build popover menu mirroring Elastic's #responses-menu (flat <li> items under ul.menu.listing)
         var $menu = $('#satek-signature-menu');
+        var $ul;
         if (!$menu.length) {
             $menu = $('<div id="satek-signature-menu" class="popupmenu">');
-            var $ul = $('<ul class="menu listing" role="menu">');
+            $ul = $('<ul class="menu listing" role="menu">');
             $ul.append($('<li role="separator" class="separator satek-sig-insert-sep">').append($('<label>').text(labels.insertsig_section || 'Insert signature')));
             $ul.append($('<li role="separator" class="separator satek-sig-manage-sep">').append($('<label>').text(labels.managesig_section || 'Manage signatures')));
             $ul.append(
@@ -29,18 +40,26 @@
                 )
             );
             $menu.append($ul).appendTo(document.body);
+        } else {
+            $ul = $menu.children('ul.menu');
         }
 
         function keepTriggerActive() {
             $toolbarBtn
-                .addClass('satek-sig-trigger')
+                .addClass('signature satek-sig-trigger')
                 .removeClass('disabled')
-                .attr('aria-disabled', 'false')
-                .attr('aria-haspopup', 'true');
+                .attr({
+                    'aria-disabled': 'false',
+                    'aria-haspopup': 'true',
+                    tabindex: '2'
+                });
+            if ($toolbarBtn[0]) {
+                $toolbarBtn[0].onclick = null;
+            }
+            $toolbarBtn.removeAttr('onclick');
         }
 
         function renderMenuItems() {
-            var $ul = $('#satek-signature-menu > ul.menu');
             var $manageSep = $ul.children('li.satek-sig-manage-sep');
             if (!$ul.length || !$manageSep.length) {
                 return;
@@ -113,56 +132,53 @@
             keepTriggerActive();
         }
 
-        function closeSignatureMenu(e) {
-            var popId = $toolbarBtn.attr('aria-describedby');
-            if (popId && $('#' + popId).length) {
-                try {
-                    $toolbarBtn.popover('hide');
-                } catch (err) { /* ignore */ }
-            }
-            rcmail.triggerEvent('menu-close', {
-                event: 'menu-close',
-                name: 'satek-signature-menu',
-                originalEvent: e || null
-            });
+        function closeSignatureMenu() {
+            try {
+                $toolbarBtn.popover('hide');
+            } catch (err) { /* ignore */ }
         }
 
-        function isSignatureMenuOpen() {
-            var popId = $toolbarBtn.attr('aria-describedby');
-            return !!(popId && $('#' + popId).is(':visible'));
-        }
-
-        // Convert toolbar button into popover trigger (mirrors #responses-menu)
+        // Convert toolbar button into an Elastic native popup trigger (identical to #responses-menu)
         document.body.classList.add('satek-sig-enabled');
         keepTriggerActive();
         renderMenuItems();
 
         $toolbarBtn
+            .attr({
+                href: '#satek-signature',
+                'data-popup': 'satek-signature-menu',
+                'data-popup-pos': 'bottom'
+            })
+            .data('popup', 'satek-signature-menu')
             .data('popup-pos', 'bottom')
-            .removeAttr('onclick')
             .off('click');
 
-        $toolbarBtn[0].addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (typeof e.stopImmediatePropagation === 'function') {
-                e.stopImmediatePropagation();
-            }
-            if (isSignatureMenuOpen()) {
-                closeSignatureMenu(e);
-                return;
-            }
-            renderMenuItems();
-            rcmail.triggerEvent('menu-open', {
-                event: 'menu-open',
-                name: 'satek-signature-menu',
-                obj: $menu,
-                props: { link: this },
-                originalEvent: e
+        if (window.UI && typeof window.UI.popup_init === 'function') {
+            window.UI.popup_init($toolbarBtn[0]);
+            $toolbarBtn
+                .on('show.bs.popover.sateksig', function () {
+                    renderMenuItems();
+                })
+                .on('click.sateksig', function (e) {
+                    e.preventDefault();
+                });
+        } else {
+            // Non-Elastic fallback
+            $toolbarBtn.on('click.sateksig', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                renderMenuItems();
+                rcmail.triggerEvent('menu-open', {
+                    event: 'menu-open',
+                    name: 'satek-signature-menu',
+                    obj: $menu,
+                    props: { link: this },
+                    originalEvent: e
+                });
             });
-        }, true);
+        }
 
-        // Prevent Roundcube's change_identity / enable_command from graying out the Signature menu button
+        // Refresh menu items when identity changes
         rcmail.addEventListener('change_identity', function () {
             keepTriggerActive();
             renderMenuItems();
@@ -179,12 +195,12 @@
             .on('click.sateksig', '#satek-signature-menu a.satek-sig-item, #satek-signature-menu-clone a.satek-sig-item', function (e) {
                 e.preventDefault();
                 var iid = $(this).attr('data-iid');
-                closeSignatureMenu(e);
+                closeSignatureMenu();
                 insertSignatureById(iid);
             })
             .on('click.sateksig', '#satek-signature-menu a.satek-sig-manage, #satek-signature-menu-clone a.satek-sig-manage', function (e) {
                 e.preventDefault();
-                closeSignatureMenu(e);
+                closeSignatureMenu();
                 openSignatureModal();
             });
 

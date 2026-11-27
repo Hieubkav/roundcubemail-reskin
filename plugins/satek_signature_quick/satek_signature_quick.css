@@ -1,5 +1,7 @@
 /* Satek Quick Signature Popover & Unified Settings Modal */
 
+body.satek-sig-enabled #toolbar-menu a.signature,
+body.satek-sig-enabled #toolbar-menu a.signature.disabled,
 body.satek-sig-enabled #messagetoolbar a.signature,
 body.satek-sig-enabled #messagetoolbar a.signature.disabled {
   opacity: 1 !important;
